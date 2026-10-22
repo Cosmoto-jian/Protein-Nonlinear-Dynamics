@@ -1,0 +1,35 @@
+# The loop heartbeat: once a day (or on demand) open one `loop` issue holding the next task from tools/next.py.
+# An agent picks it up: set the repository variable AGENT_MENTION (e.g. "@claude" or "@codex") to the
+# mention your installed coding-agent app responds to. Its PR then goes through the gates as usual.
+name: loop
+on:
+  schedule:
+    - cron: "0 1 * * *"
+  workflow_dispatch:
+permissions:
+  issues: write
+  contents: read
+jobs:
+  next:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install -r requirements.txt
+      - run: python tools/next.py > next.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - uses: actions/github-script@v7
+        env:
+          MENTION: ${{ vars.AGENT_MENTION }}
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.readFileSync('next.md', 'utf8');
+            const open = await github.rest.issues.listForRepo({...context.repo, state: 'open', labels: 'loop'});
+            if (open.data.length >= 1) { core.info('a loop task is already open'); return; }
+            const title = 'loop: ' + (body.split('\n')[0].replace('## next: ', '') || 'next task');
+            const tail = '\n\nFollow AGENTS.md. Branch `loop/<task-id>`, PR must pass `make gates`.' + (process.env.MENTION ? `\n\n${process.env.MENTION}` : '');
+            await github.rest.issues.create({...context.repo, title, body: body + tail, labels: ['loop']});

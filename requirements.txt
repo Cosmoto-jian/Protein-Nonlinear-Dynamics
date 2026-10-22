@@ -1,0 +1,4 @@
+# Python 3.12+. Pinned versions used for validation.
+matplotlib==3.11.2
+numpy==2.5.4
+pyyaml==6.0.2

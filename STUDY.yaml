@@ -1,0 +1,14 @@
+id: S-001
+title: "<study title>"
+question: "<one-sentence research question>"
+aims:
+  - id: A1
+    text: "<aim 1>"
+    done_when: "<observable criterion that ends this aim>"
+target_journal: "<journal>"
+figure_width_mm: 183
+owner: "<GitHub username>"
+loop:
+  max_open_tasks: 1           # loop issues open at the same time
+  usd_per_month: 50           # agent budget; the agent stops and asks when it is reached
+  reflect_after_dead_ends: 3  # after this many dead-ends in a row, next.py asks for a rethink
