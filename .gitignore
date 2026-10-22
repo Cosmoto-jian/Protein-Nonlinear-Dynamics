@@ -10,3 +10,11 @@ writing/tex/*.pdf
 data/derived/tmp/
 results/logs/*
 !results/logs/.gitkeep
+# nodal-state arrays of the tension paths (about 220 MB); rebuilt by `make all`, hashes kept in pipeline.lock
+data/derived/**/*.npy
+writing/tex/*.bbl
+writing/tex/*.blg
+writing/tex/*.out
+writing/tex/*.spl
+writing/tex/*.fls
+writing/tex/*.fdb_latexmk

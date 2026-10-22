@@ -16,6 +16,22 @@ Three files hold the truth; everything else is derived from them:
 | `pipeline.yaml` | every formal step: command, inputs, outputs, parameters. `pipeline.lock` records hashes; `data_manifest.csv`, `figure_manifest.csv` and `graph.json` are generated from it |
 | `research/claims.yaml` | append-only ledger of judged results: supported, refuted, inconclusive, dead-end |
 
+## This study
+Geometrically nonlinear C-alpha truss mechanics of mechanosensitive channels under conservative membrane tension:
+how the tension response departs from its linearization (stiffening, turning, snapping), verified with an explicit
+VFIFE solver and a bordered Newton method, with stability certified by Sylvester's law of inertia.
+
+| Item | Location |
+|---|---|
+| Structures (OPM, RCSB) and legacy reference paths | `data/raw/` (`MANIFEST.yaml`) |
+| Analysis code and solvers | `src/` (see `src/README.md`) |
+| Tension paths, checks, summary | `data/derived/` (pipeline outputs) |
+| Figures 1-7, A.1, A.2 | `plot/figN.py` -> `figure_data/figN/` -> `results/figures/` |
+| Manuscript (elsarticle) | `writing/tex/main.tex`; numbers and tables in `writing/tex/gen/` |
+
+Full chain (`make all`): about one to two days on a 10-core workstation, dominated by the Piezo1 paths, the
+continuation and the rewired-network nulls. Fast chain (`make figures-fast`): seconds. Build the paper with `make paper`.
+
 ## Quick start
 ```bash
 pip install -r requirements.txt

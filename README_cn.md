@@ -16,6 +16,19 @@ make next → 分支 → 做任务 → PR → make gates + make validate → 合
 | `pipeline.yaml` | 所有正式步骤的命令、输入、输出、参数；`pipeline.lock` 记哈希；`data_manifest.csv`、`figure_manifest.csv`、`graph.json` 自动生成 |
 | `research/claims.yaml` | 只追加的结论账本：supported / refuted / inconclusive / dead-end |
 
+## 本研究
+机械敏感通道 Cα 桁架在保守膜张力下的几何非线性力学：张力响应如何偏离其线性化（刚化、转向、失稳），以显式 VFIFE 与带约束的 Newton 法互相验证，并用 Sylvester 惯性定理认证稳定性。
+
+| 内容 | 位置 |
+|---|---|
+| 结构文件（OPM、RCSB）与旧版参考路径 | `data/raw/`（`MANIFEST.yaml`） |
+| 分析代码与求解器 | `src/`（见 `src/README.md`） |
+| 张力路径、校核、汇总 | `data/derived/`（流水线输出） |
+| 图 1-7、A.1、A.2 | `plot/figN.py` -> `figure_data/figN/` -> `results/figures/` |
+| 论文（elsarticle） | `writing/tex/main.tex`；数字与表格在 `writing/tex/gen/` |
+
+完整链（`make all`）在 10 核工作站上约需一到两天，主要耗时在 Piezo1 路径、延拓和重连网络零模型；快速链（`make figures-fast`）只需数秒。论文用 `make paper` 编译。
+
 ## 常用命令
 ```bash
 make next           # 下一件事
