@@ -1,0 +1,18 @@
+\begin{table}[t]
+\centering\small
+\caption{Validation (TM subset, $r_c=10$\,\AA; RMSD in \AA). NL: best frame of the nonlinear path within $\eps\le\eps^*$ (at $\eps$). Linear: best-amplitude linear response, unrestricted [restricted to $\eps\le\eps^*$]; same $\tau$: linear response at the tension of the NL frame. Dilation, rewired (best of three), ANM$_{10}$: null models of Section~\ref{sec:nulls}. Class: NL vs.\ unrestricted linear with margin $\max(0.2\,\text{\AA},3\%)$; $\checkmark$: approaches the partner.}
+\label{tab:val}
+\setlength{\tabcolsep}{2.6pt}\resizebox{\textwidth}{!}{%
+\begin{tabular}{lccccccccccl}
+\toprule
+Channel & closed & NL & $\eps$ & linear & same $\tau$ & ovl NL/L & dilation & rewired & ANM$_{10}$ & whole: closed$\to$NL & class\\
+\midrule
+Piezo1 & 10.80 & \textbf{9.04} & 0.097 & 9.81 [9.81] & 14.99 & 0.56/0.42 & 9.09 & 8.95 & 8.27 & 14.86$\to$11.49 & NL better $\checkmark$\\
+MscS & 6.33 & 4.62 & 0.166 & 4.45 [4.45] & 4.48 & 0.69/0.71 & 5.92 & 4.68 & 5.64 & 8.51$\to$8.79 & equivalent $\checkmark$\\
+MscL & 6.92 & 5.68 & 0.110 & 5.23 [5.76] & 5.66 & 0.69/0.65 & 5.60 & 5.94 & 6.70 & 6.98$\to$5.89 & NL worse $\checkmark$\\
+TREK-2 & 2.13 & 1.93 & 0.033 & 1.93 [1.93] & 1.95 & 0.43/0.43 & 2.09 & 1.95 & 1.44 & 2.40$\to$2.19 & equivalent $\checkmark$\\
+TRAAK & 0.64 & 0.69 & 0.010 & 0.64 [0.64] & 0.69 & 0.03/0.07 & 0.64 & 0.64 & 0.45 & 1.01$\to$1.04 & equivalent\\
+OSCA1.2 & 6.16 & 6.21 & 0.010 & 6.16 [6.16] & 6.21 & 0.09/0.35 & 6.16 & 6.16 & 4.98 & 5.94$\to$5.96 & equivalent\\
+\bottomrule
+\end{tabular}}
+\end{table}

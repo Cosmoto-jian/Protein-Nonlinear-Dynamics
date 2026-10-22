@@ -13,6 +13,7 @@ import scipy.sparse.linalg as spla
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from inertia import constrained_inertia
+from paths import raw as raw_path
 
 names = sys.argv[1:] or PANEL + EXTRA
 outf = os.path.join(RES, 'load_check.json')
@@ -37,8 +38,8 @@ for name in names:
     raw, ns = make_area(M, equilibrate=False); eq, _ = make_area(M, equilibrate=True)
     C = gauge_C(X0)
     anchor = rigid_anchor_dofs(X0, exclude_nodes=raw.vertices); fd = np.setdiff1d(np.arange(3 * net.N), anchor)
-    R4 = json.load(open(raw(f'r4_{name}_rc10.json')))
-    Xs = np.load(raw(f'r4_{name}_rc10_Xs.npy')) if raw(f'r4_{name}_rc10_Xs.npy', required=False) else None
+    R4 = json.load(open(raw_path(f'r4_{name}_rc10.json')))
+    Xs = np.load(raw_path(f'r4_{name}_rc10_Xs.npy')) if raw_path(f'r4_{name}_rc10_Xs.npy', required=False) else None
     rec = dict(N=int(net.N), n_loaded=int(len(raw.vertices)), n_sector=ns)
     # (i) operator vs direct shoelace, and A'(x) = A(Sx)
     frames = [X0] + ([Xs[i] for i in range(0, len(Xs), max(1, len(Xs) // 6))] if Xs is not None else [])

@@ -1,1 +1,1419 @@
-{}
+{
+ "arclength-6b3r": {
+  "cmd": "python src/arclength.py 6b3r 10 0.10 400 0.003",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/derived/paths/6b3r_rc10_loadcontrol.json": "851ac3dacb8bd5b56120aeb138dd0b69a5dd9180c892665b41601cf08ce9b0e3",
+   "data/derived/paths/6b3r_rc10_loadcontrol_Xs.npy": "27874d6c86aca1798b2406a66d16a27ebb5a777114665061d1c7b4880fa81308",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/arclength.py": "f1dc2b0f16d241b312449d65d8dc96a980a84d389ee0f232d1386dc0599677e6",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6b3r_rc10_Xs.npy": "33cdaa4c59ca1d9f17b15dda2f9746ee0413d7fc3c9667173d5525428cdca24a",
+   "data/derived/paths/6b3r_rc10_arclength.json": "377364d593331b8379bb925daa189e9b11a68d66d469c7721be0d80ddaab37e4",
+   "data/derived/paths/6b3r_rc10_arclength_Xs.npy": "b1b28a2f9b1857a461392b0c9443f228115d6ceeca89180f22837553d9b25d34"
+  },
+  "params": {
+   "ds0": 0.003,
+   "n_points": 400,
+   "start_eps": 0.1
+  }
+ },
+ "fig1": {
+  "cmd": "python plot/fig1.py plot",
+  "deps": {
+   "figure_data/fig1": "3940db23b694ddb8865e53758edee19665489f8b86040c9e853c43177cf1cb4d",
+   "plot/fig1.py": "b348ae926ecb37a341ce520eab3173a3ea70c1bc170add3cd4a961b554b3da3b",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig1.md": "ee67c1b2426af93a1c0771e7d79f7e05f4304e982b96ec719b1a00d367eb5879",
+   "results/figures/fig1.pdf": "b645f7e4bde84ed04bac8440686d95181b6f529b6b2f7e4c696f02cb53cb2309",
+   "results/figures/fig1.png": "63e73c9be9dfc011f7e7f7a32fbed4a7b794fe16285e66ae7d2861689aba4c01",
+   "results/figures/fig1.svg": "3786e9df8e56928304dde29f8108e32a0b240ed807782351f570f979e9748bdb"
+  },
+  "params": null
+ },
+ "fig1-data": {
+  "cmd": "python plot/fig1.py extract",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig1.py": "b348ae926ecb37a341ce520eab3173a3ea70c1bc170add3cd4a961b554b3da3b",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "figure_data/fig1": "3940db23b694ddb8865e53758edee19665489f8b86040c9e853c43177cf1cb4d"
+  },
+  "params": null
+ },
+ "fig2": {
+  "cmd": "python plot/fig2.py plot",
+  "deps": {
+   "figure_data/fig2": "f487b81cef3e66127fed35322ffaeb6a107b0225a51e81d076ececcb7cd49bb0",
+   "plot/fig2.py": "2136d1c7cc5d4ce6204389e31395d94a617b33e7ed10817388dc94ae8bcce1e7",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig2.md": "8b8f36541f3e68e6c6fcae84f9c6e17be6280b7b1dde52e18b9f8ccf5060f631",
+   "results/figures/fig2.pdf": "d6fe1ec3e2abc47cdcd15ff6573103ad5ddf834fa48ae752e0998518bf12d7c3",
+   "results/figures/fig2.png": "4381da981ef0557c7933d51cb6ed01cdaa6d84cacc2ee281285fa2a36244068d",
+   "results/figures/fig2.svg": "eba546580a11e27bf0bc5effd117da319458b69f16e5c375f009a21e99704715"
+  },
+  "params": null
+ },
+ "fig2-data": {
+  "cmd": "python plot/fig2.py extract",
+  "deps": {
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig2.py": "2136d1c7cc5d4ce6204389e31395d94a617b33e7ed10817388dc94ae8bcce1e7",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/fig2": "f487b81cef3e66127fed35322ffaeb6a107b0225a51e81d076ececcb7cd49bb0"
+  },
+  "params": null
+ },
+ "fig3": {
+  "cmd": "python plot/fig3.py plot",
+  "deps": {
+   "figure_data/fig3": "f91ff75f385b6109912dba2a7f76ab45a58563d7b55ac281a4bef60efccf3b0e",
+   "plot/fig3.py": "4b2280ad9183ec6e4c8c29855057ee08104684a977b46e9fb4aee95a58b12582",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig3.md": "a28ad4437929263f2949960eb0c7d93075d272f97e3db1561edab36e2318702e",
+   "results/figures/fig3.pdf": "3e798765dfcbaab9a76312c7b0ab0f2775e1e8f1f80b1c6b886452a8ce71413f",
+   "results/figures/fig3.png": "ac0e80c16fb50fb8c4fa94655870a78235ec0d58b4a7f593a02847f899b76e49",
+   "results/figures/fig3.svg": "916d22fbc4494c4ab187aa97117bdb1036d13be984d7702702997b39d2a75dc5"
+  },
+  "params": null
+ },
+ "fig3-data": {
+  "cmd": "python plot/fig3.py extract",
+  "deps": {
+   "data/derived/paths/2oar_rc10.json": "c9b145f9ddbb12e666944dd80a7b7677a4c34ada6f6440b0de40f6af93edbaa4",
+   "data/derived/paths/4wff_rc10.json": "2c9b4d7ae2bf4b63673d10188f187782b6928f41b567d44fedd3d60d036a78fe",
+   "data/derived/paths/4xdk_rc10.json": "fc8c18d78accd31246504accaf57fa656e9f75c42a9c835ad09c299f7a8451af",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6cq8_rc10.json": "a022e4f350b0a8aa3d368b22db62b2314b8fdfc2cdba58b004f3aff888bdaa6c",
+   "data/derived/paths/6mgv_rc10.json": "70f90a65a072febda0321e51c2e6258b83a75e7d7d26fcce92c55531a46d643e",
+   "data/derived/paths/6pwn_rc10.json": "7d907ec7f3d1bd3088e8d6083c72e54d01bc458284d6031611ed8a17e669bd80",
+   "data/derived/paths/6vtk_rc10.json": "b6a76a8f9e903093a72b799ee73dcb22a5a3330986665c333a29ea1c89335ddb",
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig3.py": "4b2280ad9183ec6e4c8c29855057ee08104684a977b46e9fb4aee95a58b12582",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/fig3": "f91ff75f385b6109912dba2a7f76ab45a58563d7b55ac281a4bef60efccf3b0e"
+  },
+  "params": null
+ },
+ "fig4": {
+  "cmd": "python plot/fig4.py plot",
+  "deps": {
+   "figure_data/fig4": "6afe93c69f46e96f38e902eee5f6028b10471263f9bff3e3228562d1af79475a",
+   "plot/fig4.py": "0527fb32a9d6e79b9d6f7e784389c6ad722d459ab1a95ede1a6ce17045cbef18",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig4.md": "cf1099a9aa69baaf1bdb8a674073afee53773a3c73e8e5fff08dab07d62514a5",
+   "results/figures/fig4.pdf": "31d96088378b5ded1bb8067dc7238ef85b4ce1ea4c422bfb3e734e2766352fa6",
+   "results/figures/fig4.png": "8196d629df7651eca4884d4566d45b913a625773f95b1c3bb3f6f3e71a078e6f",
+   "results/figures/fig4.svg": "519758e85bc4110524958c467fd2acfbcfbe4c5c28c3c64c96bcaef2f87d9b7f"
+  },
+  "params": null
+ },
+ "fig4-data": {
+  "cmd": "python plot/fig4.py extract",
+  "deps": {
+   "data/derived/paths/2oar_rc10.json": "c9b145f9ddbb12e666944dd80a7b7677a4c34ada6f6440b0de40f6af93edbaa4",
+   "data/derived/paths/4wff_rc10.json": "2c9b4d7ae2bf4b63673d10188f187782b6928f41b567d44fedd3d60d036a78fe",
+   "data/derived/paths/4xdk_rc10.json": "fc8c18d78accd31246504accaf57fa656e9f75c42a9c835ad09c299f7a8451af",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6mgv_rc10.json": "70f90a65a072febda0321e51c2e6258b83a75e7d7d26fcce92c55531a46d643e",
+   "data/derived/paths/6pwn_rc10.json": "7d907ec7f3d1bd3088e8d6083c72e54d01bc458284d6031611ed8a17e669bd80",
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig4.py": "0527fb32a9d6e79b9d6f7e784389c6ad722d459ab1a95ede1a6ce17045cbef18",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/fig4": "6afe93c69f46e96f38e902eee5f6028b10471263f9bff3e3228562d1af79475a"
+  },
+  "params": null
+ },
+ "fig5": {
+  "cmd": "python plot/fig5.py plot",
+  "deps": {
+   "figure_data/fig5": "032efda48664287cf8e44f5429f89aeb1924ac9b0c05c21b07dbaa4327ccbab3",
+   "plot/fig5.py": "660c1c65d0f267d35e98f9209bfb5f6c8ef9dff0f619878d5c39c1e81714dfe7",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig5.md": "7a51494e726fab8b79f2a28a716bd8623f76dc8013538ea548a47d3f5cea0b56",
+   "results/figures/fig5.pdf": "6f977fc23a69c090154fe9a4a4f837c95e64d98f157d0c4edf254d59661f6a1f",
+   "results/figures/fig5.png": "3bae5b052b8ebf93f09a85dc5df757c5966ba8bda49a0f9c3152a41a597f31e5",
+   "results/figures/fig5.svg": "c42e9c0b42fb293d0440821cf2486cef6d09563ecf0236d7770e971717631e97"
+  },
+  "params": null
+ },
+ "fig5-data": {
+  "cmd": "python plot/fig5.py extract",
+  "deps": {
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig5.py": "660c1c65d0f267d35e98f9209bfb5f6c8ef9dff0f619878d5c39c1e81714dfe7",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/fig5": "032efda48664287cf8e44f5429f89aeb1924ac9b0c05c21b07dbaa4327ccbab3"
+  },
+  "params": null
+ },
+ "fig6": {
+  "cmd": "python plot/fig6.py plot",
+  "deps": {
+   "figure_data/fig6": "4433bf09e08071aa1fedd8796ae307f73557ca80ec6e5e1a72bc1ad192d79427",
+   "plot/fig6.py": "7a67f5871f099308579647ee05edeefb572507a2796bdcf8eb5dbb52e263e4a1",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig6.md": "61a543edecad3d4ea3221057b82b6238576c41d13f7188d4dd3e0d9ee0d13b57",
+   "results/figures/fig6.pdf": "64edf36f1b75127956e04a0c431584430076fd32e9263d84314105f28be1c3fb",
+   "results/figures/fig6.png": "7379682547ccf4c655083f1868210103e4adac110e2896a1e27048cb0356e8a7",
+   "results/figures/fig6.svg": "da853ad6aed5d88ef61cfcd96211eada4c5862f557108a1ea4eb6038ac147d09"
+  },
+  "params": null
+ },
+ "fig6-data": {
+  "cmd": "python plot/fig6.py extract",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6b3r_rc10_Xs.npy": "33cdaa4c59ca1d9f17b15dda2f9746ee0413d7fc3c9667173d5525428cdca24a",
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig6.py": "7a67f5871f099308579647ee05edeefb572507a2796bdcf8eb5dbb52e263e4a1",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "figure_data/fig6": "4433bf09e08071aa1fedd8796ae307f73557ca80ec6e5e1a72bc1ad192d79427"
+  },
+  "params": null
+ },
+ "fig7": {
+  "cmd": "python plot/fig7.py plot",
+  "deps": {
+   "figure_data/fig7": "59945a0ef8a8bd4335a796c9bbae577eeac2e7977528ea5119d3f01ac0f8b7aa",
+   "plot/fig7.py": "9e0eb87ea7d5409374bcb21cb9a8adee6f01e5fc656722e1b9f524574ef8c42a",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/fig7.md": "ca5343735e7e60d69bdb30481cb9d1e84b9e2f154a0fcf63df9ba78bb31384cc",
+   "results/figures/fig7.pdf": "fbc89f0c5fc236bf54a4ac1477390cc8e03cdad0ef4bcfc2721dd6dd3add2a2f",
+   "results/figures/fig7.png": "2c037d2faebaa3738547be5442366f46c4b696c89d1d882c18a2453761d0a243",
+   "results/figures/fig7.svg": "f830e40689b46ac02505af0df59ce9f2f840b3470ff82e35f1c9c5832834084d"
+  },
+  "params": null
+ },
+ "fig7-data": {
+  "cmd": "python plot/fig7.py extract",
+  "deps": {
+   "data/derived/paths/6b3r_rc10_arclength.json": "377364d593331b8379bb925daa189e9b11a68d66d469c7721be0d80ddaab37e4",
+   "data/derived/paths/6b3r_rc10_loadcontrol.json": "851ac3dacb8bd5b56120aeb138dd0b69a5dd9180c892665b41601cf08ce9b0e3",
+   "data/derived/paths/6b3r_rc10_snap.json": "52cefeb44476578151f116e6f1603a868ea4b84e3d28e0adc8cb4258c30f0330",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/fig7.py": "9e0eb87ea7d5409374bcb21cb9a8adee6f01e5fc656722e1b9f524574ef8c42a",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/fig7": "59945a0ef8a8bd4335a796c9bbae577eeac2e7977528ea5119d3f01ac0f8b7aa"
+  },
+  "params": null
+ },
+ "figA1": {
+  "cmd": "python plot/figA1.py plot",
+  "deps": {
+   "figure_data/figA1": "76abeb3ea974e36985b578e41237b4340b4f971c658ac8fc9d03602104ec1685",
+   "plot/figA1.py": "1f9703f83335e2ca8802df5aa6aa998aa4dc6f8514da8e86bd39bfdd1b9c313d",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/figA1.md": "0957811d871c7b3a1d7cdfa257860e2c64d1df3481d23b2c7bd0f0b7f1ec1fda",
+   "results/figures/figA1.pdf": "26134a6e448b3d4cd1467b5c7fb44e0af1995aa2a11c13a3816f76439bc3a9ce",
+   "results/figures/figA1.png": "f39343a0becf3d8e5d699a4e1ab53abb9f5df02f3d3103aa110de5bf686dfa2c",
+   "results/figures/figA1.svg": "a5468b1979206da0e5eaad041ae40a596448e0018cd20b3672618e2b1edfd3eb"
+  },
+  "params": null
+ },
+ "figA1-data": {
+  "cmd": "python plot/figA1.py extract",
+  "deps": {
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/figA1.py": "1f9703f83335e2ca8802df5aa6aa998aa4dc6f8514da8e86bd39bfdd1b9c313d",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/figA1": "76abeb3ea974e36985b578e41237b4340b4f971c658ac8fc9d03602104ec1685"
+  },
+  "params": null
+ },
+ "figA2": {
+  "cmd": "python plot/figA2.py plot",
+  "deps": {
+   "figure_data/figA2": "d320068f9a114d6e4212395a00c5ef3b144151e284c302345eb81210794db5e7",
+   "plot/figA2.py": "2f8d6ba1fb7b38dbcf02a21e5b5e403ec982f90e3f109f871fc02c205ab4d66d",
+   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "results/descriptions/figA2.md": "b5e35ab8b7ab8fc9970f5d648470df9a7672ee3f8cc4235dda6f375494629341",
+   "results/figures/figA2.pdf": "e91c5cdc0f75e2c807c773bc5cb59e03db065608b51e3bcd500458ddd104b13c",
+   "results/figures/figA2.png": "b84b8d3c24a6364335ebeea3827637517360d9fcb85ffed50ece608fefe9ac9b",
+   "results/figures/figA2.svg": "f6024447fc26e9bad72c3e041972329b8d9f44e6b67176eb90d3dd677e2cdb5d"
+  },
+  "params": null
+ },
+ "figA2-data": {
+  "cmd": "python plot/figA2.py extract",
+  "deps": {
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
+   "plot/figA2.py": "2f8d6ba1fb7b38dbcf02a21e5b5e403ec982f90e3f109f871fc02c205ab4d66d",
+   "plot/style.py": "a9aed0c16cef668c98061b13122eb24f5b0fbe954e11b7aa1cf80489dd3e5e6f"
+  },
+  "outs": {
+   "figure_data/figA2": "d320068f9a114d6e4212395a00c5ef3b144151e284c302345eb81210794db5e7"
+  },
+  "params": null
+ },
+ "indicator": {
+  "cmd": "python src/indicator.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/indicator.py": "77862f0e34b927f07ace2054082434fea8d194d75ee91c364ec3400c5626e54e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/indicator.json": "c54a0389643ea8ceba51e4d309c125ad9b6a60c33d6b7d40bd0fd77b2898911a"
+  },
+  "params": null
+ },
+ "load-check": {
+  "cmd": "python src/load_check.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/load_check.py": "57eea50d8ec805a8da12dd270d7f373140883104ae0fd5c9dd5461eb9306fbad",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/load_check.json": "969a3809c141fcb88c9109f2fe5a6ea3e5fd4bdb00a5c110ea1edcd13e96d3b8"
+  },
+  "params": null
+ },
+ "models": {
+  "cmd": "python src/prepare_models.py",
+  "deps": {
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/prepare_models.py": "0a39c1096baba9df7e3435c47cb70e8b9e1e61bcb27edc9bd4e15a3b2cf1b445"
+  },
+  "outs": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c"
+  },
+  "params": {
+   "chains": {
+    "4wff": "AB"
+   },
+   "drop_resname": "UNK",
+   "half_thickness_override_A": {
+    "4wff": 15.0
+   }
+  }
+ },
+ "nulls": {
+  "cmd": "python src/batch_nulls.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/batch_nulls.py": "ee521dbb2fe2c1c29153c9cc92105340730d37c3dda3f0f72fc9f0bfcad49e68",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/nulls.py": "b3552dfc94e865f3f71d5753481f71980703654f5a14b8ac3125504f54f991fc",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/nulls.json": "ffd9b07c31943a9bf720ac1350352de945b1c686a260af13962d7588a7c89d71"
+  },
+  "params": {
+   "rewire_seeds": [
+    11,
+    12,
+    13
+   ]
+  }
+ },
+ "numbers": {
+  "cmd": "python src/make_tex.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/derived/paths/6b3r_rc10_Xs.npy": "33cdaa4c59ca1d9f17b15dda2f9746ee0413d7fc3c9667173d5525428cdca24a",
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/make_tex.py": "6c689ca717c7a0f03b3544bce25cbdc2ee236deee6a7756303f6286d153107e2",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827",
+   "writing/tex/main.tex": "7972df06697e71f07f03fe203ad222ebcfd2164d30ef4b2a87905d581a1c1764"
+  },
+  "outs": {
+   "writing/tex/gen": "10f3f6872b4c817d21d65405aa1c3730ad6eda5732cacf97fea970f944e5c1eb"
+  },
+  "params": null
+ },
+ "path-2oar-rc10": {
+  "cmd": "python src/run_path.py 2oar 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/2oar_rc10.json": "c9b145f9ddbb12e666944dd80a7b7677a4c34ada6f6440b0de40f6af93edbaa4",
+   "data/derived/paths/2oar_rc10_Xs.npy": "86fd34b7a8d1a16baf0bbb9d3cba1ac0a1652c7d2664756c82705c7f0f559246"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-2oar-rc12": {
+  "cmd": "python src/run_path.py 2oar 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/2oar_rc12.json": "ceea7cc9d2f84af3e14b0c022a53a5e4202eb38b1032797ea99ca415c0b85e11",
+   "data/derived/paths/2oar_rc12_Xs.npy": "d399e7b601e3c8eca20c3607dab583abdf030be42905728457536a2c8ab7d2d8"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-2oar-rc8": {
+  "cmd": "python src/run_path.py 2oar 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/2oar_rc8.json": "a4ab9e9291146398e8dedb95a26976f66b02fbead8d29f42b88b96690e144a39",
+   "data/derived/paths/2oar_rc8_Xs.npy": "081ba0ab9912dac8b1dd129e3717f82eaab5564c85add0f52ea3cbb3791b9138"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4wff-rc10": {
+  "cmd": "python src/run_path.py 4wff 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4wff_rc10.json": "2c9b4d7ae2bf4b63673d10188f187782b6928f41b567d44fedd3d60d036a78fe",
+   "data/derived/paths/4wff_rc10_Xs.npy": "4f840a6748e1fe77db8edb0e40d38693a22490e8ddb5e061203788224d42e0a4"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4wff-rc12": {
+  "cmd": "python src/run_path.py 4wff 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4wff_rc12.json": "6f74eee4b2bd9f4a8f832c6dff60ca4275c71946a5bfff6baf7fd1f40782505f",
+   "data/derived/paths/4wff_rc12_Xs.npy": "b86f78d9b94176aa194aaa489a9aadfa95ac3f687baf6757e55f493838ddf545"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4wff-rc8": {
+  "cmd": "python src/run_path.py 4wff 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4wff_rc8.json": "d03053b6b00d30e67fbefefcd3b2816c7ffa8c82273d8ab4b62c96b204a6d905",
+   "data/derived/paths/4wff_rc8_Xs.npy": "fdee2f2368bf2af9c942f32cce9d982e48dfc46889bf923e99bc9ac834a4ba46"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4xdk-rc10": {
+  "cmd": "python src/run_path.py 4xdk 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4xdk_rc10.json": "fc8c18d78accd31246504accaf57fa656e9f75c42a9c835ad09c299f7a8451af",
+   "data/derived/paths/4xdk_rc10_Xs.npy": "bf8273ece925ce37d5957dcdc921ac7a0cc43642ef62b9f595b8b54f6608ba9a"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4xdk-rc12": {
+  "cmd": "python src/run_path.py 4xdk 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4xdk_rc12.json": "91ac587ecfc1b2895ee7d5b687c2d55dd156948540384e8587003224062145e7",
+   "data/derived/paths/4xdk_rc12_Xs.npy": "e21cce959c4efe1bdc6d7bd27fa86200f299b42a10b27b1c3a1d186238c91b80"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-4xdk-rc8": {
+  "cmd": "python src/run_path.py 4xdk 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/4xdk_rc8.json": "bda1c332586c94933c79b1f6fea722c1c8e5fc64e6e251a24fdbe7f9e4bf0050",
+   "data/derived/paths/4xdk_rc8_Xs.npy": "6231b7e80a592c86753b86cf563811526faf041e535817b1a3fb135616f7bcda"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6b3r-rc10": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --tag _loadcontrol",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_loadcontrol.json": "851ac3dacb8bd5b56120aeb138dd0b69a5dd9180c892665b41601cf08ce9b0e3",
+   "data/derived/paths/6b3r_rc10_loadcontrol_Xs.npy": "27874d6c86aca1798b2406a66d16a27ebb5a777114665061d1c7b4880fa81308"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6b3r-rc12": {
+  "cmd": "python src/run_path.py 6b3r 12 --refine",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc12.json": "63fd71befbca88976fe2f815dd2a479b84ff1a0143fee8f78187f664089e6e0b",
+   "data/derived/paths/6b3r_rc12_Xs.npy": "f3d77b72334fc72928be7dc34fce82356779065a59bbc8327788d9f351cbc656"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6b3r-rc8": {
+  "cmd": "python src/run_path.py 6b3r 8 --refine",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc8.json": "69029e8dc68bd200bc061ba39fff39b11d36bbed05dd38142bbdd9ce09afc1b5",
+   "data/derived/paths/6b3r_rc8_Xs.npy": "fdee2f2368bf2af9c942f32cce9d982e48dfc46889bf923e99bc9ac834a4ba46"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6cq8-rc10": {
+  "cmd": "python src/run_path.py 6cq8 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6cq8_rc10.json": "a022e4f350b0a8aa3d368b22db62b2314b8fdfc2cdba58b004f3aff888bdaa6c",
+   "data/derived/paths/6cq8_rc10_Xs.npy": "638d78e6b94257ce09b3aa24ee54e38eb7ddcf59be2115490aa3ce8f671b9d15"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6cq8-rc12": {
+  "cmd": "python src/run_path.py 6cq8 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6cq8_rc12.json": "f1fbf5682db9dee9ee31c1f8cabb8bd9cc50ead67ef494ce346f3f90010f1cd6",
+   "data/derived/paths/6cq8_rc12_Xs.npy": "8d742d9313c42ea23551bc227ee23607348b22d9c2274ab5d7f9dd62cc18fdd8"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6cq8-rc8": {
+  "cmd": "python src/run_path.py 6cq8 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6cq8_rc8.json": "75ca277c94642c0ff6f472ca31c07efd164159df37e7b07747258bf3b7e2a964",
+   "data/derived/paths/6cq8_rc8_Xs.npy": "a40b7fd675044f8a1cda784205dc15741715d92d7a98a33f1a7ff31b0b2a6bb3"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6mgv-rc10": {
+  "cmd": "python src/run_path.py 6mgv 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6mgv_rc10.json": "70f90a65a072febda0321e51c2e6258b83a75e7d7d26fcce92c55531a46d643e",
+   "data/derived/paths/6mgv_rc10_Xs.npy": "75249795ee4f9412ce044def867f2a4a41039ef4a230a5f0c662e8e1c4b08301"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6mgv-rc12": {
+  "cmd": "python src/run_path.py 6mgv 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6mgv_rc12.json": "b35e1ee13870d4291249209187c7ead2a9bb6e6bdb033c63efb8efd12255607c",
+   "data/derived/paths/6mgv_rc12_Xs.npy": "27c2aab5f111b1864636da446e23ebd4d15cacddae2d6224d31423d59dc89b23"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6mgv-rc8": {
+  "cmd": "python src/run_path.py 6mgv 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6mgv_rc8.json": "2ee3dfe5db554faf32b568f6952e3d1bd25beb4493f683d31c38e5c6916b4f85",
+   "data/derived/paths/6mgv_rc8_Xs.npy": "08b5fb669aaf81169b1a0b277c31ab4f52f43ee9fabf00581e639812248cbecb"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6pwn-rc10": {
+  "cmd": "python src/run_path.py 6pwn 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10.json": "7d907ec7f3d1bd3088e8d6083c72e54d01bc458284d6031611ed8a17e669bd80",
+   "data/derived/paths/6pwn_rc10_Xs.npy": "bd163a6a98df5450726612aa9c43b9340e1ab5e62ff5de18659a645faec17a3f"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6pwn-rc12": {
+  "cmd": "python src/run_path.py 6pwn 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc12.json": "f9d1e2592635af54d9ef95da70c08cafa9b42528151a113b0c7ed2e039cb92fc",
+   "data/derived/paths/6pwn_rc12_Xs.npy": "1d47a1b76cd0e132b750a232a3162459d1d5b20e66597b891015dd73839cdc20"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6pwn-rc8": {
+  "cmd": "python src/run_path.py 6pwn 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc8.json": "c097bd9442ab08397a780ea5a56ba2ec01a96ee90add0823b6314e80eb7fa6bb",
+   "data/derived/paths/6pwn_rc8_Xs.npy": "59754e301fac455a1f1afdd006418fbf6ad9edb51bbcc9eaa9b4a61f7fe1722a"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6vtk-rc10": {
+  "cmd": "python src/run_path.py 6vtk 10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6vtk_rc10.json": "b6a76a8f9e903093a72b799ee73dcb22a5a3330986665c333a29ea1c89335ddb",
+   "data/derived/paths/6vtk_rc10_Xs.npy": "b7c7131ad8ce4713fe527c32b71d856c7b3d8bc82e3d4230849bfa371ce1573f"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6vtk-rc12": {
+  "cmd": "python src/run_path.py 6vtk 12",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6vtk_rc12.json": "40e6dcc86c63fab586b380a2c5e22b5bf23e4fff1db978b47c34ba3f48b89247",
+   "data/derived/paths/6vtk_rc12_Xs.npy": "a5597fc401ca2ea8c92577a682736bc156a12fa4717878336d51c5dd51c22163"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "path-6vtk-rc8": {
+  "cmd": "python src/run_path.py 6vtk 8",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6vtk_rc8.json": "9221d7f42d7669ef326fcb0da9571c4266079bceade413cd6e808cd0bf4a9d50",
+   "data/derived/paths/6vtk_rc8_Xs.npy": "b790904a18ee852acb544e24184f41a02a7f6565b8fa74e1889ce71788ecc917"
+  },
+  "params": {
+   "eps_stop": 0.4,
+   "gauge": "eckart6",
+   "maxe_stop": 1.0,
+   "p20_stop": 0.12
+  }
+ },
+ "physical-scale": {
+  "cmd": "python src/physcale.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/physcale.py": "436de09e5ba87fa5bc0931b658598de0dfbdcc7d2d7612631629f577a0b88f68",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/physical_scale.json": "855beb1e6a9eaa917b845340b4fbefc2042d1b0c7329b265c3d7e5492a2867c0"
+  },
+  "params": null
+ },
+ "snap-6b3r": {
+  "cmd": "python src/snap.py 6b3r 10 1e-3",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6b3r_rc10_arclength.json": "377364d593331b8379bb925daa189e9b11a68d66d469c7721be0d80ddaab37e4",
+   "data/derived/paths/6b3r_rc10_arclength_Xs.npy": "b1b28a2f9b1857a461392b0c9443f228115d6ceeca89180f22837553d9b25d34",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/snap.py": "170b44a8d52a9e3c77bebffad3d9d13db0df5316ecff065abdff050217b826c4",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_snap.json": "52cefeb44476578151f116e6f1603a868ea4b84e3d28e0adc8cb4258c30f0330",
+   "data/derived/paths/6b3r_rc10_snap_states.npy": "2e6468b0b361580f9c2aca3e0594faedef1a2bb88a82c052f545f9e89faa6d62"
+  },
+  "params": {
+   "overload": 0.001
+  }
+ },
+ "summary": {
+  "cmd": "python src/analyze.py",
+  "deps": {
+   "data/derived/indicator.json": "c54a0389643ea8ceba51e4d309c125ad9b6a60c33d6b7d40bd0fd77b2898911a",
+   "data/derived/load_check.json": "969a3809c141fcb88c9109f2fe5a6ea3e5fd4bdb00a5c110ea1edcd13e96d3b8",
+   "data/derived/nulls.json": "ffd9b07c31943a9bf720ac1350352de945b1c686a260af13962d7588a7c89d71",
+   "data/derived/paths/2oar_rc10.json": "c9b145f9ddbb12e666944dd80a7b7677a4c34ada6f6440b0de40f6af93edbaa4",
+   "data/derived/paths/2oar_rc12.json": "ceea7cc9d2f84af3e14b0c022a53a5e4202eb38b1032797ea99ca415c0b85e11",
+   "data/derived/paths/2oar_rc8.json": "a4ab9e9291146398e8dedb95a26976f66b02fbead8d29f42b88b96690e144a39",
+   "data/derived/paths/4wff_rc10.json": "2c9b4d7ae2bf4b63673d10188f187782b6928f41b567d44fedd3d60d036a78fe",
+   "data/derived/paths/4wff_rc12.json": "6f74eee4b2bd9f4a8f832c6dff60ca4275c71946a5bfff6baf7fd1f40782505f",
+   "data/derived/paths/4wff_rc8.json": "d03053b6b00d30e67fbefefcd3b2816c7ffa8c82273d8ab4b62c96b204a6d905",
+   "data/derived/paths/4xdk_rc10.json": "fc8c18d78accd31246504accaf57fa656e9f75c42a9c835ad09c299f7a8451af",
+   "data/derived/paths/4xdk_rc12.json": "91ac587ecfc1b2895ee7d5b687c2d55dd156948540384e8587003224062145e7",
+   "data/derived/paths/4xdk_rc8.json": "bda1c332586c94933c79b1f6fea722c1c8e5fc64e6e251a24fdbe7f9e4bf0050",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6b3r_rc10_arclength.json": "377364d593331b8379bb925daa189e9b11a68d66d469c7721be0d80ddaab37e4",
+   "data/derived/paths/6b3r_rc10_dhm2.json": "300ae6c74274d460c37c3761d6326cfa1c5f9af886f38fe108c1606b3e8c4d87",
+   "data/derived/paths/6b3r_rc10_dhp2.json": "9b5066c39c88a22dc9f72b3991807f7992ea5a47306252376e586e1b4b7140e7",
+   "data/derived/paths/6b3r_rc10_kbb10.json": "d4a6e925370c355f6a22df0756019f14d3bdbfc528dae7f5bc94750f0531956c",
+   "data/derived/paths/6b3r_rc10_kbb100.json": "da089432061dc41268bc4cd70d8a66810a9c0e190f74d512fd2f508129f15353",
+   "data/derived/paths/6b3r_rc10_loadcontrol.json": "851ac3dacb8bd5b56120aeb138dd0b69a5dd9180c892665b41601cf08ce9b0e3",
+   "data/derived/paths/6b3r_rc10_ns0.5.json": "f2eeb1c13eba90b97746f289f4eeb6f9d3d5d6dcb75f32e5d63d4e8788aceb6a",
+   "data/derived/paths/6b3r_rc10_ns2.json": "581e41310c3412e51b9b8a1ea413a557b4db17fa5847ede5bc0d1e4dc1ae0cd9",
+   "data/derived/paths/6b3r_rc10_sh3.json": "e079a4a70178466bab80543c53cd6f2227e293180bdf075907008782612aa5e8",
+   "data/derived/paths/6b3r_rc10_sh6.json": "73dca54a39890839cb2b13e4857042c3cd97d250965149c4095157b693fe8c67",
+   "data/derived/paths/6b3r_rc10_sl3.json": "a29774198cdf007490b3bfe0f5e9dcc6d3d08bb579a47ddc692644defa4123bf",
+   "data/derived/paths/6b3r_rc10_sl5.json": "ea924e367fb9b2ab42c5cc691d88d19fbfd6c9a6312b7c4b04a904a271b094da",
+   "data/derived/paths/6b3r_rc10_snap.json": "52cefeb44476578151f116e6f1603a868ea4b84e3d28e0adc8cb4258c30f0330",
+   "data/derived/paths/6b3r_rc12.json": "63fd71befbca88976fe2f815dd2a479b84ff1a0143fee8f78187f664089e6e0b",
+   "data/derived/paths/6b3r_rc8.json": "69029e8dc68bd200bc061ba39fff39b11d36bbed05dd38142bbdd9ce09afc1b5",
+   "data/derived/paths/6cq8_rc10.json": "a022e4f350b0a8aa3d368b22db62b2314b8fdfc2cdba58b004f3aff888bdaa6c",
+   "data/derived/paths/6cq8_rc12.json": "f1fbf5682db9dee9ee31c1f8cabb8bd9cc50ead67ef494ce346f3f90010f1cd6",
+   "data/derived/paths/6cq8_rc8.json": "75ca277c94642c0ff6f472ca31c07efd164159df37e7b07747258bf3b7e2a964",
+   "data/derived/paths/6mgv_rc10.json": "70f90a65a072febda0321e51c2e6258b83a75e7d7d26fcce92c55531a46d643e",
+   "data/derived/paths/6mgv_rc12.json": "b35e1ee13870d4291249209187c7ead2a9bb6e6bdb033c63efb8efd12255607c",
+   "data/derived/paths/6mgv_rc8.json": "2ee3dfe5db554faf32b568f6952e3d1bd25beb4493f683d31c38e5c6916b4f85",
+   "data/derived/paths/6pwn_rc10.json": "7d907ec7f3d1bd3088e8d6083c72e54d01bc458284d6031611ed8a17e669bd80",
+   "data/derived/paths/6pwn_rc10_dhm2.json": "696ce3bd25602025fbba554bb30399e44dd84511f66adb6703fcc1ac5b46d728",
+   "data/derived/paths/6pwn_rc10_dhp2.json": "24d9ee23692a23d3e2e0277963f9d6f03a46f5a227525c7137648679c18d14ac",
+   "data/derived/paths/6pwn_rc10_kbb10.json": "54802a56b7646e8b705aaca7c809316a732d5694b3993cd8d7cf56cb4a4f0f6b",
+   "data/derived/paths/6pwn_rc10_kbb100.json": "4428050a42fd98db19cfd5f7016b60532670a2cb4c3d0a9a261de619b052c3c2",
+   "data/derived/paths/6pwn_rc10_ns0.5.json": "13f2ed0ea5a3af8b066b437fd5d591747e4a70a6326638117d9c72717c1715be",
+   "data/derived/paths/6pwn_rc10_ns2.json": "b953e5e127aea654903018e67866cdd405ea787ad5ea079df1babf2f04c279d5",
+   "data/derived/paths/6pwn_rc10_sh3.json": "f4cddfb1680d05795b51c257f6ade194dd2393b8573b100baa066b4c76845ade",
+   "data/derived/paths/6pwn_rc10_sh6.json": "87853b8aae21f8656be37b9b31252b95a75bab0d35bf1e456a9c5355e2c41c25",
+   "data/derived/paths/6pwn_rc10_sl3.json": "9b7cc6c85907f583632609b492486dac5b431b54bc43598d305f4b020c6b72e6",
+   "data/derived/paths/6pwn_rc10_sl5.json": "affd464c0d7264ee5272ada46956f945d45ce04e95ed99ad3bca32690708f62f",
+   "data/derived/paths/6pwn_rc12.json": "f9d1e2592635af54d9ef95da70c08cafa9b42528151a113b0c7ed2e039cb92fc",
+   "data/derived/paths/6pwn_rc8.json": "c097bd9442ab08397a780ea5a56ba2ec01a96ee90add0823b6314e80eb7fa6bb",
+   "data/derived/paths/6vtk_rc10.json": "b6a76a8f9e903093a72b799ee73dcb22a5a3330986665c333a29ea1c89335ddb",
+   "data/derived/paths/6vtk_rc12.json": "40e6dcc86c63fab586b380a2c5e22b5bf23e4fff1db978b47c34ba3f48b89247",
+   "data/derived/paths/6vtk_rc8.json": "9221d7f42d7669ef326fcb0da9571c4266079bceade413cd6e808cd0bf4a9d50",
+   "data/derived/physical_scale.json": "855beb1e6a9eaa917b845340b4fbefc2042d1b0c7329b265c3d7e5492a2867c0",
+   "data/derived/vfife_checks.json": "d85706ac4635ceae2ff0f5b720b050cd3c3e6ac03f7813e89e7fee385f344e3b",
+   "src/analyze.py": "ba69bae00d730a36be40ec07e907f15f8e30a0e20b399e0f0888ee8313c6b439",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1"
+  },
+  "outs": {
+   "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33"
+  },
+  "params": {
+   "approach_rel": 0.05,
+   "emax": 0.5,
+   "margin_A": 0.2,
+   "margin_rel": 0.03,
+   "overlap_min": 0.3,
+   "p20": 0.05
+  }
+ },
+ "variant-6b3r-dhm2": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --dh -2 --tag _dhm2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_dhm2.json": "300ae6c74274d460c37c3761d6326cfa1c5f9af886f38fe108c1606b3e8c4d87",
+   "data/derived/paths/6b3r_rc10_dhm2_Xs.npy": "b94835708e005b7d2dd0117a20917f7766a00ec27d1c9814dab093de22c28238"
+  },
+  "params": null
+ },
+ "variant-6b3r-dhp2": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --dh 2 --tag _dhp2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_dhp2.json": "9b5066c39c88a22dc9f72b3991807f7992ea5a47306252376e586e1b4b7140e7",
+   "data/derived/paths/6b3r_rc10_dhp2_Xs.npy": "09a8f9fa9864d14731b051f801db5752398e1698fdc2c42d6bcfdf643845f74a"
+  },
+  "params": null
+ },
+ "variant-6b3r-kbb10": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --kbb 10 --tag _kbb10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_kbb10.json": "d4a6e925370c355f6a22df0756019f14d3bdbfc528dae7f5bc94750f0531956c",
+   "data/derived/paths/6b3r_rc10_kbb10_Xs.npy": "f0d0f44c1259d6681ec83892dc33164ba76014be074ba01d9fa057c20557ebc1"
+  },
+  "params": null
+ },
+ "variant-6b3r-kbb100": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --kbb 100 --tag _kbb100",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_kbb100.json": "da089432061dc41268bc4cd70d8a66810a9c0e190f74d512fd2f508129f15353",
+   "data/derived/paths/6b3r_rc10_kbb100_Xs.npy": "6a15987a6747cc2a06d1461eba91fcd3ca46f4527051a430a993a3c2a6f3ff75"
+  },
+  "params": null
+ },
+ "variant-6b3r-ns0.5": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --nscale 0.5 --tag _ns0.5",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_ns0.5.json": "f2eeb1c13eba90b97746f289f4eeb6f9d3d5d6dcb75f32e5d63d4e8788aceb6a",
+   "data/derived/paths/6b3r_rc10_ns0.5_Xs.npy": "d9db407742f38228d17d83ff6f9f5c90dfb3460f549415d474823fd8cf8c759a"
+  },
+  "params": null
+ },
+ "variant-6b3r-ns2": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --nscale 2 --tag _ns2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_ns2.json": "581e41310c3412e51b9b8a1ea413a557b4db17fa5847ede5bc0d1e4dc1ae0cd9",
+   "data/derived/paths/6b3r_rc10_ns2_Xs.npy": "548ebc6d8631aafc3cee02d4637d1b1764aecd8f8f463ee4febd09ecd52947ad"
+  },
+  "params": null
+ },
+ "variant-6b3r-sh3": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --shell 3 --tag _sh3",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_sh3.json": "e079a4a70178466bab80543c53cd6f2227e293180bdf075907008782612aa5e8",
+   "data/derived/paths/6b3r_rc10_sh3_Xs.npy": "850310a822b6a16cb9f04e238e4f2a1f61c9cef090ffc20b7e4cfd2214ce42d3"
+  },
+  "params": null
+ },
+ "variant-6b3r-sh6": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --shell 6 --tag _sh6",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_sh6.json": "73dca54a39890839cb2b13e4857042c3cd97d250965149c4095157b693fe8c67",
+   "data/derived/paths/6b3r_rc10_sh6_Xs.npy": "3e89e5bf70002708c8dd62b1cae8ff9ebd89f649f486b33bf8fefd1b79b23f33"
+  },
+  "params": null
+ },
+ "variant-6b3r-sl3": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --slab 3 --tag _sl3",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_sl3.json": "a29774198cdf007490b3bfe0f5e9dcc6d3d08bb579a47ddc692644defa4123bf",
+   "data/derived/paths/6b3r_rc10_sl3_Xs.npy": "9376aa58246336ee0e57424f1b16fb74eacdf9b8cb5394a70d14991b27957782"
+  },
+  "params": null
+ },
+ "variant-6b3r-sl5": {
+  "cmd": "python src/run_path.py 6b3r 10 --refine --slab 5 --tag _sl5",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6b3r_rc10_sl5.json": "ea924e367fb9b2ab42c5cc691d88d19fbfd6c9a6312b7c4b04a904a271b094da",
+   "data/derived/paths/6b3r_rc10_sl5_Xs.npy": "1a056cbf068728a5913576163a03324420a3e7947c9c44912658d734045feb3c"
+  },
+  "params": null
+ },
+ "variant-6pwn-dhm2": {
+  "cmd": "python src/run_path.py 6pwn 10 --dh -2 --tag _dhm2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_dhm2.json": "696ce3bd25602025fbba554bb30399e44dd84511f66adb6703fcc1ac5b46d728",
+   "data/derived/paths/6pwn_rc10_dhm2_Xs.npy": "7ee66968ee546b81142a808a0c2d381f95a529a556957f7decc13a3edca39d63"
+  },
+  "params": null
+ },
+ "variant-6pwn-dhp2": {
+  "cmd": "python src/run_path.py 6pwn 10 --dh 2 --tag _dhp2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_dhp2.json": "24d9ee23692a23d3e2e0277963f9d6f03a46f5a227525c7137648679c18d14ac",
+   "data/derived/paths/6pwn_rc10_dhp2_Xs.npy": "49486c46f07773de0fe90564c8075a0613a6c8506ffeb2ed25f65e77ae79be4f"
+  },
+  "params": null
+ },
+ "variant-6pwn-kbb10": {
+  "cmd": "python src/run_path.py 6pwn 10 --kbb 10 --tag _kbb10",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_kbb10.json": "54802a56b7646e8b705aaca7c809316a732d5694b3993cd8d7cf56cb4a4f0f6b",
+   "data/derived/paths/6pwn_rc10_kbb10_Xs.npy": "892dfc7687b0eb905dd709a5b073bce37d3d29d571bca06be1dfdb5d028249ff"
+  },
+  "params": null
+ },
+ "variant-6pwn-kbb100": {
+  "cmd": "python src/run_path.py 6pwn 10 --kbb 100 --tag _kbb100",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_kbb100.json": "4428050a42fd98db19cfd5f7016b60532670a2cb4c3d0a9a261de619b052c3c2",
+   "data/derived/paths/6pwn_rc10_kbb100_Xs.npy": "6176914462e8cbfb7705dfc92c89cb9e7c5d0283bf8e963ba21ef20c964796e1"
+  },
+  "params": null
+ },
+ "variant-6pwn-ns0.5": {
+  "cmd": "python src/run_path.py 6pwn 10 --nscale 0.5 --tag _ns0.5",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_ns0.5.json": "13f2ed0ea5a3af8b066b437fd5d591747e4a70a6326638117d9c72717c1715be",
+   "data/derived/paths/6pwn_rc10_ns0.5_Xs.npy": "e5866c47654f2cfdc645cd9f584e498ab4036fe6e1782a8f49baebd068023abf"
+  },
+  "params": null
+ },
+ "variant-6pwn-ns2": {
+  "cmd": "python src/run_path.py 6pwn 10 --nscale 2 --tag _ns2",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_ns2.json": "b953e5e127aea654903018e67866cdd405ea787ad5ea079df1babf2f04c279d5",
+   "data/derived/paths/6pwn_rc10_ns2_Xs.npy": "619dc71293f58c627d97702f8d4f682a8c6a3b2e040e465899e92bd2d503b9cb"
+  },
+  "params": null
+ },
+ "variant-6pwn-sh3": {
+  "cmd": "python src/run_path.py 6pwn 10 --shell 3 --tag _sh3",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_sh3.json": "f4cddfb1680d05795b51c257f6ade194dd2393b8573b100baa066b4c76845ade",
+   "data/derived/paths/6pwn_rc10_sh3_Xs.npy": "a6c0ee4db29a5d645f4ccafe1b0e22628d5f93d7f103a7b7d7f2d9109dc8e2ac"
+  },
+  "params": null
+ },
+ "variant-6pwn-sh6": {
+  "cmd": "python src/run_path.py 6pwn 10 --shell 6 --tag _sh6",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_sh6.json": "87853b8aae21f8656be37b9b31252b95a75bab0d35bf1e456a9c5355e2c41c25",
+   "data/derived/paths/6pwn_rc10_sh6_Xs.npy": "00edb57618f9be8c6d59f7eff808f05677dd9cf142a74d38bef44d696005b7b9"
+  },
+  "params": null
+ },
+ "variant-6pwn-sl3": {
+  "cmd": "python src/run_path.py 6pwn 10 --slab 3 --tag _sl3",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_sl3.json": "9b7cc6c85907f583632609b492486dac5b431b54bc43598d305f4b020c6b72e6",
+   "data/derived/paths/6pwn_rc10_sl3_Xs.npy": "eb8a478513c20faa7ab49d1427106477df49d33635ad14961627c9ac2b77694c"
+  },
+  "params": null
+ },
+ "variant-6pwn-sl5": {
+  "cmd": "python src/run_path.py 6pwn 10 --slab 5 --tag _sl5",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/run_path.py": "a50dd13d108e703a0b7b1f57a3b3d90c09a51f895af5479f741747b0515bf5a9",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/paths/6pwn_rc10_sl5.json": "affd464c0d7264ee5272ada46956f945d45ce04e95ed99ad3bca32690708f62f",
+   "data/derived/paths/6pwn_rc10_sl5_Xs.npy": "8960edec7fe466c4a1d99e5f68c8097f07952beeff778eab9c3210931842886c"
+  },
+  "params": null
+ },
+ "vfife-checks": {
+  "cmd": "python src/batch_vfife_checks.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/derived/paths/2oar_rc10.json": "c9b145f9ddbb12e666944dd80a7b7677a4c34ada6f6440b0de40f6af93edbaa4",
+   "data/derived/paths/2oar_rc10_Xs.npy": "86fd34b7a8d1a16baf0bbb9d3cba1ac0a1652c7d2664756c82705c7f0f559246",
+   "data/derived/paths/4wff_rc10.json": "2c9b4d7ae2bf4b63673d10188f187782b6928f41b567d44fedd3d60d036a78fe",
+   "data/derived/paths/4wff_rc10_Xs.npy": "4f840a6748e1fe77db8edb0e40d38693a22490e8ddb5e061203788224d42e0a4",
+   "data/derived/paths/4xdk_rc10.json": "fc8c18d78accd31246504accaf57fa656e9f75c42a9c835ad09c299f7a8451af",
+   "data/derived/paths/4xdk_rc10_Xs.npy": "bf8273ece925ce37d5957dcdc921ac7a0cc43642ef62b9f595b8b54f6608ba9a",
+   "data/derived/paths/6b3r_rc10.json": "c7d6c3f0b34e803ab5e97dfc6738906f75ad9089c56471ba38537d1fb8613e38",
+   "data/derived/paths/6b3r_rc10_Xs.npy": "33cdaa4c59ca1d9f17b15dda2f9746ee0413d7fc3c9667173d5525428cdca24a",
+   "data/derived/paths/6cq8_rc10.json": "a022e4f350b0a8aa3d368b22db62b2314b8fdfc2cdba58b004f3aff888bdaa6c",
+   "data/derived/paths/6cq8_rc10_Xs.npy": "638d78e6b94257ce09b3aa24ee54e38eb7ddcf59be2115490aa3ce8f671b9d15",
+   "data/derived/paths/6mgv_rc10.json": "70f90a65a072febda0321e51c2e6258b83a75e7d7d26fcce92c55531a46d643e",
+   "data/derived/paths/6mgv_rc10_Xs.npy": "75249795ee4f9412ce044def867f2a4a41039ef4a230a5f0c662e8e1c4b08301",
+   "data/derived/paths/6pwn_rc10.json": "7d907ec7f3d1bd3088e8d6083c72e54d01bc458284d6031611ed8a17e669bd80",
+   "data/derived/paths/6pwn_rc10_Xs.npy": "bd163a6a98df5450726612aa9c43b9340e1ab5e62ff5de18659a645faec17a3f",
+   "data/derived/paths/6vtk_rc10.json": "b6a76a8f9e903093a72b799ee73dcb22a5a3330986665c333a29ea1c89335ddb",
+   "data/derived/paths/6vtk_rc10_Xs.npy": "b7c7131ad8ce4713fe527c32b71d856c7b3d8bc82e3d4230849bfa371ce1573f",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/batch_vfife_checks.py": "c28c73383e254758e691d29e983ea9cc815ad2b56a64d434563763fbaf1689bd",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827",
+   "src/vfife_check.py": "ce8fe6ea4095fe1ef3a8e6b9f081a9828cb692957e735c66e7a7ef985bd0c2c5"
+  },
+  "outs": {
+   "data/derived/vfife_checks.json": "d85706ac4635ceae2ff0f5b720b050cd3c3e6ac03f7813e89e7fee385f344e3b"
+  },
+  "params": null
+ }
+}
