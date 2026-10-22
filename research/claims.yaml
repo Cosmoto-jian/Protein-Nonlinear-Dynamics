@@ -1,0 +1,17 @@
+# Append-only ledger of judged results (judge only). Existing entries never change; correct with a new entry.
+# status: supported | refuted | inconclusive | dead-end
+entries: []
+# - id: F-001
+#   date: 2026-10-22
+#   status: supported
+#   statement: "<one-sentence result>"
+#   theory: T-001
+#   prediction: P-001
+#   experiment: E-001
+#   run: E-001/runs/R-0001          # must have audit/reports/R-0001.md with Verdict: pass
+# - id: F-002
+#   date: 2026-10-22
+#   status: dead-end
+#   statement: "<question or method that failed>"
+#   origin: "E-001 explore node N-007"   # dead-ends may cite exploration; they are never evidence
+#   reason: "<why>"

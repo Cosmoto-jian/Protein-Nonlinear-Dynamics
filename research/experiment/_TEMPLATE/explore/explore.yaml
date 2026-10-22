@@ -1,0 +1,17 @@
+# Exploration tree (pilot -> tune -> explore -> ablate). Results here are never evidence.
+stages: [pilot, tune, explore, ablate]
+workers: 3
+max_nodes: 24
+max_debug_depth: 3
+budget: {gpu_hours: 10, usd: 30}
+data_split: dev          # exploration uses dev only; holdout is reserved for PREREG
+seeds: [0, 1, 2]
+nodes: []
+# - id: N-001
+#   parent: null
+#   stage: pilot
+#   change: "<what this node tries>"
+#   metric: null
+#   status: ok            # ok | bug | worse | best
+selected: null           # node id carried into PREREG, with one line of reason
+selected_reason: ""

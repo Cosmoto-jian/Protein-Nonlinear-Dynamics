@@ -1,0 +1,41 @@
+# The single source of truth for every formal output. `python run_all.py` executes it, records hashes
+# in pipeline.lock, and generates data_manifest.csv, figure_manifest.csv and graph.json from it.
+#
+# Step fields
+#   name       unique id
+#   cmd        command run from the project root ("python ..." uses the current interpreter)
+#   deps       files or folders the step reads
+#   outs       files or folders it writes: a path, or {path, units, purpose}
+#   params     values recorded in the lock; a change makes the step stale
+#   fast       true for figure_data -> figure steps (deps only under figure_data/ and plot/)
+#   figure     figure id for figure_manifest.csv
+#   expensive  skipped by `make all-cheap`
+steps:
+  - name: fig1
+    cmd: python plot/fig1.py plot
+    deps: [plot/fig1.py, plot/style.py]
+    outs: [results/figures/fig1.pdf, results/figures/fig1.svg, results/figures/fig1.png, results/descriptions/fig1.md]
+    fast: true
+    figure: fig1
+
+# A complete chain, for reference:
+#  - name: contacts
+#    cmd: python src/contacts.py
+#    deps: [src/contacts.py, data/raw/0123abcd4567ef89__7xyz.cif]
+#    outs: [{path: data/derived/contacts.npy, units: angstrom, purpose: residue contact map}]
+#    params: {cutoff: 7.5}
+#  - name: E-001-R-0001
+#    cmd: python src/run.py --exp E-001 --run R-0001
+#    deps: [src/run.py, data/derived/contacts.npy, research/experiment/E-001/PREREG.yaml]
+#    outs: [research/experiment/E-001/runs/R-0001]
+#    expensive: true
+#  - name: fig2-data
+#    cmd: python plot/fig2.py extract
+#    deps: [plot/fig2.py, research/experiment/E-001/runs/R-0001]
+#    outs: [figure_data/fig2]
+#  - name: fig2
+#    cmd: python plot/fig2.py plot
+#    deps: [plot/fig2.py, plot/style.py, figure_data/fig2]
+#    outs: [results/figures/fig2.pdf, results/figures/fig2.svg, results/figures/fig2.png, results/descriptions/fig2.md]
+#    fast: true
+#    figure: fig2
