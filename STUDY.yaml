@@ -1,13 +1,19 @@
 id: S-001
-title: "<study title>"
-question: "<one-sentence research question>"
+title: "Finite-deformation mechanics of locally under-constrained protein truss networks"
+question: "Do locally under-constrained truss-network modes, followed into finite deformation with VFIFE, explain how mechanosensitive channels (e.g. Piezo1 6B3R) respond to membrane tension?"
 aims:
   - id: A1
-    text: "<aim 1>"
-    done_when: "<observable criterion that ends this aim>"
-target_journal: "<journal>"
+    text: "Compute the admissible-space projected stiffness spectrum (rigid Tz/Rz removed) for the 8-channel panel"
+    done_when: "Projected spectra for all 8 channels are in pipeline outputs and pass the evidence gate"
+  - id: A2
+    text: "Follow Piezo1 (6B3R) under area-tension loading on all membrane-facing nodes, not only convex-hull nodes"
+    done_when: "Load-path and stability results are reproduced by run_all.py from raw structures"
+  - id: A3
+    text: "Test the mechanism against a stronger null than the 8IXO comparison"
+    done_when: "A pre-registered null comparison is locked, run, audited, and recorded in claims.yaml"
+target_journal: "TBD"
 figure_width_mm: 183
-owner: "<GitHub username>"
+owner: "Cosmoto-jian"
 loop:
   max_open_tasks: 1           # loop issues open at the same time
   usd_per_month: 50           # agent budget; the agent stops and asks when it is reached
