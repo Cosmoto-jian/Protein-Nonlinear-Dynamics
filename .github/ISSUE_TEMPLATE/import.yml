@@ -1,0 +1,27 @@
+name: "import"
+description: "Import a legacy project (read-only inventory first)"
+labels: ["import", "triaged"]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Location (file / ID, e.g. E-002, fig3, sec:results)
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Legacy project location (read-only) and baseline command
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and evidence
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected result / acceptance criterion (used to write the failing check)

@@ -1,0 +1,20 @@
+name: triage
+on:
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const labels = context.payload.issue.labels.map(l => l.name);
+            const needsUser = labels.some(l => ['law', 'scope', 'import'].includes(l));
+            if (needsUser) await github.rest.issues.addLabels({...context.repo, issue_number: context.issue.number, labels: ['needs-user']});
+            const branch = `fix/I-${String(context.issue.number).padStart(3, '0')}`;
+            await github.rest.issues.createComment({...context.repo, issue_number: context.issue.number,
+              body: `Triaged. Fix branch: \`${branch}\`.\nFlow: failing check first -> fix -> PR linked to this issue -> merge after \`make gates\` and \`make validate\`.` +
+                    (needsUser ? '\nNeeds owner approval (aims, writing law, or legacy import map).' : '')});

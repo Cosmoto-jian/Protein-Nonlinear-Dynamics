@@ -1,0 +1,18 @@
+version: 1
+terms: []
+# - term: "dynamic coupling index"
+#   symbol: "\\phi_{xy}"
+#   definition: ""
+symbols: []
+concepts: []
+# - id: C-001
+#   name: ""
+#   novelty: research/theory/T-001/NOVELTY.md   # verdict must be novel or incremental
+#   formal_definition: ""
+#   operational_definition: ""
+#   code: "src/...::func"
+#   source_theory: T-001
+#   differs_from: ""
+#   evidence: [F-001]
+#   first_use: "sec:intro"
+banned_words_if_not_novel: ["first", "novel", "for the first time", "unprecedented"]

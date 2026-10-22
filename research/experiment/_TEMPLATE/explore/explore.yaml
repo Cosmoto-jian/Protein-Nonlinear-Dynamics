@@ -1,0 +1,9 @@
+stages: [pilot, tune, explore, ablate]
+workers: 3
+max_nodes: 24
+max_debug_depth: 3
+budget:
+  gpu_hours: 10
+  usd: 30
+data_split: dev          # exploration uses dev only; holdout is reserved for PREREG
+seeds: [0, 1, 2]

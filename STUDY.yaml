@@ -1,0 +1,11 @@
+id: S-001
+title: "<study title>"
+question: "<one-sentence research question>"
+aims:
+  - id: A1
+    text: "<aim 1>"
+theories: []        # [T-001, ...]
+experiments: []     # [E-001, ...]
+target_journal: "<journal>"
+figure_width_mm: 183
+owner: "<GitHub username>"

@@ -1,0 +1,9 @@
+# Full rebuild chain, executed in order by `python run_all.py --full`.
+# Every step runs from the project root. Inputs must exist before the step; outputs must exist after it.
+seed: 0
+steps: []
+# - name: preprocess
+#   cmd: python src/preprocessing/clean.py --seed 0
+#   inputs: [data/raw/0123abcd4567ef89__pdb_7xyz.cif]
+#   outputs: [data/derived/clean.csv]
+#   expensive: false

@@ -1,0 +1,2 @@
+figure,panel,data_file,source_run,script,command,output
+fig1,a,-,-,plot/fig1.py,python plot/fig1.py,results/figures/fig1

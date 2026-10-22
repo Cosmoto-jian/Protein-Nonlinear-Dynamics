@@ -1,0 +1,7 @@
+# Approved exceptions (owner only). Each exception is reported as EXCEPTION in validation, never PASS.
+exceptions: []
+# - path: data/raw/0123abcd4567ef89__legacy_table.xlsx
+#   rule: language            # language | full_chain_not_run | external_data | baseline_missing
+#   reason: raw file contains Chinese sheet names; kept byte-identical
+#   approved_by: <owner>
+#   date: 2026-10-22

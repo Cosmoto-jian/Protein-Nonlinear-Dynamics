@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+graph.json
+writing/tex/*.aux
+writing/tex/*.log
+writing/tex/*.pdf
+.venv/
+.env
+*.key
+data/derived/tmp/
+results/logs/*
+!results/logs/.gitkeep
