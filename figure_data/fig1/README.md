@@ -16,6 +16,13 @@ Source: src/model.py (MscL 2OAR, r_c = 10 A, reference state)
 | fx | x component of dA/dx (area gradient) | angstrom | value |
 | fy | y component of dA/dx | angstrom | value |
 
+## atoms.csv
+| Column | Meaning | Unit | Kind |
+|---|---|---|---|
+| x | heavy-atom x minus membrane-axis x (OPM 2OAR) | angstrom | value |
+| y | heavy-atom y minus axis y | angstrom | value |
+| z | heavy-atom z minus bilayer midplane | angstrom | value |
+
 ## edges.csv
 | Column | Meaning | Unit | Kind |
 |---|---|---|---|

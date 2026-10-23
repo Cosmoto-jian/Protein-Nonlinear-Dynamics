@@ -1,7 +1,9 @@
 """Plotting style and paired descriptions. Every figure takes fonts, sizes, colours and widths from here.
 
-Elsevier (JMPS) layout: single column 90 mm, 1.5 column 140 mm, double column 190 mm; font ladder 8/7/6 pt
-(labels / legends and annotations / ticks), panel letters 9 pt bold; bundled Liberation Sans (Arial metrics); Okabe-Ito colour-blind-safe palette with one
+Elsevier (JMPS) layout: single column 90 mm, 1.5 column 140 mm, double column 190 mm; font ladder 8/7/7 pt
+(axis labels and panel titles / legends, annotations and ticks), panel letters 10 pt bold, aligned per row by save();
+legend rule: the structure legend is the first line on top, an encoding shared by several panels the second line on top,
+an encoding used by one panel sits inside that panel; experiment drawn in EXP (black), never in a structure colour; bundled Liberation Sans (Arial metrics); Okabe-Ito colour-blind-safe palette with one
 colour and marker per structure in every figure; vector PDF and SVG with text kept as text, 600 dpi PNG."""
 from pathlib import Path
 import csv, json, re
@@ -13,7 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 MM = 1 / 25.4
 WIDTH = {"single": 90 * MM, "onehalf": 140 * MM, "double": 190 * MM}
 W1, W15, W2 = WIDTH["single"], WIDTH["onehalf"], WIDTH["double"]
-SIZE = {"label": 9, "axis": 8, "tick": 6, "note": 7, "legend": 7}
+SIZE = {"label": 10, "axis": 8, "title": 8, "tick": 7, "note": 7, "legend": 7}
+FS = SIZE["note"]                                          # every in-panel annotation
+EXP = "#1A1A1A"                                            # experimental structure / target, all figures
+NOTE = "#555555"                                           # colour of in-panel annotations
 CH = ["6b3r", "6pwn", "2oar", "4xdk", "4wff", "6mgv"]             # channels with a partner structure
 ALL = CH + ["6cq8", "6vtk"]
 LABEL = {"6b3r": "Piezo1", "6pwn": "MscS", "2oar": "MscL", "4xdk": "TREK-2", "4wff": "TRAAK", "6mgv": "OSCA1.2",
@@ -61,7 +66,8 @@ def apply():
     _use_bundled_font()
     mpl.rcParams.update({
         "font.family": "sans-serif", "font.sans-serif": [FONT, "DejaVu Sans"],
-        "mathtext.fontset": "dejavusans",
+        "mathtext.fontset": "custom", "mathtext.rm": FONT, "mathtext.it": FONT + ":italic", "mathtext.bf": FONT + ":bold",
+        "mathtext.sf": FONT, "mathtext.fallback": "cm",
         "font.size": SIZE["axis"], "axes.labelsize": SIZE["axis"], "axes.titlesize": SIZE["axis"], "legend.fontsize": SIZE["legend"],
         "xtick.labelsize": SIZE["tick"], "ytick.labelsize": SIZE["tick"], "axes.linewidth": 0.6,
         "xtick.direction": "out", "ytick.direction": "out", "xtick.major.size": 2.5, "ytick.major.size": 2.5,
@@ -85,6 +91,15 @@ def color(obj: str) -> str:
     return OBJECT_COLOR[obj]
 
 
+def top_legend(fig, rows, y=1.0, row_h_mm=4.2, ncol=None):
+    """Legend block above the panels: rows[0] (the structures) on top, rows[1] (encodings shared by several panels) below."""
+    out = []
+    for i, h in enumerate(reversed(rows)):
+        out.append(fig.legend(handles=h, loc="lower center", ncol=ncol or len(h), bbox_to_anchor=(0.5, y + i * row_h_mm * MM / fig.get_figheight()),
+                              handletextpad=0.35, columnspacing=1.2, borderaxespad=0.0))
+    return out
+
+
 def figure(nrows, ncols, width="double", height_mm=None, **kw):
     apply()
     w = WIDTH[width]
@@ -94,7 +109,75 @@ def figure(nrows, ncols, width="double", height_mm=None, **kw):
 
 
 def letter(ax, s, dx=-0.16, dy=1.0):
-    ax.text(dx, dy, s, transform=ax.transAxes, fontsize=SIZE["label"], fontweight="bold", va="bottom", ha="left")
+    """Panel letter; save() moves it to the left edge of the panel (tick labels and axis title included) and to the
+    common top of its row, so dx, dy only matter before alignment."""
+    t = ax.text(dx, dy, s, transform=ax.transAxes, fontsize=SIZE["label"], fontweight="bold", va="top", ha="left")
+    t._panel_axes = ax
+    LETTERS.append(t)
+    return t
+
+
+LETTERS = []
+
+
+def _align_titles(fig, axes, r):
+    """Left panel titles of one row share one baseline (the highest), also for equal-aspect panels."""
+    H = fig.bbox.height; rows = []
+    for ax in sorted(axes, key=lambda a: -a.get_window_extent(r).y1):
+        for row in rows:
+            if abs(row[0].get_window_extent(r).y1 - ax.get_window_extent(r).y1) < 0.08 * H or abs(row[0].get_window_extent(r).y1 - ax.get_window_extent(r).y1) < 0.2 * H and _same_band(row[0], ax, r):
+                row.append(ax); break
+        else:
+            rows.append([ax])
+    for row in rows:
+        tl = [(ax, tt) for ax in row for tt in (ax.title, ax._left_title) if tt.get_text().strip()]
+        if len(tl) < 2:
+            continue
+        target = max(tt.get_window_extent(r).y0 for _, tt in tl)
+        for ax, tt in tl:
+            bb = ax.get_window_extent(r); x, y = tt.get_position()
+            ax._autotitlepos = False; tt.set_y(y + (target - tt.get_window_extent(r).y0) / bb.height)
+
+
+def _same_band(a, b, r):
+    ba, bb = a.get_window_extent(r), b.get_window_extent(r)
+    return min(ba.y1, bb.y1) - max(ba.y0, bb.y0) > 0.5 * min(ba.height, bb.height)
+
+
+def _align_letters(fig):
+    from matplotlib.transforms import Bbox
+    mine = [t for t in LETTERS if t.figure is fig]
+    if not mine:
+        return
+    r = fig.canvas.get_renderer(); W, H = fig.bbox.width, fig.bbox.height
+    _align_titles(fig, [t._panel_axes for t in mine], r)
+    fig.canvas.draw()
+    for t in mine:
+        t.set_visible(False)
+    boxes = []
+    for t in mine:
+        ax = t._panel_axes
+        tb = ax.get_tightbbox(r, bbox_extra_artists=[c for c in ax.texts if c is not t and getattr(c, "_in_layout", True)] )
+        pb = ax.get_window_extent(r)
+        boxes.append((t, tb, pb))
+    rows = []
+    for t, tb, pb in sorted(boxes, key=lambda b: -b[2].y1):
+        for row in rows:
+            if abs(row[0][2].y1 - pb.y1) < 0.08 * H:
+                row.append((t, tb, pb)); break
+        else:
+            rows.append([(t, tb, pb)])
+    for row in rows:
+        top = max(max(tb.y1, pb.y1) for _, tb, pb in row)
+        for t, tb, pb in row:
+            t.set_transform(fig.transFigure); t.set_position(((tb.x0) / W, (top + 2) / H)); t.set_ha("left"); t.set_va("top")
+            t.set_visible(True)
+            ax = t._panel_axes; lb = t.get_window_extent(r)
+            for tt in (ax.title, ax._left_title, ax._right_title):
+                if tt.get_text().strip():
+                    bb = tt.get_window_extent(r)
+                    if lb.overlaps(bb):
+                        t.set_position(((bb.x0 - lb.width - 9) / W, (top + 2) / H)); lb = t.get_window_extent(r)
 
 
 def label_panels(axes, start="a", dx=-0.30, dy=1.02):
@@ -138,6 +221,10 @@ def check_overlaps(fig):
         texts.append((t, bb))
     spines = [(s, s.get_window_extent(r)) for ax in fig.axes for s in ax.spines.values() if s.get_visible()]
     bad = []
+    for ax in fig.axes:                               # a panel title must not run past its panel
+        for tt in (ax.title, ax._left_title, ax._right_title):
+            if tt.get_text().strip() and ax.axison and tt.get_window_extent(r).x1 > ax.get_window_extent(r).x1 + 3:
+                bad.append(("title-overflow", tt.get_text()[:30]))
     for i, (a, ba) in enumerate(texts):
         for b, bb in texts[i + 1:]:
             if ba.overlaps(bb):
@@ -154,6 +241,12 @@ def save(fig, name, outdir=None, tight=False):
     """Write <name>.pdf/.svg/.png to results/figures without timestamps; return overlapping text found on the drawn figure."""
     if tight:
         fig.tight_layout(rect=(0, 0, 1, 0.945), h_pad=0.9, w_pad=1.6)
+    try:
+        fig.align_ylabels([a for a in fig.axes if a.axison])
+    except Exception:
+        pass
+    fig.canvas.draw()
+    _align_letters(fig)
     fig.canvas.draw()
     bad = check_overlaps(fig)
     out = Path(outdir) if outdir else ROOT / "results/figures"

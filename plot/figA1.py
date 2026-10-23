@@ -41,7 +41,7 @@ def plot():
     TH = style.read_csv(f"figure_data/{NAME}/thresholds.csv"); MG = style.read_csv(f"figure_data/{NAME}/margins.csv"); LV = style.read_csv(f"figure_data/{NAME}/load_variants.csv")
     style.apply()
     fig = plt.figure(figsize=(style.W2, 72 * MM))
-    axa = fig.add_axes([0.05, 0.22, 0.40, 0.66]); axb = fig.add_axes([0.55, 0.22, 0.18, 0.66]); axc = fig.add_axes([0.82, 0.22, 0.18, 0.66])
+    axa = fig.add_axes([0.05, 0.22, 0.40, 0.66]); axb = fig.add_axes([0.61, 0.22, 0.15, 0.66]); axc = fig.add_axes([0.85, 0.22, 0.15, 0.66])
     lab = [f"{float(a) * 100:g}% / {b}" for a, b in (k.split("_") for k in KEYS[:-1])] + ["bb 5%"]
     d = {(r["structure"], r["criterion"]): (np.nan if r["delta"] == "" else float(r["delta"])) for r in TH}
     M = np.array([[d[(p, k)] for k in KEYS] for p in CH])
@@ -52,30 +52,33 @@ def plot():
     axa.set_xlim(-0.5, M.shape[1] - 0.5); axa.set_ylim(M.shape[0] - 0.5, -0.5)
     for i in range(M.shape[0]):
         for j in range(M.shape[1]):
-            axa.text(j, i, f"{M[i, j]:.2f}", ha="center", va="center", fontsize=5.5, color="white" if abs(M[i, j]) > 0.6 * lim else DARK)
-    axa.set_xticks(range(len(KEYS))); axa.set_xticklabels(lab, rotation=55, ha="right", fontsize=5.5)
+            axa.text(j, i, f"{M[i, j]:.2f}", ha="center", va="center", fontsize=style.FS, color="white" if abs(M[i, j]) > 0.6 * lim else DARK)
+    axa.set_xticks(range(len(KEYS))); axa.set_xticklabels(lab, rotation=55, ha="right", fontsize=style.FS)
     axa.set_yticks(range(len(CH))); axa.set_yticklabels([LABEL[p] for p in CH])
-    axa.set_xlabel(r"validity thresholds $P_{20}$ / $|e|_{\max}$"); axa.set_title(r"$\Delta_{L-NL}$ (Å)")
+    axa.set_xlabel(r"validity thresholds $P_{20}$ / $|e|_{\max}$"); axa.set_title("Validity thresholds", loc="left")
     for sp_ in axa.spines.values(): sp_.set_visible(False)
-    cb = fig.colorbar(im, ax=axa, fraction=0.04, pad=0.02); cb.ax.tick_params(labelsize=6); cb.outline.set_linewidth(0.4)
+    cb = fig.colorbar(im, ax=axa, fraction=0.04, pad=0.02); cb.ax.tick_params(labelsize=style.SIZE["tick"]); cb.outline.set_linewidth(0.4); cb.set_label(r"$\Delta_{\mathrm{L-NL}}$ (Å)")
     cb.solids.set_rasterized(False)                    # keep the colour bar vector (reproducible SVG)
     cl = {"NL better": 1, "equivalent": 0, "NL worse": -1}
     for i, p in enumerate(CH):
         rr = [r for r in MG if r["structure"] == p]
         axb.plot(num(rr, "margin"), np.array([cl[r["cls"]] for r in rr]) + (i - 2.5) * 0.06, MK[p] + "-", color=COL[p], ms=3, lw=0.7, mec="white", mew=0.3)
     axb.set_yticks([-1, 0, 1]); axb.set_yticklabels(["NL worse", "equiv.", "NL better"]); axb.set_xlabel("equivalence margin (Å)")
-    axb.set_title("class vs. margin"); axb.set_ylim(-1.5, 1.5)
+    axb.set_title("Class vs. margin", loc="left"); axb.set_ylim(-1.5, 1.5)
     for i, p in enumerate(("6b3r", "6pwn")):
         y = [float(r["delta"]) for r in LV if r["structure"] == p and r["variant"] != "reference"]
         ref = [float(r["delta"]) for r in LV if r["structure"] == p and r["variant"] == "reference"][0]
         axc.plot(np.full(len(y), i) + np.linspace(-0.15, 0.15, len(y)), y, "x", color=COL[p], ms=3.5, mew=0.8)
         axc.plot(i, ref, MK[p], color=COL[p], ms=5, mec="white", mew=0.4)
     axc.axhspan(-0.2, 0.2, color=LIGHT, lw=0, zorder=0); axc.axhline(0, color=DARK, lw=0.5)
-    axc.set_xticks([0, 1]); axc.set_xticklabels(["Piezo1", "MscS"]); axc.set_xlim(-0.6, 1.6); axc.set_ylabel(r"$\Delta_{L-NL}$ (Å)")
-    axc.set_title("load construction")
-    fig.legend(handles=chan_handles(ls="-"), loc="upper center", ncol=6, bbox_to_anchor=(0.66, 1.07), fontsize=6)
+    axc.set_xticks([0, 1]); axc.set_xticklabels(["Piezo1", "MscS"]); axc.set_xlim(-0.6, 1.6); axc.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)")
+    axc.set_title("Load construction", loc="left")
+    from matplotlib.lines import Line2D
+    axc.legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="white", ms=4.5, label="reference"),
+                        Line2D([], [], ls="", marker="x", color="k", ms=3.5, label="variants")], loc="upper right", handletextpad=0.2)
+    style.top_legend(fig, [chan_handles()], y=0.92)
     for a_, tt, dx in ((axa, "a", -0.18), (axb, "b", -0.55), (axc, "c", -0.5)):
-        a_.text(dx, 1.04, tt, transform=a_.transAxes, fontsize=9, fontweight="bold", va="bottom")
+        style.letter(a_, tt)
     style.save(fig, NAME)
     pz = M[0, :-1]
     style.describe(NAME, "Fig. A.1 sensitivity (r_c = 10 A). Piezo1 Delta_L-NL over the nine validity-threshold combinations: {{pmin}} to {{pmax}} A; "

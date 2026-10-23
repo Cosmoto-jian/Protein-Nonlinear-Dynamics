@@ -65,24 +65,24 @@ def plot():
                 a.vlines(i + off, 0, 100 * g[key], color=COL[p], lw=0.8)
                 a.plot(i + off, 100 * g[key], mk, color=COL[p], mfc=fc, ms=3.8, mew=0.8)
     a.axhline(0, color=DARK, lw=0.5)
-    a.set_xticks(xs); a.set_xticklabels([LABEL[p] for p in CH], rotation=40, ha="right"); a.set_xlim(-0.6, len(CH) - 0.4)
-    a.set_ylabel("TM RMSD reduction (%)"); a.set_title("What explains the approach?")
+    a.set_xticks(xs); a.set_xticklabels([LABEL[p] for p in CH], rotation=90, ha="right", va="center", rotation_mode="anchor"); a.set_xlim(-0.6, len(CH) - 0.4)
+    a.set_ylabel("TM RMSD reduction (%)"); a.set_title("What explains the approach?", loc="left")
     a.legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label="nonlinear path"),
                       Line2D([], [], ls="", marker="o", mfc="white", mec="k", ms=4, label="best-amplitude linear"),
                       Line2D([], [], ls="", marker="D", mfc="white", mec="k", ms=4, label="isotropic dilation"),
-                      Line2D([], [], ls="", marker="s", mfc="white", mec="k", ms=4, label="best rewired network")], loc="upper right", fontsize=6, handletextpad=0.2)
+                      Line2D([], [], ls="", marker="s", mfc="white", mec="k", ms=4, label="best rewired network")], loc="upper right", fontsize=style.FS, handletextpad=0.2)
     c = ax[1]
     c.axhspan(-0.2, 0.2, color=LIGHT, lw=0, zorder=0)
     for p in CH:
         chi, d = float(TU[p]["chi_010"]), float(TU[p]["delta"])
         c.plot(chi, d, MK[p], color=COL[p], ms=5, mec="white", mew=0.4, zorder=3)
-        c.annotate(LABEL[p], (chi, d), xytext=(4, {"6pwn": -8, "4wff": -9}.get(p, 3)), textcoords="offset points", fontsize=6, color=COL[p])
+        c.annotate(LABEL[p], (chi, d), xytext=(4, {"6pwn": -8, "4wff": -9, "6mgv": -9}.get(p, 3)), textcoords="offset points", fontsize=style.FS, color=COL[p])
     for p in ("6cq8", "6vtk"):
         chi = float(TU[p]["chi_010"]); c.plot(chi, -0.62, "|", color=COL[p], ms=8, mew=1.2)
-        c.annotate(LABEL[p], (chi, -0.62), xytext=(3, 4), textcoords="offset points", fontsize=6, color=COL[p])
+        c.annotate(LABEL[p], (chi, -0.62), xytext=({"6cq8": 3, "6vtk": -3}[p], 4), ha={"6cq8": "left", "6vtk": "right"}[p], textcoords="offset points", fontsize=style.FS, color=COL[p])
     c.axhline(0, color=DARK, lw=0.5)
-    c.set_xlabel(r"a-priori indicator $\chi$ ($\varepsilon=0.10$, membrane nodes)"); c.set_ylabel(r"$\Delta_{L-NL}$ (Å)")
-    c.set_title("Only the largest turning pays off"); c.set_xscale("log"); c.set_ylim(-0.7, 1.0)
+    c.set_xlabel(r"a-priori indicator $\chi$ ($\varepsilon=0.10$, membrane nodes)"); c.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)")
+    c.set_title("Only the largest turning pays", loc="left"); c.set_xscale("log"); c.set_ylim(-0.7, 1.0)
     d = ax[2]
     d.axhspan(-0.2, 0.2, color=LIGHT, lw=0, zorder=0)
     for i, p in enumerate(CH):
@@ -92,14 +92,14 @@ def plot():
             mk = {"rc10": "o", "rc12": "s", "backbone": "^", "load": "x"}[r["kind"]]; fc = "white" if r["kind"] == "rc12" else COL[p]
             d.plot(i + jit, float(r["delta"]), mk, color=COL[p], mfc=fc, ms=3.6 if mk != "x" else 3.0, mew=0.8)
     d.axhline(0, color=DARK, lw=0.5)
-    d.set_xticks(xs); d.set_xticklabels([LABEL[p] for p in CH], rotation=40, ha="right"); d.set_xlim(-0.6, len(CH) - 0.4)
-    d.set_ylabel(r"$\Delta_{L-NL}$ (Å)"); d.set_title("Only Piezo1 stays above the margin")
+    d.set_xticks(xs); d.set_xticklabels([LABEL[p] for p in CH], rotation=90, ha="right", va="center", rotation_mode="anchor"); d.set_xlim(-0.6, len(CH) - 0.4)
+    d.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)"); d.set_title("Robust only for Piezo1", loc="left")
     d.legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label="$r_c$ = 10 Å"), Line2D([], [], ls="", marker="s", mfc="white", mec="k", ms=4, label="$r_c$ = 12 Å"),
                       Line2D([], [], ls="", marker="x", color="k", ms=4, label="load construction"), Line2D([], [], ls="", marker="^", mfc="k", mec="k", ms=4, label="stiff backbone")],
-             loc="upper right", fontsize=6, handletextpad=0.2)
+             loc="upper right", fontsize=style.FS, handletextpad=0.2)
     for a_, t in zip(ax, "abc"):
-        style.letter(a_, t, dx=-0.22, dy=1.04)
-    fig.legend(handles=chan_handles(CH + ["6cq8", "6vtk"], ls=""), loc="upper center", ncol=8, bbox_to_anchor=(0.5, 1.0))
+        style.letter(a_, t)
+    style.top_legend(fig, [chan_handles(CH + ["6cq8", "6vtk"])], y=0.88)
     style.save(fig, NAME)
     pzr = [float(r["delta"]) for r in RB if r["structure"] == "6b3r"]
     style.describe(NAME, "Fig. 5 turning and experiment. Advantage of the nonlinear path over the best-amplitude linear response: Piezo1 {{pz}} A "

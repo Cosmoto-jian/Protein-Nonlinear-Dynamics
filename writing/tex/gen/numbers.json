@@ -142,5 +142,14 @@
  "mscl-tphys-best": "512--867",
  "piezo-ept": "2.3",
  "ept-min": "0.04",
- "ept-max": "0.18"
+ "ept-max": "0.18",
+ "piezo-c3-rmsd": "1\\times10^{-3}",
+ "piezo-c3-tilt": "0.8",
+ "piezo-c3-zrot": "1.25",
+ "piezo-n-desc": "one",
+ "mscl-lin-restr": "5.76",
+ "mscs-whole-closed": "8.51",
+ "mscs-whole-nl": "8.79",
+ "nsec-min": "23",
+ "nsec-max": "108"
 }
