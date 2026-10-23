@@ -223,3 +223,38 @@ files:
     fetched: 2026-10-22
     license: "project data"
     purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: d07e937b77bb769f__7WLT.pdb
+    sha256: d07e937b77bb769fd8347a118b37a77a1a6ac52bf57b7f1845fca7852bbf5a4e
+    original_name: 7WLT.pdb
+    source: "https://files.rcsb.org/download/7WLT.pdb"
+    fetched: 2026-10-23
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 multi-state validation: mPiezo1 curved state in lipid bilayer (3.46 A); Nature 2022, doi:10.1038/s41586-022-04574-8"
+  - file: 6bf03f9aa3e89492__7WLU.pdb
+    sha256: 6bf03f9aa3e894929608068c26e67f4c9967de59e391345a51531aa3046d5e1d
+    original_name: 7WLU.pdb
+    source: "https://files.rcsb.org/download/7WLU.pdb"
+    fetched: 2026-10-23
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 multi-state validation: mPiezo1 flattened state in lipid bilayer (6.81 A, incomplete model); Nature 2022, doi:10.1038/s41586-022-04574-8"
+  - file: 8fddb51d76f9a008__8IXN.pdb
+    sha256: 8fddb51d76f9a0087e265075724f4a4c034ca6bd5abdf5b7fce6df6c92f9678e
+    original_name: 8IXN.pdb
+    source: "https://files.rcsb.org/download/8IXN.pdb"
+    fetched: 2026-10-23
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 multi-state validation: mPiezo1-S2472E curved state, companion of 8IXO; Neuron 2025, doi:10.1016/j.neuron.2024.11.020"
+  - file: 4a726fdba98d68d8__11YE.pdb
+    sha256: 4a726fdba98d68d84f0cf710c888f4c4275a0040639aa9dfea845b9a62ccc8a3
+    original_name: 11YE.pdb
+    source: "https://files.rcsb.org/download/11YE.pdb"
+    fetched: 2026-10-23
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 multi-state validation: mPiezo1 curved state in plasma membrane vesicles (3.7 A); Sci Adv 2026, doi:10.1126/sciadv.aed7115"
+  - file: 6d28a6599bd9880e__11ZC.pdb
+    sha256: 6d28a6599bd9880e0e333eededa1c66b2ffb1d3c85eacaef212f2598dce70db8
+    original_name: 11ZC.pdb
+    source: "https://files.rcsb.org/download/11ZC.pdb"
+    fetched: 2026-10-23
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 multi-state validation: mPiezo1 flat state in plasma membrane vesicles (6.0 A); Sci Adv 2026, doi:10.1126/sciadv.aed7115"
