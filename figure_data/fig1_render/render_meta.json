@@ -1,0 +1,12 @@
+{
+ "half_height": 52.701840000000004,
+ "width_px": 1800,
+ "height_px": 2400,
+ "focus_node": 375,
+ "n_focus_elements": 10,
+ "surface": {
+  "sigma": 1.6,
+  "grid": 0.8,
+  "iso": 0.06
+ }
+}

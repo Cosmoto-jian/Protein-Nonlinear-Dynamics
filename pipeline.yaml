@@ -1093,8 +1093,20 @@ steps:
   - src/paths.py
   - src/vfife
   - data/derived/models
+  - data/raw/MANIFEST.yaml
   outs:
   - figure_data/fig1
+- name: fig1-render
+  cmd: python plot/fig1_render.py
+  deps:
+  - plot/fig1_render.py
+  - plot/style.py
+  - figure_data/fig1
+  outs:
+  - path: figure_data/fig1_render
+    purpose: rendered layers of Fig 1a (molecular surface, C-alpha truss) and their camera
+  params:
+    surface_transparency_in_figure: 0.95
 - name: fig1
   cmd: python plot/fig1.py plot
   deps:
@@ -1102,6 +1114,7 @@ steps:
   - plot/style.py
   - plot/figcommon.py
   - figure_data/fig1
+  - figure_data/fig1_render
   outs:
   - results/figures/fig1.pdf
   - results/figures/fig1.svg

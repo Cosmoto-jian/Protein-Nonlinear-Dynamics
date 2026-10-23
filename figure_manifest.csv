@@ -1,5 +1,5 @@
 figure,data_files,source_runs,script,command,output
-fig1,figure_data/fig1,-,plot/fig1.py,python plot/fig1.py plot,results/figures/fig1
+fig1,figure_data/fig1;figure_data/fig1_render,-,plot/fig1.py,python plot/fig1.py plot,results/figures/fig1
 fig2,figure_data/fig2,-,plot/fig2.py,python plot/fig2.py plot,results/figures/fig2
 fig3,figure_data/fig3,-,plot/fig3.py,python plot/fig3.py plot,results/figures/fig3
 fig4,figure_data/fig4,-,plot/fig4.py,python plot/fig4.py plot,results/figures/fig4

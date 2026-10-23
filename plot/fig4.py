@@ -53,7 +53,7 @@ def plot():
     NL = style.read_csv(f"figure_data/{NAME}/nonlinear.csv"); LI = style.read_csv(f"figure_data/{NAME}/linear.csv")
     C = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/channels.csv")}
     style.apply()
-    fig, axs = plt.subplots(2, 3, figsize=(style.W2, 104 * MM), gridspec_kw=dict(wspace=0.32, hspace=0.50))
+    fig, axs = plt.subplots(2, 3, figsize=(style.W2, 104 * MM), gridspec_kw=dict(wspace=0.30, hspace=0.50, left=0.07, right=0.99, top=0.86))
     f = lambda r, k: float(r[k]) if r[k] != "" else None
     for a, p, t in zip(axs.ravel(), CH, "abcdef"):
         c = C[p]; rr = [r for r in NL if r["structure"] == p]; E = num(rr, "eps"); T = num(rr, "rmsd_tm")
@@ -74,16 +74,16 @@ def plot():
         a.plot(f(c, "eps_best"), f(c, "nl_best"), marker="*", color="k", ms=7, mec="white", mew=0.4, zorder=5, ls="")
         if c["limit_point"] == "1":
             k = ks - 1; a.plot(E[k], T[k], marker="|", color="k", ms=8, mew=1.0, zorder=5)
-            a.annotate("L$_1$", (E[k], T[k]), xytext=(-10, 6), textcoords="offset points", fontsize=6)
-        a.set_xlim(0, xmax); a.set_title(LABEL[p], color=COL[p], fontweight="bold")
+            a.annotate("L$_1$", (E[k], T[k]), xytext=(-10, 6), textcoords="offset points", fontsize=style.FS)
+        a.set_xlim(0, xmax); a.set_title(LABEL[p], color=COL[p], fontweight="bold", loc="left")
         lo = min(T.min(), gt[m].min(), f(c, "closed"), f(c, "dilation") if c["dilation"] != "" else 1e9)
         hi = max(f(c, "closed"), max(T[:ks][E[:ks] <= xmax]))
         pad = 0.10 * (hi - lo + 0.2); a.set_ylim(lo - pad, hi + pad)
         a.yaxis.set_major_locator(MaxNLocator(4)); a.xaxis.set_major_locator(MaxNLocator(4))
-        a.set_title(f"{f(c, 'closed'):.2f} → {f(c, 'nl_best'):.2f} Å (linear {f(c, 'lin_best'):.2f})", loc="right", fontsize=6, color=DARK)
+        a.set_title(f"{f(c, 'closed'):.2f}→{f(c, 'nl_best'):.2f} Å, lin. {f(c, 'lin_best'):.2f}", loc="right", fontsize=style.FS, color=style.NOTE)
         if t in "ad": a.set_ylabel(r"RMSD$_{\rm TM}$ to partner (Å)")
         if t in "def": a.set_xlabel(r"normalised radial displacement $\varepsilon$")
-        style.letter(a, t, dx=-0.22, dy=1.03)
+        style.letter(a, t)
     h = [Line2D([], [], color="k", lw=1.2, label="nonlinear tension path"),
          Line2D([], [], color="k", lw=0.9, ls=(0, (3, 1.6)), label="linear response (own $\\varepsilon$)"),
          Line2D([], [], color="#7F7F7F", lw=0.7, ls=(0, (1, 1.5)), label="best isotropic dilation"),
@@ -91,7 +91,7 @@ def plot():
          Line2D([], [], color=GREY, lw=0.6, ls=(0, (4, 2)), label="closed state"),
          Line2D([], [], ls="", marker="*", color="k", ms=6, label=r"best frame, $\varepsilon\leq\varepsilon^*$"),
          Patch(color=LIGHT, label=r"$\varepsilon>\varepsilon^*$")]
-    fig.legend(handles=h, loc="upper center", ncol=4, bbox_to_anchor=(0.5, 1.06), handletextpad=0.4)
+    fig.legend(handles=h, loc="upper center", ncol=4, bbox_to_anchor=(0.5, 1.0), handletextpad=0.4)
     style.save(fig, NAME)
     pz = C["6b3r"]
     style.describe(NAME, "Fig. 4 validation against the partner structures (TM C-alpha RMSD, r_c = 10 A) for {{n}} channels. Piezo1: closed {{pz_closed}} A, "
