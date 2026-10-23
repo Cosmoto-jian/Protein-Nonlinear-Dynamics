@@ -15,6 +15,7 @@ import numpy as np, scipy.sparse as sp, scipy.sparse.linalg as spla
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from inertia import constrained_inertia
+import ckpt
 
 ap = argparse.ArgumentParser()
 ap.add_argument('name'); ap.add_argument('rc', type=float)
@@ -101,7 +102,11 @@ print('pre', tag, 'N', net.N, 'eps/tau %.4g' % eps_per_tau, f'{time.time()-T0:.0
 # ---------- path
 rows, Xs = [], []
 X, tau, A_prev, W = X0.copy(), 0.0, area.area(X0), 0.0
-dtau0 = 0.01 / eps_per_tau; dtau = dtau0; n_fail = 0; stop = None
+dtau0 = 0.01 / eps_per_tau; dtau = dtau0; n_fail = 0; stop = None; wall_prev = 0.0
+st = ckpt.load(tag)
+if st is not None:
+    rows, Xs, X, tau, A_prev, W, dtau, n_fail, wall_prev = (st[k] for k in ('rows', 'Xs', 'X', 'tau', 'A_prev', 'W', 'dtau', 'n_fail', 'wall'))
+    T0 = time.time() - wall_prev
 while True:
     cap = 0.02 / eps_per_tau
     eps_now = eps_of(X)
@@ -133,6 +138,7 @@ while True:
     X, tau, A_prev = Xn, t_new, A
     if it <= 5:
         dtau *= 1.25
+    ckpt.save(tag, dict(rows=rows, Xs=Xs, X=X, tau=tau, A_prev=A_prev, W=W, dtau=dtau, n_fail=n_fail, wall=time.time() - T0))
     print(tag, rec['step'], 'eps %.4f tau %.4g it %d p20 %.4f maxe %.3f bb %.3f' % (rec['eps'], t_new, it, rec['p20'], rec['max_e'], rec['max_e_bb']),
           ('tm %.3f/%.3f' % (rec['nl']['rmsd_tm'], rec['lin']['rmsd_tm'])) if tgt else '',
           'neg %s' % (rec['inertia']['n_neg'] if 'inertia' in rec else '-'), 'lam %.2e' % (rec['lam'][0] if rec['lam'] else np.nan),
@@ -146,4 +152,5 @@ while True:
 np.save(f'{RES}/paths/{tag}_Xs.npy', np.array(Xs))
 res = dict(pre=pre, rows=rows, stop=stop, n_fail=n_fail, wall_s=time.time() - T0)
 json.dump(res, open(f'{RES}/paths/{tag}.json', 'w'), default=float)
+ckpt.clear(tag)
 print('DONE', tag, stop, f'{time.time()-T0:.0f}s', flush=True)

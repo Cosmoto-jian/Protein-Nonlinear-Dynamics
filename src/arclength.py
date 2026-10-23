@@ -20,6 +20,7 @@ import numpy as np, scipy.sparse as sp
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from inertia import constrained_inertia
+import ckpt
 
 name, rc, e_start = sys.argv[1], float(sys.argv[2]), float(sys.argv[3])
 npts = int(sys.argv[4]) if len(sys.argv) > 4 else 300
@@ -101,6 +102,10 @@ t = tangent(x, lam, (dxdl, 1.0), sx2)
 mu = np.linalg.lstsq(C.T, -residual(x, np.zeros(6), lam)[0], rcond=None)[0]
 pts = [record(x, lam, t, 0, 0.0)]; Xs = [x.reshape(-1, 3).copy()]
 ds = ds0; n_rej = 0
+st = ckpt.load(tag + '_arclength')
+if st is not None:
+    pts, Xs, x, lam, mu, t, ds, n_rej = (st[k] for k in ('pts', 'Xs', 'x', 'lam', 'mu', 't', 'ds', 'n_rej'))
+    T0 = time.time() - st['wall']
 print('start', tag, 'step', k0 + 1, 'eps %.4f' % pts[0]['eps'], flush=True)
 while len(pts) < npts:
     xk, lk = x.copy(), lam
@@ -129,6 +134,7 @@ while len(pts) < npts:
         q['max_e'], q['p20'], q['nl']['rmsd_tm'], it, ds), f'{time.time()-T0:.0f}s', flush=True)
     if it <= 4:
         ds = min(ds * 1.25, ds0)
+    ckpt.save(tag + '_arclength', dict(pts=pts, Xs=Xs, x=x, lam=lam, mu=mu, t=t, ds=ds, n_rej=n_rej, wall=time.time() - T0))
     if q['p20'] > 0.12 or q['max_e'] > 1.0 or q['eps'] > 0.40:
         break
 stop = 'p20>0.12' if pts[-1]['p20'] > 0.12 else ('max_e>1.0' if pts[-1]['max_e'] > 1.0 else ('eps>0.40' if pts[-1]['eps'] > 0.40 else 'max points'))
@@ -148,4 +154,5 @@ merged = dict(pre=dict(P['pre'], continuation=dict(start_step=k0 + 1, ds0=ds0, n
               loadcontrol_stop=dict(reason=P['stop'], eps=P['rows'][-1]['eps'], tau=P['rows'][-1]['tau']))
 json.dump(merged, open(f'{RES}/paths/{tag}.json', 'w'), default=float)
 np.save(f'{RES}/paths/{tag}_Xs.npy', np.concatenate([XsP[:k0 + 1], np.array(Xs[1:])]))
+ckpt.clear(tag + '_arclength')
 print('DONE', tag, stop, f'{time.time()-T0:.0f}s', flush=True)

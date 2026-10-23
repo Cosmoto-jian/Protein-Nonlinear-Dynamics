@@ -31,6 +31,7 @@ steps:
   cmd: python src/run_path.py 2oar 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -52,6 +53,7 @@ steps:
   cmd: python src/run_path.py 2oar 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -73,6 +75,7 @@ steps:
   cmd: python src/run_path.py 2oar 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -94,6 +97,7 @@ steps:
   cmd: python src/run_path.py 4xdk 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -115,6 +119,7 @@ steps:
   cmd: python src/run_path.py 4xdk 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -136,6 +141,7 @@ steps:
   cmd: python src/run_path.py 4xdk 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -157,6 +163,7 @@ steps:
   cmd: python src/run_path.py 4wff 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -178,6 +185,7 @@ steps:
   cmd: python src/run_path.py 4wff 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -199,6 +207,7 @@ steps:
   cmd: python src/run_path.py 4wff 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -220,6 +229,7 @@ steps:
   cmd: python src/run_path.py 6cq8 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -241,6 +251,7 @@ steps:
   cmd: python src/run_path.py 6cq8 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -262,6 +273,7 @@ steps:
   cmd: python src/run_path.py 6cq8 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -283,6 +295,7 @@ steps:
   cmd: python src/run_path.py 6mgv 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -304,6 +317,7 @@ steps:
   cmd: python src/run_path.py 6mgv 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -325,6 +339,7 @@ steps:
   cmd: python src/run_path.py 6mgv 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -346,6 +361,7 @@ steps:
   cmd: python src/run_path.py 6vtk 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -367,6 +383,7 @@ steps:
   cmd: python src/run_path.py 6vtk 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -388,6 +405,7 @@ steps:
   cmd: python src/run_path.py 6vtk 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -409,6 +427,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -430,6 +449,7 @@ steps:
   cmd: python src/run_path.py 6pwn 12
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -451,6 +471,7 @@ steps:
   cmd: python src/run_path.py 6pwn 8
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -472,6 +493,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --tag _loadcontrol
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -493,6 +515,7 @@ steps:
   cmd: python src/run_path.py 6b3r 12 --refine
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -514,6 +537,7 @@ steps:
   cmd: python src/run_path.py 6b3r 8 --refine
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -535,6 +559,7 @@ steps:
   cmd: python src/arclength.py 6b3r 10 0.10 400 0.003
   deps:
   - src/arclength.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -582,6 +607,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --nscale 0.5 --tag _ns0.5
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -598,6 +624,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --nscale 2 --tag _ns2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -614,6 +641,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --shell 3 --tag _sh3
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -630,6 +658,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --shell 6 --tag _sh6
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -646,6 +675,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --slab 3 --tag _sl3
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -662,6 +692,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --slab 5 --tag _sl5
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -678,6 +709,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --dh -2 --tag _dhm2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -694,6 +726,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --dh 2 --tag _dhp2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -710,6 +743,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --kbb 10 --tag _kbb10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -726,6 +760,7 @@ steps:
   cmd: python src/run_path.py 6pwn 10 --kbb 100 --tag _kbb100
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -742,6 +777,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --nscale 0.5 --tag _ns0.5
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -758,6 +794,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --nscale 2 --tag _ns2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -774,6 +811,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --shell 3 --tag _sh3
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -790,6 +828,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --shell 6 --tag _sh6
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -806,6 +845,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --slab 3 --tag _sl3
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -822,6 +862,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --slab 5 --tag _sl5
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -838,6 +879,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --dh -2 --tag _dhm2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -854,6 +896,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --dh 2 --tag _dhp2
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -870,6 +913,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --kbb 10 --tag _kbb10
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -886,6 +930,7 @@ steps:
   cmd: python src/run_path.py 6b3r 10 --refine --kbb 100 --tag _kbb100
   deps:
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
@@ -966,6 +1011,7 @@ steps:
   - src/batch_nulls.py
   - src/nulls.py
   - src/run_path.py
+  - src/ckpt.py
   - src/paths.py
   - src/model.py
   - src/inertia.py
