@@ -1,7 +1,7 @@
 """Plotting style and paired descriptions. Every figure takes fonts, sizes, colours and widths from here.
 
 Elsevier (JMPS) layout: single column 90 mm, 1.5 column 140 mm, double column 190 mm; font ladder 8/7/6 pt
-(labels / legends and annotations / ticks), panel letters 9 pt bold; Okabe-Ito colour-blind-safe palette with one
+(labels / legends and annotations / ticks), panel letters 9 pt bold; bundled Liberation Sans (Arial metrics); Okabe-Ito colour-blind-safe palette with one
 colour and marker per structure in every figure; vector PDF and SVG with text kept as text, 600 dpi PNG."""
 from pathlib import Path
 import csv, json, re
@@ -41,9 +41,26 @@ def _load_palette():
 OBJECT_COLOR: dict[str, str] = _load_palette()           # persisted in palette.yaml
 
 
+FONT_DIR = Path(__file__).with_name("fonts")
+FONT = "Liberation Sans"                                  # metric-compatible with Arial; bundled for reproducibility
+
+
+def _use_bundled_font():
+    """Register the bundled Liberation Sans files and remove other copies of that family, so every platform uses the same glyphs."""
+    from matplotlib import font_manager as fm
+    files = sorted(FONT_DIR.glob("*.ttf"))
+    if not files:
+        return
+    fm.fontManager.ttflist = [f for f in fm.fontManager.ttflist if f.name != FONT]
+    for f in files:
+        fm.fontManager.addfont(str(f))
+    fm.fontManager._findfont_cached.cache_clear()
+
+
 def apply():
+    _use_bundled_font()
     mpl.rcParams.update({
-        "font.family": "sans-serif", "font.sans-serif": ["Arial", "Liberation Sans", "DejaVu Sans"],
+        "font.family": "sans-serif", "font.sans-serif": [FONT, "DejaVu Sans"],
         "mathtext.fontset": "dejavusans",
         "font.size": SIZE["axis"], "axes.labelsize": SIZE["axis"], "axes.titlesize": SIZE["axis"], "legend.fontsize": SIZE["legend"],
         "xtick.labelsize": SIZE["tick"], "ytick.labelsize": SIZE["tick"], "axes.linewidth": 0.6,
