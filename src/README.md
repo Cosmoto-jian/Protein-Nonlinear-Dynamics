@@ -16,6 +16,7 @@ formal output is a step in `pipeline.yaml`. Files are located from the project r
 | `indicator.py` | second-order indicators chi and kappa | `indicator` |
 | `vfife_check.py`, `batch_vfife_checks.py` | VFIFE restarts against Newton states; work-energy order | `vfife-checks` |
 | `nulls.py`, `batch_nulls.py` | dilation, ANM-subspace and rewired-network nulls | `nulls` |
+| `prs.py` | single-node perturbation-response scanning null (target-informed reference) | `prs` |
 | `physcale.py` | spring constant from crystallographic B-factors, area changes | `physical-scale` |
 | `analyze.py` | validity ranges, validation classes, sensitivity summary | `summary` |
 | `make_tex.py` | every number (`\V{key}`) and table of the manuscript into `writing/tex/gen/` | `numbers` |
