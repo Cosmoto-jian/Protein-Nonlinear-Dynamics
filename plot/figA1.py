@@ -45,7 +45,11 @@ def plot():
     lab = [f"{float(a) * 100:g}% / {b}" for a, b in (k.split("_") for k in KEYS[:-1])] + ["bb 5%"]
     d = {(r["structure"], r["criterion"]): (np.nan if r["delta"] == "" else float(r["delta"])) for r in TH}
     M = np.array([[d[(p, k)] for k in KEYS] for p in CH])
-    lim = np.nanmax(np.abs(M)); im = axa.imshow(M, cmap="RdBu_r", vmin=-lim, vmax=lim, aspect="auto")
+    lim = np.nanmax(np.abs(M))
+    # vector cells (pcolormesh) instead of imshow: an embedded raster makes the SVG depend on the PNG encoder
+    im = axa.pcolormesh(np.arange(M.shape[1] + 1) - 0.5, np.arange(M.shape[0] + 1) - 0.5, np.ma.masked_invalid(M),
+                        cmap="RdBu_r", vmin=-lim, vmax=lim, edgecolors="face", linewidth=0)
+    axa.set_xlim(-0.5, M.shape[1] - 0.5); axa.set_ylim(M.shape[0] - 0.5, -0.5)
     for i in range(M.shape[0]):
         for j in range(M.shape[1]):
             axa.text(j, i, f"{M[i, j]:.2f}", ha="center", va="center", fontsize=5.5, color="white" if abs(M[i, j]) > 0.6 * lim else DARK)
@@ -54,6 +58,7 @@ def plot():
     axa.set_xlabel(r"validity thresholds $P_{20}$ / $|e|_{\max}$"); axa.set_title(r"$\Delta_{L-NL}$ (Å)")
     for sp_ in axa.spines.values(): sp_.set_visible(False)
     cb = fig.colorbar(im, ax=axa, fraction=0.04, pad=0.02); cb.ax.tick_params(labelsize=6); cb.outline.set_linewidth(0.4)
+    cb.solids.set_rasterized(False)                    # keep the colour bar vector (reproducible SVG)
     cl = {"NL better": 1, "equivalent": 0, "NL worse": -1}
     for i, p in enumerate(CH):
         rr = [r for r in MG if r["structure"] == p]

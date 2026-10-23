@@ -257,15 +257,15 @@
   "cmd": "python plot/figA1.py plot",
   "deps": {
    "figure_data/figA1": "76abeb3ea974e36985b578e41237b4340b4f971c658ac8fc9d03602104ec1685",
-   "plot/figA1.py": "1f9703f83335e2ca8802df5aa6aa998aa4dc6f8514da8e86bd39bfdd1b9c313d",
+   "plot/figA1.py": "2db07560ab6ff94790b573909f419271d4c70b40730f01544dd98c7e58d0fc7b",
    "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
    "plot/style.py": "00ae1f615ea594878112c4d6855c2190c4717fffd534dd65b763f05bca43c2ac"
   },
   "outs": {
    "results/descriptions/figA1.md": "0957811d871c7b3a1d7cdfa257860e2c64d1df3481d23b2c7bd0f0b7f1ec1fda",
-   "results/figures/figA1.pdf": "b7abba593012cc38589f251e4e13f9fca97190841b251bee5d3d754a1b682ea3",
-   "results/figures/figA1.png": "aea9c21edf2aa981aafa2913c205a3478203f4d5edcdb5b87be6f4c8eb1ad939",
-   "results/figures/figA1.svg": "644676c72e00437f7203f98c13ce5c374724796ecf6a48bfde3906266f3a0c51"
+   "results/figures/figA1.pdf": "54f80371590257064a435e1f31ee4381ff2eb6b1e1f5bafa1e887f97bfcd8fd3",
+   "results/figures/figA1.png": "2f43a5b0516829041c1af0921494eae2aa3ff859d48cf464e6e533ce0698f313",
+   "results/figures/figA1.svg": "703888690cfba0c684899bf384e262fa100a5639810bd7f64ad6d32e6019e6ac"
   },
   "params": null
  },
@@ -274,7 +274,7 @@
   "deps": {
    "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/figA1.py": "1f9703f83335e2ca8802df5aa6aa998aa4dc6f8514da8e86bd39bfdd1b9c313d",
+   "plot/figA1.py": "2db07560ab6ff94790b573909f419271d4c70b40730f01544dd98c7e58d0fc7b",
    "plot/style.py": "00ae1f615ea594878112c4d6855c2190c4717fffd534dd65b763f05bca43c2ac"
   },
   "outs": {
