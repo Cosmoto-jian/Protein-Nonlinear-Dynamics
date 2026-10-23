@@ -982,6 +982,25 @@ steps:
     - 12
     - 13
   expensive: true
+- name: prs
+  cmd: python src/prs.py
+  deps:
+  - src/prs.py
+  - src/paths.py
+  - src/model.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/prs.json
+    units: angstrom
+    purpose: single-node perturbation-response scanning null on the TM subset (target-informed reference)
+  params:
+    rc_A: 10.0
+    n_top: 30
+    scan: single-node, three fitted force components
+  expensive: true
 - name: physical-scale
   cmd: python src/physcale.py
   deps:

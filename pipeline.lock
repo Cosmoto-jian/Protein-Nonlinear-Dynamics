@@ -966,6 +966,26 @@
   },
   "params": null
  },
+ "prs": {
+  "cmd": "python src/prs.py",
+  "deps": {
+   "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
+   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
+   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
+   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
+   "src/prs.py": "448a02c4b52096adfc0d1bf6da0b1fc6650827b3acd846df20045e9d5be200cc",
+   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+  },
+  "outs": {
+   "data/derived/prs.json": "122273d7ea394ad291c72a3facb72160b7ba6dde896fa89c9f4a17f01f833b75"
+  },
+  "params": {
+   "n_top": 30,
+   "rc_A": 10.0,
+   "scan": "single-node, three fitted force components"
+  }
+ },
  "snap-6b3r": {
   "cmd": "python src/snap.py 6b3r 10 1e-3",
   "deps": {
