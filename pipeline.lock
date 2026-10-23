@@ -411,14 +411,14 @@
    "data/derived/summary.json": "e437a86dbc21caf2da9460b75451b2d0dac3d39843e6516e19b7ec9264976e33",
    "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
    "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
-   "src/make_tex.py": "6c689ca717c7a0f03b3544bce25cbdc2ee236deee6a7756303f6286d153107e2",
+   "src/make_tex.py": "78fc440eacddd4382fa7142d0c32b0a55ccaaaaf3a1a82c72e88425a1acdf4e9",
    "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
    "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827",
-   "writing/tex/main.tex": "7972df06697e71f07f03fe203ad222ebcfd2164d30ef4b2a87905d581a1c1764"
+   "writing/tex/main.tex": "7e16ee0ac496587e12d550458de0a2c8f58f67d5ac08f2423de86fd01561c7b0"
   },
   "outs": {
-   "writing/tex/gen": "10f3f6872b4c817d21d65405aa1c3730ad6eda5732cacf97fea970f944e5c1eb"
+   "writing/tex/gen": "ce406daca5fe614e5cf4213a6b7144cc9dc7edaa7b154da2a3f70aa7c7d4120f"
   },
   "params": null
  },
