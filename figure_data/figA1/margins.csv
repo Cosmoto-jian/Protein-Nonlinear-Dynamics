@@ -1,0 +1,43 @@
+structure,margin,cls
+6b3r,0.1,NL better
+6b3r,0.15,NL better
+6b3r,0.2,NL better
+6b3r,0.25,NL better
+6b3r,0.3,NL better
+6b3r,0.35,NL better
+6b3r,0.4,NL better
+6pwn,0.1,NL worse
+6pwn,0.15,NL worse
+6pwn,0.2,equivalent
+6pwn,0.25,equivalent
+6pwn,0.3,equivalent
+6pwn,0.35,equivalent
+6pwn,0.4,equivalent
+2oar,0.1,NL worse
+2oar,0.15,NL worse
+2oar,0.2,NL worse
+2oar,0.25,NL worse
+2oar,0.3,NL worse
+2oar,0.35,NL worse
+2oar,0.4,NL worse
+4xdk,0.1,equivalent
+4xdk,0.15,equivalent
+4xdk,0.2,equivalent
+4xdk,0.25,equivalent
+4xdk,0.3,equivalent
+4xdk,0.35,equivalent
+4xdk,0.4,equivalent
+4wff,0.1,equivalent
+4wff,0.15,equivalent
+4wff,0.2,equivalent
+4wff,0.25,equivalent
+4wff,0.3,equivalent
+4wff,0.35,equivalent
+4wff,0.4,equivalent
+6mgv,0.1,equivalent
+6mgv,0.15,equivalent
+6mgv,0.2,equivalent
+6mgv,0.25,equivalent
+6mgv,0.3,equivalent
+6mgv,0.35,equivalent
+6mgv,0.4,equivalent

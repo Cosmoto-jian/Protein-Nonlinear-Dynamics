@@ -1,8 +1,225 @@
-files: []
-# - file: 0123abcd4567ef89__7xyz.cif
-#   sha256: <full hash>
-#   original_name: 7xyz.cif
-#   source: https://...
-#   fetched: 2026-10-22
-#   license: CC-BY-4.0
-#   purpose: structure of the open state
+files:
+  - file: 5f749d9e5893d56a__opm_6b3r.pdb
+    sha256: 5f749d9e5893d56a16cc8c4f87eb5084d7d8186d8f393d410682b5ce9c7e869b
+    original_name: opm_6b3r.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/6b3r.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 6B3R; source of the C-alpha model"
+  - file: 9b47c934782721c2__opm_6pwn.pdb
+    sha256: 9b47c934782721c2538a22336ca0dbee3f84f74783ada712ead7bd11b1df463d
+    original_name: opm_6pwn.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/6pwn.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 6PWN; source of the C-alpha model"
+  - file: 4bd3c786ced44be3__opm_2oar.pdb
+    sha256: 4bd3c786ced44be3909552230ad7dae9082b69abf9b06fb46dd4f9f55bc0f85f
+    original_name: opm_2oar.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/2oar.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 2OAR; source of the C-alpha model"
+  - file: 1a80e6145bfde9ed__opm_4xdk.pdb
+    sha256: 1a80e6145bfde9ed5290153b80edbd74ef6df2b3ad5d1a33b792fe8e788caecb
+    original_name: opm_4xdk.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/4xdk.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 4XDK; source of the C-alpha model"
+  - file: 74a6a46e33676580__opm_4wff.pdb
+    sha256: 74a6a46e33676580942116ecaaa4da5967807266045c7a756b944e810b231cb6
+    original_name: opm_4wff.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/4wff.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 4WFF; source of the C-alpha model"
+  - file: 0b7bdcc151243a97__opm_6mgv.pdb
+    sha256: 0b7bdcc151243a97d39053ef6958cca881fdf11f54414541e73910431045f401
+    original_name: opm_6mgv.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/6mgv.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 6MGV; source of the C-alpha model"
+  - file: 0ef33918dd293d42__opm_6cq8.pdb
+    sha256: 0ef33918dd293d4207b3d206f33432dfdf961758319a26525ba9efd5edf733cf
+    original_name: opm_6cq8.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/6cq8.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 6CQ8; source of the C-alpha model"
+  - file: 3028f6e7b4b31db0__opm_6vtk.pdb
+    sha256: 3028f6e7b4b31db0e0f144331f980d0c5821eddafe6133073977208ec0d695d7
+    original_name: opm_6vtk.pdb
+    source: "https://opm-assets.storage.googleapis.com/pdb/6vtk.pdb"
+    fetched: 2026-10-22
+    license: "OPM (Orientations of Proteins in Membranes), free for academic use"
+    purpose: "membrane-oriented coordinates of the closed or resting structure 6VTK; source of the C-alpha model"
+  - file: b08d202a77e06a20__8IXO.pdb
+    sha256: b08d202a77e06a20ef3c132d62cdbe0d78e4373d57dd280238daa97b6fdd1b8a
+    original_name: 8IXO.pdb
+    source: "https://files.rcsb.org/download/8IXO.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "Piezo1 partner (S2472E, intermediate open)"
+  - file: 7d1ca8f7c32ec393__2VV5.pdb
+    sha256: 7d1ca8f7c32ec393205fe2bb412740696e134c07212b005423ecea0e46015e5e
+    original_name: 2VV5.pdb
+    source: "https://files.rcsb.org/download/2VV5.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "MscS partner (A106V, open)"
+  - file: b0d862f59c016f10__4Y7K.pdb
+    sha256: b0d862f59c016f10f737f1183a2913db37e7c34b81cee9b7f1ced1d42cd4c215
+    original_name: 4Y7K.pdb
+    source: "https://files.rcsb.org/download/4Y7K.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "MscL homologue closed (M. acetivorans)"
+  - file: ff0ab541bb16d680__4Y7J.pdb
+    sha256: ff0ab541bb16d680144406ade29b73ee0d5295d224b474d9e63235bf34924112
+    original_name: 4Y7J.pdb
+    source: "https://files.rcsb.org/download/4Y7J.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "MscL homologue expanded (M. acetivorans)"
+  - file: 93d0852861c652d3__4BW5.pdb
+    sha256: 93d0852861c652d315e6ad7604f19dd241cae9d22299e6276e42a37e20d6142a
+    original_name: 4BW5.pdb
+    source: "https://files.rcsb.org/download/4BW5.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "TREK-2 partner (TM4 up)"
+  - file: d6f1be18b0743b70__4WFE.pdb
+    sha256: d6f1be18b0743b706b36b28ccf38c70eab680fd5108c171d7fceeeee89b705e3
+    original_name: 4WFE.pdb
+    source: "https://files.rcsb.org/download/4WFE.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "TRAAK partner (K+-bound conductive)"
+  - file: f787809c1465d3c4__8XAJ.pdb
+    sha256: f787809c1465d3c443c058348f8e68b6f904b8a3c24a2b0ed56dcaea3d742a60
+    original_name: 8XAJ.pdb
+    source: "https://files.rcsb.org/download/8XAJ.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "OSCA1.2 partner (open, liposome)"
+  - file: 1c99d364f2ade470__4WFF.pdb
+    sha256: 1c99d364f2ade470bda54c41ffa2b07ad0c1a1438ac3e5962e06243fa025c069
+    original_name: 4WFF.pdb
+    source: "https://files.rcsb.org/download/4WFF.pdb"
+    fetched: 2026-10-22
+    license: "PDB data: CC0 1.0"
+    purpose: "TRAAK crystal structure; crystallographic B-factors for the physical scale"
+  - file: 555359a624d80782__r4_2oar_rc10.json
+    sha256: 555359a624d80782a720cf1829752d95ce9283e77dc4c5d2ac34df16860c3c1e
+    original_name: r4_2oar_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 05b198b28d4f4471__r4_4wff_rc10.json
+    sha256: 05b198b28d4f4471a523d14155b97fee83ea5308393a807a9b75712591b11ae6
+    original_name: r4_4wff_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 8eca20347d929d0f__r4_4xdk_rc10.json
+    sha256: 8eca20347d929d0fa34cdae11e22e9bb9278c7f0a5d57a38bbab6ef317ecebca
+    original_name: r4_4xdk_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 056b1336bc7eb521__r4_6b3r_rc10.json
+    sha256: 056b1336bc7eb521c573378e302da85aabec69dbe68cdb1bb4fa981c22b3da04
+    original_name: r4_6b3r_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: e1e167b3ea61ecc2__r4_6cq8_rc10.json
+    sha256: e1e167b3ea61ecc23ac4cee50e04d987c2d940f02699b1f02f293f65c807f457
+    original_name: r4_6cq8_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 630c1e946179ff3e__r4_6mgv_rc10.json
+    sha256: 630c1e946179ff3e2efad09edf387833d8c61433af0b6deaa9a806faf4766c45
+    original_name: r4_6mgv_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 47cc43784afc7044__r4_6pwn_rc10.json
+    sha256: 47cc43784afc7044cb6480d4c5999ab4c098e2abc1890a9179c64503070fb066
+    original_name: r4_6pwn_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: f0f718fca6df669c__r4_6vtk_rc10.json
+    sha256: f0f718fca6df669c31df8579d5e18b7b159681cde89310d150c30ec011fd824e
+    original_name: r4_6vtk_rc10.json
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: c7150bead452ceba__r4_2oar_rc10_Xs.npy
+    sha256: c7150bead452ceba22a2fcd9c5137306d7b116364f8a31ba1383789e00d9f886
+    original_name: r4_2oar_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 0b0914dc163ab0b6__r4_4wff_rc10_Xs.npy
+    sha256: 0b0914dc163ab0b69753d8b80237331e96d5328d2594e5f39ba12cd0634aaa93
+    original_name: r4_4wff_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 061666e3ad52944f__r4_4xdk_rc10_Xs.npy
+    sha256: 061666e3ad52944fd6e5f15be1cca969ff1488e760c056b9bf59d4289c15c52a
+    original_name: r4_4xdk_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 86b34391ac0c4efb__r4_6b3r_rc10_Xs.npy
+    sha256: 86b34391ac0c4efb2752c0fbb87666686d92c582b088cfd75d0e222c3368fb5e
+    original_name: r4_6b3r_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: ffd0de680e5cf964__r4_6cq8_rc10_Xs.npy
+    sha256: ffd0de680e5cf96486feef51378920e4fecb51cbbd3801a54ae35261790b29b0
+    original_name: r4_6cq8_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 37aa79e2628fa882__r4_6mgv_rc10_Xs.npy
+    sha256: 37aa79e2628fa882d90b437218557a68ead97229c473f2276fbfb670f99eb91c
+    original_name: r4_6mgv_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: e6803bf0b7d0d03e__r4_6pwn_rc10_Xs.npy
+    sha256: e6803bf0b7d0d03e5225c1eb862999a3260772dbbca4a2491688d745bcc313d9
+    original_name: r4_6pwn_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"
+  - file: 8314599836284663__r4_6vtk_rc10_Xs.npy
+    sha256: 8314599836284663fb195b27c93a7f4ad1467f0ec64ac37ff0c1da89fce8e32f
+    original_name: r4_6vtk_rc10_Xs.npy
+    source: "legacy r4 manuscript pipeline (code not preserved)"
+    fetched: 2026-10-22
+    license: "project data"
+    purpose: "legacy r4 tension path used only as reference frames by the load and gauge check (src/load_check.py)"

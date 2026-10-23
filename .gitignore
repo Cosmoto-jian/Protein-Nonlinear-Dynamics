@@ -10,3 +10,9 @@ writing/tex/*.pdf
 data/derived/tmp/
 results/logs/*
 !results/logs/.gitkeep
+writing/tex/*.bbl
+writing/tex/*.blg
+writing/tex/*.out
+writing/tex/*.spl
+writing/tex/*.fls
+writing/tex/*.fdb_latexmk

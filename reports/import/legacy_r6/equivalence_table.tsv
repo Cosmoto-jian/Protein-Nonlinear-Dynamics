@@ -1,0 +1,61 @@
+file	n_num_diff	max_abs	max_rel	worst_key	non_numeric
+data/derived/load_check.json	51	8.24e-05	6.61e-01	/4wff/gauge_raw/lambda_anchored	
+data/derived/indicator.json	14	3.16e-06	3.76e-02	/4wff/fd_rel_change[0]	
+data/derived/vfife_checks.json	39	1.00e+03	1.51e+00	/vfife_4wff_rc10[0]/rmsdev	
+data/derived/nulls.json	139	3.00e+00	4.29e-01	/4wff/rewired[2]/steps	
+data/derived/physical_scale.json	7	2.50e-04	1.50e-04	/4wff/dA_exp_nm2	
+data/derived/summary.json	539	5.47e+05	1.51e+00	/vfife_checks/vfife_4wff_rc10[0]/rmsdev	/variants/6b3r_rc10_loadcontrol/options/tag:value ''!='_loadcontrol'; /runs/4wff_rc8/enl_all_star:missing-new; /runs/4wff_rc8/lam_min:value '1.6764679414208438e-11'!='None'
+data/derived/paths/2oar_rc10.json	0	0.00e+00	0.00e+00		
+data/derived/paths/2oar_rc12.json	0	0.00e+00	0.00e+00		
+data/derived/paths/2oar_rc8.json	0	0.00e+00	0.00e+00		
+data/derived/paths/4wff_rc10.json	1340	1.92e-02	2.09e+06	/rows[4]/rigid_rotation_deg	
+data/derived/paths/4wff_rc12.json	1122	1.92e-02	2.09e+06	/rows[3]/rigid_rotation_deg	
+data/derived/paths/4wff_rc8.json	860	5.47e+05	5.07e-01	/pre/target/linear_grid[0]/ovl	/rows:len 1!=0
+data/derived/paths/4xdk_rc10.json	0	0.00e+00	0.00e+00		
+data/derived/paths/4xdk_rc12.json	0	0.00e+00	0.00e+00		
+data/derived/paths/4xdk_rc8.json	0	0.00e+00	0.00e+00		
+data/derived/paths/6b3r_rc10.json	1708	9.26e-17	9.20e-13	/rows[221]/lam[0]	/pre/continuation/ds0:missing-old; /pre/options/tag:value ''!='_loadcontrol'
+data/derived/paths/6b3r_rc10_arclength.json	1598	9.26e-17	9.20e-13	/points[195]/lam[0]	
+data/derived/paths/6b3r_rc10_dhm2.json	358	6.79e-17	7.19e-13	/rows[56]/lam[0]	
+data/derived/paths/6b3r_rc10_dhp2.json	90	4.22e-17	5.64e-13	/rows[3]/lam[0]	
+data/derived/paths/6b3r_rc10_kbb10.json	514	1.53e-16	6.30e-12	/rows[126]/lam[0]	
+data/derived/paths/6b3r_rc10_kbb100.json	606	9.83e-16	5.96e-12	/rows[4]/lam[0]	
+data/derived/paths/6b3r_rc10_loadcontrol.json	214	6.74e-17	9.11e-13	/rows[10]/lam[1]	/pre/options/tag:value ''!='_loadcontrol'
+data/derived/paths/6b3r_rc10_ns0.5.json	357	9.32e-17	5.13e-13	/rows[4]/lam[1]	
+data/derived/paths/6b3r_rc10_ns2.json	206	5.65e-17	5.37e-13	/pre/lam0[0]	
+data/derived/paths/6b3r_rc10_sh3.json	206	5.15e-17	5.13e-13	/rows[18]/lam[1]	
+data/derived/paths/6b3r_rc10_sh6.json	218	6.40e-17	6.77e-13	/rows[1]/lam[0]	
+data/derived/paths/6b3r_rc10_sl3.json	202	6.33e-17	6.01e-13	/rows[3]/lam[1]	
+data/derived/paths/6b3r_rc10_sl5.json	258	8.01e-17	1.07e-12	/rows[0]/lam[0]	
+data/derived/paths/6b3r_rc10_snap.json	51	2.05e-12	5.45e-03	/newton_polish/rel	
+data/derived/paths/6b3r_rc12.json	541	2.69e-16	4.38e-13	/rows[3]/lam[0]	
+data/derived/paths/6b3r_rc8.json	0	0.00e+00	0.00e+00		
+data/derived/paths/6cq8_rc10.json	0	0.00e+00	0.00e+00		
+data/derived/paths/6cq8_rc12.json	0	0.00e+00	0.00e+00		
+data/derived/paths/6cq8_rc8.json	0	0.00e+00	0.00e+00		
+data/derived/paths/6mgv_rc10.json	186	2.18e-16	1.00e-13	/rows[32]/lam[0]	
+data/derived/paths/6mgv_rc12.json	203	2.76e-16	5.82e-14	/pre/lam0[0]	
+data/derived/paths/6mgv_rc8.json	10	5.46e-17	5.46e-05	/pre/lam0[0]	
+data/derived/paths/6pwn_rc10.json	111	1.34e-16	1.85e-14	/rows[23]/lam[0]	
+data/derived/paths/6pwn_rc10_dhm2.json	106	7.20e-17	1.21e-14	/rows[18]/lam[0]	
+data/derived/paths/6pwn_rc10_dhp2.json	93	7.81e-17	9.93e-15	/rows[4]/lam[1]	
+data/derived/paths/6pwn_rc10_kbb10.json	117	1.09e-16	1.48e-14	/rows[3]/lam[0]	
+data/derived/paths/6pwn_rc10_kbb100.json	114	7.62e-16	1.10e-13	/pre/lam0[0]	
+data/derived/paths/6pwn_rc10_ns0.5.json	118	6.94e-17	7.41e-15	/rows[26]/lam[0]	
+data/derived/paths/6pwn_rc10_ns2.json	108	5.98e-17	8.82e-15	/rows[4]/lam[2]	
+data/derived/paths/6pwn_rc10_sh3.json	112	5.29e-17	8.99e-15	/rows[12]/lam[0]	
+data/derived/paths/6pwn_rc10_sh6.json	110	5.90e-17	9.27e-15	/rows[17]/lam[0]	
+data/derived/paths/6pwn_rc10_sl3.json	112	6.59e-17	9.52e-15	/rows[0]/lam[1]	
+data/derived/paths/6pwn_rc10_sl5.json	106	6.07e-17	8.38e-15	/rows[11]/lam[0]	
+data/derived/paths/6pwn_rc12.json	68	2.78e-16	1.28e-14	/rows[15]/lam[0]	
+data/derived/paths/6pwn_rc8.json	98	9.45e-17	4.90e-14	/rows[22]/lam[1]	
+data/derived/paths/6vtk_rc10.json	53	1.49e-16	2.30e-14	/rows[4]/lam[0]	
+data/derived/paths/6vtk_rc12.json	42	7.22e-16	1.79e-14	/rows[6]/lam[0]	
+data/derived/paths/6vtk_rc8.json	150	9.06e-17	1.30e-13	/rows[31]/lam[0]	
+gen/numbers.json	2	text-diff			 "lamratio-anch-max": "46", =>  "lamratio-anch-max": "28", |  "n-bb-first": "two", =>  "n-bb-lead": "two",
+gen/numbers.tex	2	text-diff			\@namedef{v@lamratio-anch-max}{46} => \@namedef{v@lamratio-anch-max}{28} | \@namedef{v@n-bb-first}{two} => \@namedef{v@n-bb-lead}{two}
+gen/tab_nl.tex	0	identical			
+gen/tab_panel.tex	0	identical			
+gen/tab_phys.tex	0	identical			
+gen/tab_val.tex	1	text-diff			TRAAK & 0.64 & 0.69 & 0.010 & 0.64 [0.64] & 0.69 & => TRAAK & 0.64 & 0.69 & 0.010 & 0.64 [0.64] & 0.69 &
+gen/tab_ver.tex	1	text-diff			TRAAK & $6.7\times10^{-7}$ (1) & $7.7\times10^{-4} => TRAAK & $1.6\times10^{-6}$ (1) & $7.7\times10^{-4}

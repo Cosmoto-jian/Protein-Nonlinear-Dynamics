@@ -1,2 +1,10 @@
 figure,data_files,source_runs,script,command,output
-fig1,-,-,plot/fig1.py,python plot/fig1.py plot,results/figures/fig1
+fig1,figure_data/fig1,-,plot/fig1.py,python plot/fig1.py plot,results/figures/fig1
+fig2,figure_data/fig2,-,plot/fig2.py,python plot/fig2.py plot,results/figures/fig2
+fig3,figure_data/fig3,-,plot/fig3.py,python plot/fig3.py plot,results/figures/fig3
+fig4,figure_data/fig4,-,plot/fig4.py,python plot/fig4.py plot,results/figures/fig4
+fig5,figure_data/fig5,-,plot/fig5.py,python plot/fig5.py plot,results/figures/fig5
+fig6,figure_data/fig6,-,plot/fig6.py,python plot/fig6.py plot,results/figures/fig6
+fig7,figure_data/fig7,-,plot/fig7.py,python plot/fig7.py plot,results/figures/fig7
+figA1,figure_data/figA1,-,plot/figA1.py,python plot/figA1.py plot,results/figures/figA1
+figA2,figure_data/figA2,-,plot/figA2.py,python plot/figA2.py plot,results/figures/figA2

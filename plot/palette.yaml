@@ -1,1 +1,9 @@
-# research object -> colour; appended automatically on first use; edit to change globally
+# research object -> colour; fixed Okabe-Ito assignment used by every figure
+"Piezo1": "#D55E00"
+"MscS": "#009E73"
+"MscL": "#0072B2"
+"TREK-2": "#CC79A7"
+"TRAAK": "#E69F00"
+"OSCA1.2": "#56B4E9"
+"6CQ8": "#7F7F7F"
+"6VTK": "#4D4D4D"
