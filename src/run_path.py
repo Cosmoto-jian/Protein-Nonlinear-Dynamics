@@ -70,18 +70,26 @@ def lowest_eigs(X, tau, k=4):
 
 
 # ---------- reference quantities
+# Mechanism guard: if the constrained tangent at X0 has zero eigenvalues beyond the six rigid modes (Eckart gauge),
+# the bordered KKT system below is singular, the linear response uL1 (and hence eps_per_tau and the load step) is
+# round-off and the path is not defined.  Such runs are recorded as stop='mechanism' with no path.
+inertia0 = None if a.no_inertia else constrained_inertia(net, area, X0, 0.0, C)
+mechanism = inertia0 is not None and inertia0['n_zero'] > 0
 g0 = area.grad(X0)
-KKT0 = sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc()
-uL1 = spla.spsolve(KKT0, np.concatenate([g0.ravel(), np.zeros(6)]))[:n].reshape(-1, 3)
-eps_per_tau = eps_of(X0 + uL1)
+if mechanism:
+    uL1, eps_per_tau = None, None
+else:
+    KKT0 = sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc()
+    uL1 = spla.spsolve(KKT0, np.concatenate([g0.ravel(), np.zeros(6)]))[:n].reshape(-1, 3)
+    eps_per_tau = eps_of(X0 + uL1)
 pre = dict(name=name, rc=rc, gauge='eckart', N=int(net.N), E=int(net.E), n_bb=int(bb.sum()), n_mem=int(len(mem)),
            options=vars(a), n_sector=n_sector, n_loaded=int(len(area.vertices)), n_slabs=len(area.polys),
            eps_per_tau=eps_per_tau, A0=area.area(X0), load_resultants_x0=load_resultants(area, X0, X0),
-           lam0=lowest_eigs(X0, 0.0, k=6))
-if not a.no_inertia:
-    pre['inertia0'] = constrained_inertia(net, area, X0, 0.0, C)
+           lam0=None if mechanism else lowest_eigs(X0, 0.0, k=6))
+if inertia0 is not None:
+    pre['inertia0'] = inertia0
 tgt = None
-if PROTEINS[name]['target'] is not None:
+if PROTEINS[name]['target'] is not None and not mechanism:
     idx, P0, XE, Delta, info = build_target(name, M)
     unl = ~np.isin(idx, area.vertices); tm = np.isin(idx, mem)
     s_grid = np.linspace(0, 0.6 / eps_per_tau, 121)
@@ -97,7 +105,15 @@ if PROTEINS[name]['target'] is not None:
     pre['target'] = info
 else:
     pre['target'] = None
-print('pre', tag, 'N', net.N, 'eps/tau %.4g' % eps_per_tau, f'{time.time()-T0:.0f}s', flush=True)
+print('pre', tag, 'N', net.N, 'mechanism n_zero=%d' % inertia0['n_zero'] if mechanism else 'eps/tau %.4g' % eps_per_tau,
+      f'{time.time()-T0:.0f}s', flush=True)
+if mechanism:
+    np.save(f'{RES}/paths/{tag}_Xs.npy', np.array([]))
+    json.dump(dict(pre=pre, rows=[], stop='mechanism', n_fail=0, wall_s=time.time() - T0), open(f'{RES}/paths/{tag}.json', 'w'),
+              default=float)
+    ckpt.clear(tag)
+    print('DONE', tag, 'mechanism', f'{time.time()-T0:.0f}s', flush=True)
+    sys.exit(0)
 
 # ---------- path
 rows, Xs = [], []
