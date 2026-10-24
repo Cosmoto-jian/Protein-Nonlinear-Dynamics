@@ -4,11 +4,11 @@
   "n_loaded": 611,
   "n_sector": 108,
   "area_operator_vs_direct": {
-   "raw_max": 2.7535894882762307e-16,
-   "equilibrated_max": 3.339249584978245e-16,
+   "raw_max": 4.1303842324143463e-16,
+   "equilibrated_max": 4.517561427727808e-16,
    "n_frames": 7
   },
-  "grad_fd_rel_max": 3.886727704555273e-08,
+  "grad_fd_rel_max": 3.886727666342812e-08,
   "resultants_x0": {
    "raw": {
     "F": [
@@ -44,37 +44,37 @@
    "eq": 0.0008593509589439453
   },
   "load_change_rel": 0.0002235312195693699,
-  "lambda1_x0": 4.929180859899431e-05,
+  "lambda1_x0": 4.9291808599001734e-05,
   "gauge_raw": {
    "tau": 0.10274271163118799,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.12379584960677188,
-   "eckart_reaction_rel": 0.0003325111040491696,
-   "Mxy_current": 0.0005118787230224864,
-   "metric_shift_tm": 0.009313670952641573,
-   "anchor_reaction_rel": 0.01587325172856192,
-   "lambda_anchored": 4.544049783123114e-06,
-   "lambda_eckart": 8.577800612515479e-05,
+   "rmsd_anchored_vs_eckart": 0.12379584960678026,
+   "eckart_reaction_rel": 0.00033251110404919576,
+   "Mxy_current": 0.0005118787230224886,
+   "metric_shift_tm": 0.009313670952636244,
+   "anchor_reaction_rel": 0.01587325172856153,
+   "lambda_anchored": 1.540831942200807e-06,
+   "lambda_eckart": 8.577800612513186e-05,
    "anchor_span": 198.5016212402307,
    "n_anchor_nodes": 6
   },
   "gauge_eq": {
    "tau": 0.10274271163118799,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 2.0421998178499465,
-   "eckart_reaction_rel": 0.008935815027512001,
-   "Mxy_current": 0.00037804716763735664,
-   "metric_shift_tm": 0.2181767665880514
+   "rmsd_anchored_vs_eckart": 2.042199817849931,
+   "eckart_reaction_rel": 0.008935815027511968,
+   "Mxy_current": 0.0003780471676373619,
+   "metric_shift_tm": 0.21817676658805674
   },
   "gauge_symmetry": {
    "converged": false,
    "reaction_rel": 1.0123809154693578e-06,
-   "rmsd_vs_eckart6": 0.03426515853971785,
+   "rmsd_vs_eckart6": 0.03426515853971426,
    "tilt_deg": 0.3179914100596221,
    "n_neg": 1,
-   "metric_shift_tm": 0.0006616637816065918
+   "metric_shift_tm": 0.0006616637816101445
   },
-  "time_s": 4076.331430912018
+  "time_s": 4130.704546928406
  },
  "6pwn": {
   "N": 1960,
@@ -121,27 +121,27 @@
    "eq": 2.6806316402241464e-05
   },
   "load_change_rel": 3.990209045050283e-05,
-  "lambda1_x0": 0.005368946807069668,
+  "lambda1_x0": 0.005368946807069674,
   "gauge_raw": {
    "tau": 2.554544680334598,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.130852852107681,
+   "rmsd_anchored_vs_eckart": 0.13085285210768166,
    "eckart_reaction_rel": 1.6163329672974477e-05,
    "Mxy_current": 2.0876598611079906e-05,
-   "metric_shift_tm": 0.009565192772583053,
-   "anchor_reaction_rel": 0.008864222093177871,
-   "lambda_anchored": 0.00027835206292057657,
-   "lambda_eckart": 0.005824164113830081,
+   "metric_shift_tm": 0.009565192772587494,
+   "anchor_reaction_rel": 0.008864222093178307,
+   "lambda_anchored": 0.0002600379829266124,
+   "lambda_eckart": 0.0058241641138300545,
    "anchor_span": 134.42894229294524,
    "n_anchor_nodes": 6
   },
   "gauge_eq": {
    "tau": 2.554544680334598,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.13828914226481334,
+   "rmsd_anchored_vs_eckart": 0.1382891422648106,
    "eckart_reaction_rel": 0.0018979334426206878,
    "Mxy_current": 2.3371722101983728e-05,
-   "metric_shift_tm": 0.019319491329067517
+   "metric_shift_tm": 0.01931949132906663
   },
   "gauge_symmetry": {
    "converged": true,
@@ -151,7 +151,7 @@
    "n_neg": 0,
    "metric_shift_tm": 6.035571704643417e-07
   },
-  "time_s": 176.2879455089569
+  "time_s": 177.01610231399536
  },
  "2oar": {
   "N": 625,
@@ -198,27 +198,27 @@
    "eq": 0.000327965581182751
   },
   "load_change_rel": 0.0005779401553691779,
-  "lambda1_x0": 0.011160678833818362,
+  "lambda1_x0": 0.01116067883381362,
   "gauge_raw": {
    "tau": 3.0255548498284295,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.019563992498002194,
+   "rmsd_anchored_vs_eckart": 0.01956399249800337,
    "eckart_reaction_rel": 4.694239984183837e-05,
    "Mxy_current": 2.9442946581921425e-05,
    "metric_shift_tm": 0.00042083644221335703,
-   "anchor_reaction_rel": 0.002441980501926882,
-   "lambda_anchored": 0.0021638934275675452,
-   "lambda_eckart": 0.022850404224334472,
+   "anchor_reaction_rel": 0.0024419805019270605,
+   "lambda_anchored": 0.0010877228974830763,
+   "lambda_eckart": 0.022850404224333237,
    "anchor_span": 89.15481548968626,
    "n_anchor_nodes": 6
   },
   "gauge_eq": {
    "tau": 3.0255548498284295,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.0866219879444004,
+   "rmsd_anchored_vs_eckart": 0.08662198794440075,
    "eckart_reaction_rel": 0.003295812395059288,
    "Mxy_current": 0.00014727174400023634,
-   "metric_shift_tm": 0.010360540025378562
+   "metric_shift_tm": 0.010360540025380338
   },
   "gauge_symmetry": {
    "converged": true,
@@ -228,7 +228,7 @@
    "n_neg": 0,
    "metric_shift_tm": 2.377479574189323e-05
   },
-  "time_s": 20.995672941207886
+  "time_s": 21.143106698989868
  },
  "4xdk": {
   "N": 499,
@@ -275,27 +275,27 @@
    "eq": 0.0004408328764010168
   },
   "load_change_rel": 0.004481620967799855,
-  "lambda1_x0": 0.004410781259979873,
+  "lambda1_x0": 0.004410781259979432,
   "gauge_raw": {
    "tau": 1.0094456718817237,
    "converged": true,
    "rmsd_anchored_vs_eckart": 0.8914257800905461,
    "eckart_reaction_rel": 0.0013995391596331374,
    "Mxy_current": 0.0009002031147377877,
-   "metric_shift_tm": 0.18095927501854847,
-   "anchor_reaction_rel": 0.07711684607373798,
-   "lambda_anchored": 0.0004715537140791963,
-   "lambda_eckart": 0.007782744872522699,
+   "metric_shift_tm": 0.18095927501855114,
+   "anchor_reaction_rel": 0.07711684607373773,
+   "lambda_anchored": 0.00048676744476449876,
+   "lambda_eckart": 0.0077827448725187025,
    "anchor_span": 88.42709415671195,
    "n_anchor_nodes": 5
   },
   "gauge_eq": {
    "tau": 1.0094456718817237,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 2.0094662307971953,
+   "rmsd_anchored_vs_eckart": 2.009466230797195,
    "eckart_reaction_rel": 0.011426058909964166,
    "Mxy_current": 0.00023888830764147846,
-   "metric_shift_tm": 0.5070409464701364
+   "metric_shift_tm": 0.50704094647014
   },
   "gauge_symmetry": {
    "converged": true,
@@ -305,7 +305,7 @@
    "n_neg": 0,
    "metric_shift_tm": 0.0013100913821730842
   },
-  "time_s": 22.597296237945557
+  "time_s": 22.81277561187744
  },
  "4wff": {
   "N": 506,
@@ -352,27 +352,27 @@
    "eq": 0.0021350418819034316
   },
   "load_change_rel": 0.0027955836544015333,
-  "lambda1_x0": 0.00398855677444783,
+  "lambda1_x0": 0.003988556774449994,
   "gauge_raw": {
    "tau": 2.348030021632126,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.4037303927957458,
+   "rmsd_anchored_vs_eckart": 0.40373039279574524,
    "eckart_reaction_rel": 0.0030891464419971785,
    "Mxy_current": 0.002143101963067972,
-   "metric_shift_tm": 0.001593760853589643,
-   "anchor_reaction_rel": 0.015376177092774633,
-   "lambda_anchored": 0.0003273185892724884,
-   "lambda_eckart": 0.005721966029495579,
+   "metric_shift_tm": 0.0015937608535905312,
+   "anchor_reaction_rel": 0.015376177092774576,
+   "lambda_anchored": 0.0004476187269477146,
+   "lambda_eckart": 0.005721966029490436,
    "anchor_span": 85.66209085704132,
    "n_anchor_nodes": 4
   },
   "gauge_eq": {
    "tau": 2.348030021632126,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 1.1381307912804257,
+   "rmsd_anchored_vs_eckart": 1.1381307912804286,
    "eckart_reaction_rel": 0.013230326253104677,
    "Mxy_current": 0.0014909620354468345,
-   "metric_shift_tm": 0.09659759680811275
+   "metric_shift_tm": 0.09659759680811586
   },
   "gauge_symmetry": {
    "converged": true,
@@ -382,7 +382,7 @@
    "n_neg": 0,
    "metric_shift_tm": 0.024727689071850634
   },
-  "time_s": 17.07223629951477
+  "time_s": 17.40397310256958
  },
  "6mgv": {
   "N": 1268,
@@ -429,27 +429,27 @@
    "eq": 0.0002132315666390965
   },
   "load_change_rel": 0.002298126300655787,
-  "lambda1_x0": 0.0008067720781687319,
+  "lambda1_x0": 0.0008067720781687422,
   "gauge_raw": {
    "tau": 0.1919013452875743,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 1.0720068151919389,
+   "rmsd_anchored_vs_eckart": 1.0720068151919335,
    "eckart_reaction_rel": 0.0010607764394007103,
    "Mxy_current": 0.0009878313476983922,
    "metric_shift_tm": 0.8077222211685946,
-   "anchor_reaction_rel": 0.3767751792941939,
-   "lambda_anchored": 8.699802707124613e-05,
-   "lambda_eckart": 0.002008931203060578,
+   "anchor_reaction_rel": 0.3767751792941948,
+   "lambda_anchored": 8.536340430370097e-05,
+   "lambda_eckart": 0.002008931203060583,
    "anchor_span": 137.63279366488206,
    "n_anchor_nodes": 5
   },
   "gauge_eq": {
    "tau": 0.1919013452875743,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.9707208626959555,
+   "rmsd_anchored_vs_eckart": 0.970720862695956,
    "eckart_reaction_rel": 0.013170953042658268,
    "Mxy_current": 0.00019784335079272794,
-   "metric_shift_tm": 0.7587410992297965
+   "metric_shift_tm": 0.7587410992298089
   },
   "gauge_symmetry": {
    "converged": true,
@@ -459,7 +459,7 @@
    "n_neg": 0,
    "metric_shift_tm": 2.392802983308684e-06
   },
-  "time_s": 209.46545577049255
+  "time_s": 212.6795437335968
  },
  "6cq8": {
   "N": 559,
@@ -506,23 +506,23 @@
    "eq": 0.00040946453106212516
   },
   "load_change_rel": 0.003933185306634466,
-  "lambda1_x0": 0.0005242137078414837,
+  "lambda1_x0": 0.0005242137078406117,
   "gauge_raw": {
    "tau": 2.8242796634290968,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.27028887959822656,
+   "rmsd_anchored_vs_eckart": 0.2702888795982417,
    "eckart_reaction_rel": 0.00190523649979278,
    "Mxy_current": 0.0010608192065207091,
-   "anchor_reaction_rel": 0.0027122091279666812,
-   "lambda_anchored": 9.622795550349435e-05,
-   "lambda_eckart": 0.0022051740986420683,
+   "anchor_reaction_rel": 0.0027122091279664926,
+   "lambda_anchored": 6.444856300274123e-05,
+   "lambda_eckart": 0.0022051740986396935,
    "anchor_span": 96.79576827010568,
    "n_anchor_nodes": 4
   },
   "gauge_eq": {
    "tau": 2.8242796634290968,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.893459617515409,
+   "rmsd_anchored_vs_eckart": 0.8934596175154194,
    "eckart_reaction_rel": 0.010562503456105854,
    "Mxy_current": 0.0008880881196163674
   },
@@ -533,7 +533,7 @@
    "tilt_deg": 1.412954256059387,
    "n_neg": 0
   },
-  "time_s": 41.509607791900635
+  "time_s": 42.10010313987732
  },
  "6vtk": {
   "N": 1338,
@@ -580,23 +580,23 @@
    "eq": 0.0002337489957972518
   },
   "load_change_rel": 0.000804463984365411,
-  "lambda1_x0": 0.0023980860640997366,
+  "lambda1_x0": 0.002398086064099719,
   "gauge_raw": {
    "tau": 4.890993209197419,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.28626759804905916,
+   "rmsd_anchored_vs_eckart": 0.28626759804905655,
    "eckart_reaction_rel": 3.224671270477735e-05,
    "Mxy_current": 4.164507877068561e-05,
-   "anchor_reaction_rel": 0.00384644376225997,
-   "lambda_anchored": 9.501417244329041e-05,
-   "lambda_eckart": 0.0039805129577589185,
-   "anchor_span": 126.67101583629935,
+   "anchor_reaction_rel": 0.003846443762259872,
+   "lambda_anchored": 0.0001028388173004897,
+   "lambda_eckart": 0.003980512957758974,
+   "anchor_span": 127.22240204460847,
    "n_anchor_nodes": 6
   },
   "gauge_eq": {
    "tau": 4.890993209197419,
    "converged": true,
-   "rmsd_anchored_vs_eckart": 0.2745109745186622,
+   "rmsd_anchored_vs_eckart": 0.2745109745186506,
    "eckart_reaction_rel": 0.000102405642796426,
    "Mxy_current": 1.4397360746103865e-05
   },
@@ -607,6 +607,6 @@
    "tilt_deg": 0.25210442957515455,
    "n_neg": 0
   },
-  "time_s": 44.13699698448181
+  "time_s": 45.24459385871887
  }
 }

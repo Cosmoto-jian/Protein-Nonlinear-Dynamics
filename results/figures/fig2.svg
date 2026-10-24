@@ -536,12 +536,12 @@ z
 " style="stroke: #d55e00; stroke-width: 0.8"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m4e763b0a44" x="42.359365" y="73.441273" style="fill: #d55e00; stroke: #d55e00; stroke-width: 0.8"/>
+     <use xlink:href="#m4e763b0a44" x="42.359365" y="75.506934" style="fill: #d55e00; stroke: #d55e00; stroke-width: 0.8"/>
     </g>
    </g>
    <g id="line2d_55">
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m4e763b0a44" x="42.359365" y="62.504543" style="fill: #d55e00; stroke: #d55e00; stroke-width: 0.8"/>
+     <use xlink:href="#m4e763b0a44" x="42.359365" y="61.962133" style="fill: #d55e00; stroke: #d55e00; stroke-width: 0.8"/>
     </g>
    </g>
    <g id="patch_5">
@@ -582,7 +582,7 @@ z
 " style="stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m682793126e" x="52.72425" y="89.57492" style="fill: #ffffff; stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#m682793126e" x="52.72425" y="98.856696" style="fill: #ffffff; stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_57">
@@ -595,7 +595,7 @@ z
 " style="stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m6fc8e3b77f" x="55.997372" y="92.048534" style="fill: #009e73; stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#m6fc8e3b77f" x="55.997372" y="85.04396" style="fill: #009e73; stroke: #009e73; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_58">
@@ -608,12 +608,12 @@ z
 " style="stroke: #0072b2; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m6537714144" x="69.635378" y="108.10061" style="fill: #0072b2; stroke: #0072b2; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#m6537714144" x="69.635378" y="98.36747" style="fill: #0072b2; stroke: #0072b2; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_59">
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m6537714144" x="69.635378" y="106.391998" style="fill: #0072b2; stroke: #0072b2; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#m6537714144" x="69.635378" y="104.464861" style="fill: #0072b2; stroke: #0072b2; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_60">
@@ -625,7 +625,7 @@ z
 " style="stroke: #cc79a7; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#mb01bdf2128" x="83.273385" y="91.245562" style="fill: #cc79a7; stroke: #cc79a7; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#mb01bdf2128" x="83.273385" y="93.775261" style="fill: #cc79a7; stroke: #cc79a7; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_61">
@@ -637,7 +637,7 @@ z
 " style="stroke: #e69f00; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#mcd1c40c1c3" x="96.911392" y="73.363489" style="fill: #e69f00; stroke: #e69f00; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#mcd1c40c1c3" x="96.911392" y="79.680735" style="fill: #e69f00; stroke: #e69f00; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_62">
@@ -651,7 +651,7 @@ z
 " style="stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#ma93cf5db55" x="107.276277" y="87.670843" style="fill: #ffffff; stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#ma93cf5db55" x="107.276277" y="86.510993" style="fill: #ffffff; stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="line2d_63">
@@ -665,7 +665,7 @@ z
 " style="stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
     </defs>
     <g clip-path="url(#pa2abdd46ac)">
-     <use xlink:href="#m5b6c583687" x="110.549399" y="80.949281" style="fill: #56b4e9; stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
+     <use xlink:href="#m5b6c583687" x="110.549399" y="80.691001" style="fill: #56b4e9; stroke: #56b4e9; stroke-width: 0.8; stroke-linejoin: miter"/>
     </g>
    </g>
    <g id="text_15">
