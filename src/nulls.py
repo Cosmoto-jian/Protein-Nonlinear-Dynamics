@@ -33,7 +33,7 @@ def rewire(pairs, X0, bb, seed, rmax, target=3.0):
         mid = np.array([0.5 * (X0[P[i][0]] + X0[P[i][1]]) for i in free]); tree = cKDTree(mid)
         for _ in range(len(free)):
             tries += 1
-            ii = rng.integers(len(free)); nb = tree.query_ball_point(mid[ii], 8.0)
+            ii = rng.integers(len(free)); nb = tree.query_ball_point(mid[ii], 8.0, return_sorted=True)  # fixed order: seed -> same network
             if len(nb) < 2: continue
             jj = nb[rng.integers(len(nb))]
             if jj == ii: continue
