@@ -48,7 +48,6 @@ def rigid_anchor_dofs(coords, exclude_nodes=None):
 
     Returns array of 6 constrained DOF indices.
     """
-    from scipy.linalg import qr
     X = coords
     N = X.shape[0]
     c = X.mean(axis=0)
@@ -63,9 +62,17 @@ def rigid_anchor_dofs(coords, exclude_nodes=None):
         excl = np.zeros(3 * N, bool)
         excl[np.asarray(exclude_nodes)[:, None] * 3 + np.arange(3)] = True
         B[excl, :] = 0.0
-    # pivots select maximally independent rows (DOFs) of B
-    _, _, piv = qr(B.T, pivoting=True)
-    anchor = np.sort(piv[:6])
+    # pivots select maximally independent rows (DOFs) of B: greedy pivoted Gram-Schmidt (= QR with column
+    # pivoting on B.T). LAPACK's pivot choice among near-equal column norms depends on the BLAS/LAPACK build, which
+    # made the anchor set (and every anchored result) machine dependent; here norms are compared after rounding to
+    # 1e-9 relative and ties go to the lowest DOF index, so the selection is reproducible.
+    Rm = B.copy(); piv = []
+    for _ in range(6):
+        nrm = np.einsum('ij,ij->i', Rm, Rm)
+        v = np.round(nrm / nrm.max(), 9)
+        i = int(np.flatnonzero(v == v.max())[0]); piv.append(i)
+        q = Rm[i] / np.sqrt(nrm[i]); Rm -= np.outer(Rm @ q, q); Rm[i] = 0.0
+    anchor = np.sort(np.array(piv))
     return anchor
 
 
