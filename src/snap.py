@@ -27,7 +27,9 @@ bb = np.array([order[i][0] == order[j][0] and abs(order[i][1] - order[j][1]) == 
 net = TrussNetwork(X0, pairs, k=1.0); area, _ = make_area(M); C = gauge_C(X0); n = 3 * net.N; x0 = X0.ravel()
 er = np.zeros((len(mem), 3)); er[:, :2] = M['m']['e_r']; R0 = M['m']['radii'].mean()
 eps_of = lambda X: float(((X[mem] - X0[mem]) * er).sum(1).mean() / R0)
-uL1 = EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(area.H @ x0)[0].reshape(-1, 3)
+import kkt
+uL1 = (kkt.linear_response(net, area, C, X0, area.H @ x0) if kkt.AVAILABLE else
+       EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(area.H @ x0)[0]).reshape(-1, 3)
 idx, P0, XE, Delta, info = build_target(name, M); unl = ~np.isin(idx, area.vertices); tm = np.isin(idx, mem)
 
 
@@ -50,8 +52,11 @@ def full_record(X, tau):
     st, _ = strains(X); uL = tau * uL1; Aa = area.area(X)
     rec = dict(tau=tau, eps=eps_of(X), U=net.energy(X), A=Aa, dA=Aa - area.area(X0), **st,
                enl_all=enl_parts(X, uL), enl_mem=enl_parts(X, uL, mem),
-               nl=target_metrics(X, idx, XE, P0, Delta, unl, tm), lin=target_metrics(X0 + uL, idx, XE, P0, Delta, unl, tm),
-               inertia=constrained_inertia(net, area, X, tau, C), lam=spectrum(net, area, X, tau, C, k=4)['lam'])
+               nl=target_metrics(X, idx, XE, P0, Delta, unl, tm), lin=target_metrics(X0 + uL, idx, XE, P0, Delta, unl, tm))
+    if kkt.AVAILABLE:                       # scheme B: inertia and lam from one factorisation
+        rec['inertia'], rec['lam'] = kkt.get(net, area, C).inertia_and_eigs(net.tangent(X) - tau * area.H, k=4)
+    else:
+        rec['inertia'] = constrained_inertia(net, area, X, tau, C); rec['lam'] = spectrum(net, area, X, tau, C, k=4)['lam']
     f = net.internal_forces(X).ravel() + tau * (area.H @ X.ravel()); mu = np.linalg.lstsq(C.T, -f, rcond=None)[0]
     rec['gauge_reaction_rel'] = float(np.linalg.norm(C.T @ mu) / np.linalg.norm(tau * (area.H @ X.ravel())))
     Rk, _ = kabsch(X0, X); rec['rigid_rotation_deg'] = float(np.degrees(np.arccos(np.clip((np.trace(Rk) - 1) / 2, -1, 1))))

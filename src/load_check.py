@@ -5,7 +5,10 @@ For every structure:
   (ii)  finite-difference check of grad A' at a deformed frame;
   (iii) residual in-plane moment M_xy of the original and of the self-equilibrated load, at x0 and along the path;
   (iv)  anchored (6 isostatic supports) vs Eckart solutions at the r4 validity-boundary tension, for both loads.
-usage: python load_check.py [names...]      output: results/load_check.json
+usage: python load_check.py [names...]      output: data/derived/load_check.json (records merged by name)
+       python load_check.py --part NAME     output: data/derived/load_check/NAME.json (one structure, for parallel runs)
+       python load_check.py --merge         merge the parts into data/derived/load_check.json (same format and order
+                                            as the serial run: PANEL + EXTRA)
 """
 import sys, os, json, time
 import numpy as np
@@ -15,9 +18,19 @@ from model import *
 from inertia import constrained_inertia
 from paths import raw as raw_path
 
-names = sys.argv[1:] or PANEL + EXTRA
+ALL = PANEL + EXTRA
+PARTS = os.path.join(RES, 'load_check')
 outf = os.path.join(RES, 'load_check.json')
-out = json.load(open(outf)) if os.path.exists(outf) else {}
+if sys.argv[1:2] == ['--merge']:
+    out = {nm: json.load(open(os.path.join(PARTS, f'{nm}.json'))) for nm in ALL}
+    json.dump(out, open(outf, 'w'), indent=1, default=float)
+    print('merged', list(out)); sys.exit(0)
+part = sys.argv[1:2] == ['--part']
+if part:
+    names = sys.argv[2:]; os.makedirs(PARTS, exist_ok=True); out = {}
+else:
+    names = sys.argv[1:] or ALL
+    out = json.load(open(outf)) if os.path.exists(outf) else {}
 
 
 def follow(net, area, X0, taus, gauge, fd=None, C=None):
@@ -87,7 +100,7 @@ for name in names:
             # statically determinate support: reactions = -(resultant of the load in the current configuration)
             fa = net.internal_forces(Xa).ravel() + taus[-1] * ar.grad(Xa).ravel()
             Ka = (net.tangent(Xa) - taus[-1] * ar.H).tocsc()[fd][:, fd]
-            la = float(spla.eigsh(Ka, k=1, sigma=-1e-6, which='LM', return_eigenvectors=False)[0])
+            la = float(spla.eigsh(Ka, k=1, sigma=-1e-6, which='LM', return_eigenvectors=False, v0=np.ones(Ka.shape[0]))[0])
             le = float(spectrum(net, ar, Xe, taus[-1], C, k=1)['lam'][0])
             an = np.unique(anchor // 3); arm = float(max(np.linalg.norm(X0[i] - X0[j]) for i in an for j in an))
             rec['gauge_raw'].update(anchor_reaction_rel=float(np.linalg.norm(fa[anchor]) / np.linalg.norm(g)),
@@ -104,5 +117,8 @@ for name in names:
         rec['gauge_symmetry']['metric_shift_tm'] = float(abs(m4['rmsd_tm'] - m6['rmsd_tm']))
     rec['time_s'] = time.time() - T0
     out[name] = rec
-    json.dump(out, open(outf, 'w'), indent=1, default=float)
+    if part:
+        json.dump(rec, open(os.path.join(PARTS, f'{name}.json'), 'w'), indent=1, default=float)
+    else:
+        json.dump(out, open(outf, 'w'), indent=1, default=float)
     print(name, json.dumps({k: rec[k] for k in ('gauge_raw', 'gauge_eq', 'gauge_symmetry', 'lambda1_x0', 'grad_fd_rel_max', 'area_operator_vs_direct')}, default=float), f'{rec["time_s"]:.0f}s', flush=True)

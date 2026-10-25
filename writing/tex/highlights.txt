@@ -1,0 +1,6 @@
+Highlights
+- Under membrane tension, protein elastic networks stiffen, turn and can lose stability
+- Stiffening makes linear ANM overshoot; one amplitude factor removes it
+- A second-order indicator from the reference state ranks the turning
+- Only Piezo1 beats rescaled ANM, and an isotropic dilation does as well
+- At the reference cutoff Piezo1 reaches a localized limit point (inertia count)

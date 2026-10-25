@@ -10,8 +10,9 @@ Source: data/derived/paths/<id>_rc10.json and data/derived/summary.json (membran
 | eps | normalized radial displacement of the membrane nodes | - | value |
 | amp | amplitude ratio a = |u_L| / |u_NL| at the same tension | - | value |
 | dir | direction error sin(theta) between u_L and u_NL | - | value |
-| lam_rel | lowest constrained eigenvalue relative to its reference value | - | value |
-| max_e | largest element strain |e|_max | - | value |
+| lam_rel | lowest constrained eigenvalue relative to its reference value (true lowest: the shift-invert shift is chosen from the inertia count, so it is negative wherever n_neg > 0, i.e. past the Piezo1 limit point) | - | value |
+| max_e | largest element strain |eta|_max | - | value |
+| n_neg | negative eigenvalues of the constrained tangent (inertia count) | - | count |
 
 ## structures.csv
 | Column | Meaning | Unit | Kind |

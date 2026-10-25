@@ -61,6 +61,11 @@ def bordered_inertia(K, C, rtol=1e-13):
 
 
 def constrained_inertia(net, area, X, tau, C, rtol=1e-13):
-    """certified inertia of K_t(X) - tau*H on the admissible space {C dx = 0}."""
+    """certified inertia of K_t(X) - tau*H on the admissible space {C dx = 0}.  With MKL PARDISO available (kkt.py):
+    shift count n_neg = n_neg(B(K + sI)), n_zero = n_neg(B(K - sI)) - n_neg(B(K + sI)), s = 1e-8, from the sparse
+    LDL^T of the bordered matrix; dense Bunch-Kaufman count below if PARDISO perturbed a pivot or is unavailable."""
+    import kkt
+    if kkt.AVAILABLE:
+        return kkt.constrained_inertia(net, area, X, tau, C, rtol)
     K = (net.tangent(X) - tau * area.H).tocsr()
     return bordered_inertia(K, C, rtol)

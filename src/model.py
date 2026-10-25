@@ -11,6 +11,7 @@ from vfife.core import TrussNetwork
 from vfife.stability import rigid_anchor_dofs
 
 from paths import DERIVED, raw
+import kkt as _kkt                                     # PARDISO bordered-KKT fast path (falls back to scipy)
 RES = str(DERIVED)
 PDB = os.path.join(RES, 'models')                       # C-alpha model inputs written by src/prepare_models.py
 os.makedirs(os.path.join(RES, 'paths'), exist_ok=True)
@@ -263,8 +264,12 @@ def _pi(net, area, X, tau):
     return net.energy(X) - tau * area.area(X)
 
 
-def newton_anchored(net, area, X, tau, fd, max_iter=40, tol=1e-9):
-    """Newton with backtracking on the potential Pi = U - tau*A (6 minimal anchors)."""
+def newton_anchored(net, area, X, tau, fd, max_iter=40, tol=1e-9, stall=3):
+    """Newton with backtracking on the potential Pi = U - tau*A (6 minimal anchors).  Early exit (not converged)
+    after `stall` consecutive line searches that hit the step floor."""
+    if _kkt.AVAILABLE:
+        return _kkt.newton_anchored(net, area, X, tau, fd, max_iter, tol, stall)
+    floor = 0
     for it in range(max_iter):
         f = net.internal_forces(X).ravel() + tau * (area.H @ X.ravel())
         rel = np.linalg.norm(f[fd]) / max(1.0, tau * np.linalg.norm((area.H @ X.ravel())[fd]))
@@ -272,21 +277,28 @@ def newton_anchored(net, area, X, tau, fd, max_iter=40, tol=1e-9):
             return X, it, rel, True
         K = (net.tangent(X) - tau * area.H).tocsc()[fd][:, fd]
         dx = np.zeros(3 * net.N); dx[fd] = spla.spsolve(K, f[fd])
-        p0 = _pi(net, area, X, tau); a = 1.0
+        p0 = _pi(net, area, X, tau); a = 1.0; hit = True
         while a > 1e-4:
             Xn = X + a * dx.reshape(-1, 3)
             if np.all(np.isfinite(Xn)) and _pi(net, area, Xn, tau) <= p0 + 1e-12 * abs(p0):
-                break
+                hit = False; break
             a *= 0.5
         X = Xn
         if not np.all(np.isfinite(X)):
             return X, it, rel, False
+        floor = floor + 1 if hit else 0
+        if stall and floor >= stall:
+            return X, it, rel, False
     return X, it, rel, False
 
 
-def newton_eckart(net, area, X, X0, tau, C, max_iter=40, tol=1e-9):
-    """Anchor-free Newton (bordered system with the 6 Eckart conditions) with backtracking on Pi."""
-    n = 3 * net.N; Cs = sp.csr_matrix(C); ok = False
+def newton_eckart(net, area, X, X0, tau, C, max_iter=40, tol=1e-9, stall=3):
+    """Anchor-free Newton (bordered system with the 6 Eckart conditions) with backtracking on Pi.  Early exit
+    (ok=False) after `stall` consecutive line searches that hit the step floor.  Linear algebra by kkt (PARDISO,
+    fixed pattern) when available, otherwise scipy spsolve on the bordered matrix."""
+    if _kkt.AVAILABLE:
+        return _kkt.newton(net, area, X, X0, tau, C, max_iter, tol, stall)
+    n = 3 * net.N; Cs = sp.csr_matrix(C); ok = False; floor = 0
     for it in range(max_iter):
         f = net.internal_forces(X).ravel() + tau * (area.H @ X.ravel())
         mu = np.linalg.lstsq(C.T, -f, rcond=None)[0]; r = f + C.T @ mu
@@ -296,13 +308,16 @@ def newton_eckart(net, area, X, X0, tau, C, max_iter=40, tol=1e-9):
         K = (net.tangent(X) - tau * area.H).tocsc()
         A = sp.bmat([[K, Cs.T], [Cs, None]]).tocsc()
         dx = spla.spsolve(A, np.concatenate([f, -C @ (X - X0).ravel()]))[:n].reshape(-1, 3)
-        p0 = _pi(net, area, X, tau); a = 1.0
+        p0 = _pi(net, area, X, tau); a = 1.0; hit = True
         while a > 1e-4:
             Xn = X + a * dx
             if np.all(np.isfinite(Xn)) and _pi(net, area, Xn, tau) <= p0 + 1e-12 * abs(p0):
-                break
+                hit = False; break
             a *= 0.5
         X = Xn
+        floor = floor + 1 if hit else 0
+        if stall and floor >= stall:
+            break
     g = tau * (area.H @ X.ravel())
     return X, it, rel, float(np.linalg.norm(C.T @ mu) / max(np.linalg.norm(g), 1e-30)), ok
 
@@ -356,9 +371,12 @@ def eckart_pivots(C):
     return _PIVOTS[key]
 
 
-def newton_eckart_fast(net, area, X, X0, tau, C, max_iter=40, tol=1e-9):
-    """same iteration as newton_eckart (bordered Newton, backtracking on Pi), linear algebra by EckartSolver."""
-    A_ = eckart_pivots(C); ok = False
+def newton_eckart_fast(net, area, X, X0, tau, C, max_iter=40, tol=1e-9, stall=3):
+    """same iteration as newton_eckart (bordered Newton, backtracking on Pi), linear algebra by kkt (PARDISO) when
+    available, otherwise by EckartSolver."""
+    if _kkt.AVAILABLE:
+        return _kkt.newton(net, area, X, X0, tau, C, max_iter, tol, stall)
+    A_ = eckart_pivots(C); ok = False; floor = 0
     for it in range(max_iter):
         f = net.internal_forces(X).ravel() + tau * (area.H @ X.ravel())
         mu = np.linalg.lstsq(C.T, -f, rcond=None)[0]; r = f + C.T @ mu
@@ -368,20 +386,24 @@ def newton_eckart_fast(net, area, X, X0, tau, C, max_iter=40, tol=1e-9):
         K = (net.tangent(X) - tau * area.H).tocsc()
         dx, _ = EckartSolver(K, C, A_).solve(f, -C @ (X - X0).ravel())
         dx = dx.reshape(-1, 3)
-        p0 = _pi(net, area, X, tau); a = 1.0
+        p0 = _pi(net, area, X, tau); a = 1.0; hit = True
         while a > 1e-4:
             Xn = X + a * dx
             if np.all(np.isfinite(Xn)) and _pi(net, area, Xn, tau) <= p0 + 1e-12 * abs(p0):
-                break
+                hit = False; break
             a *= 0.5
         X = Xn
+        floor = floor + 1 if hit else 0
+        if stall and floor >= stall:
+            break
     g = tau * (area.H @ X.ravel())
     return X, it, rel, float(np.linalg.norm(C.T @ mu) / max(np.linalg.norm(g), 1e-30)), ok
 
 
 def spectrum(net, area, X, tau, C, dense_max=700, k=3):
-    """lowest eigenvalues of K_t - tau H on the constrained space {C dx = 0}.  Dense null-space basis for N <= dense_max,
-    otherwise shift-invert Lanczos with the constrained inverse applied by EckartSolver (no dense border rows)."""
+    """the k lowest eigenvalues of K_t - tau H on the constrained space {C dx = 0}.  Dense null-space basis for
+    N <= dense_max, otherwise shift-invert Lanczos (kkt.spectrum with PARDISO, else the scipy path below) with the shift
+    chosen from the inertia: sigma = -1e-4 when n_neg = 0, sigma below lambda_min (shift-count bracket) when n_neg > 0."""
     N = net.N; n = 3 * N
     K = (net.tangent(X) - tau * area.H)
     if N <= dense_max:
@@ -390,23 +412,36 @@ def spectrum(net, area, X, tau, C, dense_max=700, k=3):
         Kc = Z.T @ (K @ Z)
         w = np.linalg.eigvalsh(0.5 * (Kc + Kc.T))
         return dict(method='dense', lam=w[:k].tolist(), n_neg=int((w < -1e-10 * abs(w[-1])).sum()))
-    sigma = -1e-4
+    if _kkt.AVAILABLE:                     # one PARDISO factorisation at sigma=-1e-8, warm-started shift-invert
+        return _kkt.spectrum(net, area, X, tau, C, k=k)
+    # scipy fallback (no PARDISO): the k eigenvalues nearest sigma = -1e-4 (= the k lowest when n_neg = 0); n_neg from a
+    # dense Bunch-Kaufman count at -1e-8; when n_neg > 0, sigma below lambda_min is bracketed by dense shift counts.
+    from inertia import bordered_inertia
+    I_ = sp.identity(n, format='csr')
+    count = lambda sg: bordered_inertia((K - sg * I_).tocsr(), C)['n_neg']
+    nn = count(-_kkt.S_ZERO)
+    sigma = -1e-4 if nn == 0 else _kkt.bracket_below(count)
+    kk = k if nn == 0 else min(k + 2, n - C.shape[0] - 1)
     if C.shape[0] == 6:
         Sv = EckartSolver((K - sigma * sp.identity(n)).tocsc(), C, eckart_pivots(C))
-        P = np.eye(n) if False else None
         Q, _ = np.linalg.qr(C.T)
         def opinv(x):
             y = Sv.solve(x - Q @ (Q.T @ x), refine=1)[0]
             return y - Q @ (Q.T @ y)
         op = spla.LinearOperator((n, n), matvec=opinv)
         Kp = spla.LinearOperator((n, n), matvec=lambda x: (lambda z: z - Q @ (Q.T @ z))(K @ (x - Q @ (Q.T @ x))))
-        w = np.sort(spla.eigsh(Kp, k=k, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False))
-        return dict(method='eckart-shift-invert', lam=w.tolist(), n_neg=int((w < 0).sum()))
-    Cs = sp.csr_matrix(C); m_ = C.shape[0]
-    lu = spla.splu(sp.bmat([[(K - sigma * sp.identity(n)).tocsc(), Cs.T], [Cs, None]]).tocsc())
-    op = spla.LinearOperator((n, n), matvec=lambda x: lu.solve(np.concatenate([x, np.zeros(m_)]))[:n])
-    w = np.sort(spla.eigsh(K.tocsc(), k=k, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False))
-    return dict(method='kkt-shift-invert', lam=w.tolist(), n_neg=int((w < 0).sum()))
+        v0 = Q[:, 0] * 0 + 1.0; v0 = v0 - Q @ (Q.T @ v0)               # deterministic start vector
+        w = np.sort(spla.eigsh(Kp, k=kk, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=v0))[:k]
+        method = 'eckart-shift-invert'
+    else:
+        Cs = sp.csr_matrix(C); m_ = C.shape[0]
+        lu = spla.splu(sp.bmat([[(K - sigma * sp.identity(n)).tocsc(), Cs.T], [Cs, None]]).tocsc())
+        op = spla.LinearOperator((n, n), matvec=lambda x: lu.solve(np.concatenate([x, np.zeros(m_)]))[:n])
+        w = np.sort(spla.eigsh(K.tocsc(), k=kk, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=np.ones(n)))[:k]
+        method = 'kkt-shift-invert'
+    if nn > 0:
+        _kkt.check_negatives(w, nn)
+    return dict(method=method, lam=w.tolist(), n_neg=int(nn))
 
 
 # ---------------- experimental mapping ----------------

@@ -30,6 +30,7 @@
 - Scientific equivalence: path, I/O and environment fixes are routine. Algorithm, threshold, sample selection, normalisation, units, parameters, statistics or figure meaning changes are a separate PR labelled `needs-user`.
 - Never report an unrun check as passed. Validation marks each item PASS, FAIL, EXCEPTION or NOT VERIFIED.
 - Every number in the paper comes from `writing/tex/gen/numbers.tex`, produced by a pipeline step.
+- Environment: `pypardiso` is optional (x86_64 only; scipy fallback otherwise). Keep `MKL_CBWR=AUTO,STRICT` (set in `src/kkt.py` and `tools/prun2.py`) so results do not depend on the thread count; run `python tests/test_kkt.py` after any change to `src/kkt.py`.
 
 ## Audit checklist (auditor, one report per run: `audit/reports/R-xxxx.md`)
 Input hashes match `pipeline.lock`; run parameters match the locked PREREG; holdout used, not exploration data or seeds; no NaN, convergence and units checked; positive and negative controls pass; statistics corrected for multiple comparisons including `explore_nodes_tried`; seeds reproduce within the pre-registered tolerance; the stated result matches the output numbers.

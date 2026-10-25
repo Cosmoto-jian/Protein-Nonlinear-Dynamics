@@ -36,7 +36,7 @@ def extract():
         "approach.csv": [("structure", "structure id", "-", "label"), ("closed", "TM RMSD of the closed structure to the partner", "angstrom", "value"),
                          ("nl", "best TM RMSD of the nonlinear path", "angstrom", "value"), ("lin", "best TM RMSD of the best-amplitude linear response", "angstrom", "value"),
                          ("dilation", "best TM RMSD of an isotropic in-plane dilation", "angstrom", "value"),
-                         ("rewired_best", "best TM RMSD over three rewired networks", "angstrom", "value")],
+                         ("rewired_best", "best TM RMSD over all rewired networks", "angstrom", "value")],
         "turning.csv": [("structure", "structure id", "-", "label"), ("chi_010", "second-order direction indicator chi at eps = 0.10 (membrane nodes)", "-", "value"),
                         ("delta", "advantage of the nonlinear path over the best-amplitude linear response (empty: no partner)", "angstrom", "value")],
         "robustness.csv": [("structure", "structure id", "-", "label"), ("order", "plotting order within the structure (jitter position)", "-", "index"),
@@ -51,8 +51,9 @@ def plot():
     AP = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/approach.csv")}
     TU = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/turning.csv")}
     RB = style.read_csv(f"figure_data/{NAME}/robustness.csv")
-    style.apply()
-    fig, ax = plt.subplots(1, 3, figsize=(style.W2, 70 * MM), gridspec_kw=dict(wspace=0.38, width_ratios=[1.25, 1, 1], left=0.07, right=0.99, bottom=0.22, top=0.80))
+    from figcommon import mkh
+    from style import LW, MS, MEW
+    fig, ax = style.figure(1, 3, height_mm=54, gridspec_kw=dict(width_ratios=[1.45, 1, 1])); ax = ax[0]
     xs = np.arange(len(CH)); a = ax[0]
     for i, p in enumerate(CH):
         r = AP[p]; c0 = float(r["closed"])
@@ -62,27 +63,26 @@ def plot():
             if r["rewired_best"] != "": g["rew"] = (c0 - float(r["rewired_best"])) / c0
         for key, mk, fc, off in (("nl", "o", COL[p], -0.27), ("lin", "o", "white", -0.09), ("dil", "D", "white", 0.09), ("rew", "s", "white", 0.27)):
             if key in g:
-                a.vlines(i + off, 0, 100 * g[key], color=COL[p], lw=0.8)
-                a.plot(i + off, 100 * g[key], mk, color=COL[p], mfc=fc, ms=3.8, mew=0.8)
-    a.axhline(0, color=DARK, lw=0.5)
-    a.set_xticks(xs); a.set_xticklabels([LABEL[p] for p in CH], rotation=90, ha="right", va="center", rotation_mode="anchor"); a.set_xlim(-0.6, len(CH) - 0.4)
-    a.set_ylabel("TM RMSD reduction (%)"); a.set_title("What explains the approach?", loc="left")
-    a.legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label="nonlinear path"),
-                      Line2D([], [], ls="", marker="o", mfc="white", mec="k", ms=4, label="best-amplitude linear"),
-                      Line2D([], [], ls="", marker="D", mfc="white", mec="k", ms=4, label="isotropic dilation"),
-                      Line2D([], [], ls="", marker="s", mfc="white", mec="k", ms=4, label="best rewired network")], loc="upper right", fontsize=style.FS, handletextpad=0.2)
+                a.vlines(i + off, 0, 100 * g[key], color=COL[p], lw=LW["sec"])
+                a.plot(i + off, 100 * g[key], mk, color=COL[p], mfc=fc, ms=MS["cat"], mew=MEW["open"])
+    a.axhline(0, color=DARK, lw=LW["zero"])
+    a.set_xticks(xs); style.catlabels(a.xaxis, [LABEL[p] for p in CH]); a.set_xlim(-0.6, len(CH) - 0.4)
+    a.set_ylabel("RMSD reduction (%)"); a.set_ylim(-9, 45); a.set_title("Comparison with null models", loc="left")
+    a.legend(handles=[mkh("o", "nonlinear path"), mkh("D", "isotropic dilation", filled=False), mkh("o", "best-amp. linear", filled=False),
+                      mkh("s", "best rewired", filled=False)], loc="upper center", ncol=2, handletextpad=0.1, columnspacing=0.6, borderaxespad=0.1)
     c = ax[1]
     c.axhspan(-0.2, 0.2, color=LIGHT, lw=0, zorder=0)
     for p in CH:
         chi, d = float(TU[p]["chi_010"]), float(TU[p]["delta"])
-        c.plot(chi, d, MK[p], color=COL[p], ms=5, mec="white", mew=0.4, zorder=3)
-        c.annotate(LABEL[p], (chi, d), xytext=(4, {"6pwn": -8, "4wff": -9, "6mgv": -9}.get(p, 3)), textcoords="offset points", fontsize=style.FS, color=COL[p])
+        c.plot(chi, d, MK[p], color=COL[p], ms=MS["pt"], mec="white", mew=MEW["edge"], zorder=3)
+        dx, dy, ha = {"6pwn": (4, -9, "left"), "4wff": (4, 4, "left"), "6mgv": (3, 4, "left"), "4xdk": (4, -9, "left"), "2oar": (-5, -4, "right")}.get(p, (4, 3, "left"))
+        c.annotate(LABEL[p], (chi, d), xytext=(dx, dy), ha=ha, textcoords="offset points", fontsize=style.FS, color=COL[p])
     for p in ("6cq8", "6vtk"):
-        chi = float(TU[p]["chi_010"]); c.plot(chi, -0.62, "|", color=COL[p], ms=8, mew=1.2)
-        c.annotate(LABEL[p], (chi, -0.62), xytext=({"6cq8": 3, "6vtk": -3}[p], 4), ha={"6cq8": "left", "6vtk": "right"}[p], textcoords="offset points", fontsize=style.FS, color=COL[p])
-    c.axhline(0, color=DARK, lw=0.5)
-    c.set_xlabel(r"a-priori indicator $\chi$ ($\varepsilon=0.10$, membrane nodes)"); c.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)")
-    c.set_title("Only the largest turning pays", loc="left"); c.set_xscale("log"); c.set_ylim(-0.7, 1.0)
+        chi = float(TU[p]["chi_010"]); c.plot(chi, -0.85, "|", color=COL[p], ms=MS["star"], mew=LW["data"])
+        c.annotate(LABEL[p], (chi, -0.85), xytext=({"6cq8": 3, "6vtk": -3}[p], 4), ha={"6cq8": "left", "6vtk": "right"}[p], textcoords="offset points", fontsize=style.FS, color=COL[p])
+    c.axhline(0, color=DARK, lw=LW["zero"])
+    c.set_xlabel(r"$\chi$ ($\varepsilon=0.10$)"); c.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)")
+    c.set_title(r"$\Delta_{\mathrm{L-NL}}$ vs. $\chi$", loc="left"); c.set_xscale("log"); c.set_ylim(-0.95, 1.0)
     d = ax[2]
     d.axhspan(-0.2, 0.2, color=LIGHT, lw=0, zorder=0)
     for i, p in enumerate(CH):
@@ -90,16 +90,16 @@ def plot():
         for r in pts:
             j = int(r["order"]); jit = (j - (len(pts) - 1) / 2) * 0.05
             mk = {"rc10": "o", "rc12": "s", "backbone": "^", "load": "x"}[r["kind"]]; fc = "white" if r["kind"] == "rc12" else COL[p]
-            d.plot(i + jit, float(r["delta"]), mk, color=COL[p], mfc=fc, ms=3.6 if mk != "x" else 3.0, mew=0.8)
-    d.axhline(0, color=DARK, lw=0.5)
-    d.set_xticks(xs); d.set_xticklabels([LABEL[p] for p in CH], rotation=90, ha="right", va="center", rotation_mode="anchor"); d.set_xlim(-0.6, len(CH) - 0.4)
-    d.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)"); d.set_title("Robust only for Piezo1", loc="left")
-    d.legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label="$r_c$ = 10 Å"), Line2D([], [], ls="", marker="s", mfc="white", mec="k", ms=4, label="$r_c$ = 12 Å"),
-                      Line2D([], [], ls="", marker="x", color="k", ms=4, label="load construction"), Line2D([], [], ls="", marker="^", mfc="k", mec="k", ms=4, label="stiff backbone")],
-             loc="upper right", fontsize=style.FS, handletextpad=0.2)
+            d.plot(i + jit, float(r["delta"]), mk, color=COL[p], mfc=fc, ms=MS["line"] if mk != "x" else MS["line"] - 0.5, mew=MEW["open"])
+    d.axhline(0, color=DARK, lw=LW["zero"])
+    d.set_xticks(xs); style.catlabels(d.xaxis, [LABEL[p] for p in CH]); d.set_xlim(-0.6, len(CH) - 0.4)
+    d.set_ylabel(r"$\Delta_{\mathrm{L-NL}}$ (Å)"); d.set_title("Variants", loc="left"); d.set_ylim(-1.0, 1.35)
+    d.legend(handles=[mkh("o", "$r_c$ = 10 Å"), mkh("s", "$r_c$ = 12 Å", filled=False), mkh("x", "load construction"), mkh("^", "stiff backbone")],
+             loc="upper right", handletextpad=0.1, borderaxespad=0.1)
     for a_, t in zip(ax, "abc"):
         style.letter(a_, t)
-    style.top_legend(fig, [chan_handles(CH + ["6cq8", "6vtk"])], y=0.88)
+    fig.canvas.draw()
+    style.top_legend(fig, [chan_handles(CH + ["6cq8", "6vtk"])])
     style.save(fig, NAME)
     pzr = [float(r["delta"]) for r in RB if r["structure"] == "6b3r"]
     style.describe(NAME, "Fig. 5 turning and experiment. Advantage of the nonlinear path over the best-amplitude linear response: Piezo1 {{pz}} A "

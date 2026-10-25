@@ -39,6 +39,12 @@ make figures-fast   # 只从 figure_data/ 重画
 make validate       # 干净副本验证
 ```
 
+## 环境说明
+- `pypardiso`（MKL PARDISO）可选，仅 x86_64；有它时 `src/kkt.py` 用一次稀疏 LDL^T 分解完成 Newton 求解、惯性计数和特征值；没有时（或 `PND_NO_PARDISO=1`）走 scipy 路径（结果相同，慢得多）。
+- 线程数可复现性：`src/kkt.py` 在加载 MKL 前设置 `MKL_CBWR=AUTO,STRICT`（环境变量中已有的值优先），`tools/prun2.py` 对每一步也设置它，使 PARDISO 结果与 `MKL_NUM_THREADS` 无关（不设时差异约 1e-13 相对量级）。
+- 双 VM 运行：主 VM 上 `python tools/prun2.py`（环境变量 `PRUN2_WORKER`、`PRUN2_TEAM`、`FREESTYLE_API_KEY`）；API key 只通过环境变量传入，不留在 VM 上。
+- 单元测试：`python tests/test_kkt.py`；无 pypardiso 时跳过 PARDISO 测试。
+
 ## 语言规则
 代码、配置、数据、文件名和英文文档不含中文。中文只在 `*_cn.md`，且必须有同名纯英文文件。
 

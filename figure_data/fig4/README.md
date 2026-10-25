@@ -29,5 +29,5 @@ Source: data/derived/paths/<id>_rc10.json, data/derived/summary.json (validation
 | stable_steps | number of rows on the stable branch (Piezo1: up to the limit point L1) | - | count |
 | limit_point | the path ends at a limit point | - | flag 0/1 |
 | dilation | best TM RMSD of an isotropic in-plane dilation | angstrom | value |
-| rewired_min | best TM RMSD over three rewired networks (lowest) | angstrom | value |
-| rewired_max | best TM RMSD over three rewired networks (highest) | angstrom | value |
+| rewired_min | best TM RMSD over all rewired networks (lowest) | angstrom | value |
+| rewired_max | best TM RMSD over all rewired networks (highest) | angstrom | value |

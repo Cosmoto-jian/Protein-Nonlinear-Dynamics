@@ -10,7 +10,7 @@ Source: data/derived/summary.json (validation, nulls, indicator, variants)
 | nl | best TM RMSD of the nonlinear path | angstrom | value |
 | lin | best TM RMSD of the best-amplitude linear response | angstrom | value |
 | dilation | best TM RMSD of an isotropic in-plane dilation | angstrom | value |
-| rewired_best | best TM RMSD over three rewired networks | angstrom | value |
+| rewired_best | best TM RMSD over all rewired networks | angstrom | value |
 
 ## turning.csv
 | Column | Meaning | Unit | Kind |
