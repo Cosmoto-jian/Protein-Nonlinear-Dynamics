@@ -367,6 +367,10 @@ V['piezo-c3-rmsd'] = sci(_r, 0) if _r < 0.01 else f(_r, 3); V['piezo-c3-tilt'] =
 _d = [q['dlam_ds'] for q in pts]; _i = [k for k in range(1, len(_d)) if np.sign(_d[k]) != np.sign(_d[k - 1])][0]
 _L0, _L1 = np.array(pts[_i - 4]['lam'][:4]), np.array(pts[_i - 1]['lam'][:4])
 _nd = int(np.sum(_L1 < 0.6 * _L0.min())); V['piezo-n-desc'] = {0: 'no', 1: 'one', 2: 'two', 3: 'three', 4: 'four'}[_nd]
+# past the fold: true lowest eigenvalue (shift from the inertia) on the continuation points with n_neg > 0
+_un = [q for q in pts if q['inertia']['n_neg'] > 0]
+V['piezo-n-unstable'] = str(len(_un)); V['piezo-n-lamneg'] = str(sum(1 for q in _un if q['lam'] and q['lam'][0] < 0))
+V['piezo-lam-post'] = f(pts[_i + 9]['lam'][0] / R['6b3r_rc10']['lam0'], 0).replace('-', '$-$')
 V['mscl-lin-restr'] = f(val('2oar')['lin_restricted'])
 V['mscs-whole-closed'] = f(val('6pwn')['whole_closed']); V['mscs-whole-nl'] = f(val('6pwn')['whole_nl'])
 _ns = [int(v['n_sector']) for v in L.values() if isinstance(v, dict) and 'n_sector' in v]

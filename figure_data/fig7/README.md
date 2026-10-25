@@ -16,9 +16,9 @@ Source: data/derived/paths/6b3r_rc10_loadcontrol.json, _arclength.json, _snap.js
 | tau | membrane tension | model units | value |
 | dlam_ds | load-parameter component of the unit tangent | - | value |
 | n_neg | negative eigenvalues of the constrained tangent (inertia count) | - | count |
-| lam1 | lowest eigenvalue returned by shift-invert Lanczos (sigma = -1e-4) | model units | value |
-| lam2 | second eigenvalue returned by the same solve | model units | value |
-| lam3 | third eigenvalue returned by the same solve | model units | value |
+| lam1 | lowest eigenvalue of the constrained tangent (shift-invert with the shift chosen from the inertia count: sigma = -1e-4 when n_neg = 0, sigma below the lowest eigenvalue when n_neg > 0); negative wherever n_neg = 1 | model units | value |
+| lam2 | second-lowest eigenvalue of the constrained tangent (same solve) | model units | value |
+| lam3 | third-lowest eigenvalue of the constrained tangent (same solve) | model units | value |
 | lam0 | lowest constrained eigenvalue at the reference state x0 (rc10 path) | model units | value |
 | max_e | largest element strain | - | value |
 

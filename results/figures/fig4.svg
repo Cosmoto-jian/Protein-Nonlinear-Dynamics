@@ -9,7 +9,7 @@
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -559,6 +559,7 @@ L 299.331994 45.458489
 L 300.816213 43.157441 
 L 302.300432 40.836742 
 L 303.784652 38.497179 
+L 305.268871 36.139501 
 " clip-path="url(#pbd18e0914e)" style="fill: none; stroke-dasharray: 2.7,1.44; stroke-dashoffset: 0; stroke: #009e73; stroke-width: 0.9"/>
    </g>
    <g id="patch_10">

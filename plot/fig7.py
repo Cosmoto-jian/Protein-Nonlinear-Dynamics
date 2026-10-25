@@ -31,9 +31,10 @@ def extract():
         "continuation.csv": [("point", "continuation point index", "-", "index"), ("eps", "normalized radial displacement", "-", "value"),
                              ("tau", "membrane tension", "model units", "value"), ("dlam_ds", "load-parameter component of the unit tangent", "-", "value"),
                              ("n_neg", "negative eigenvalues of the constrained tangent (inertia count)", "-", "count"),
-                             ("lam1", "lowest eigenvalue returned by shift-invert Lanczos (sigma = -1e-4)", "model units", "value"),
-                             ("lam2", "second eigenvalue returned by the same solve", "model units", "value"),
-                             ("lam3", "third eigenvalue returned by the same solve", "model units", "value"),
+                             ("lam1", "lowest eigenvalue of the constrained tangent (shift-invert with the shift chosen from the inertia count: "
+                                      "sigma = -1e-4 when n_neg = 0, sigma below the lowest eigenvalue when n_neg > 0); negative wherever n_neg = 1", "model units", "value"),
+                             ("lam2", "second-lowest eigenvalue of the constrained tangent (same solve)", "model units", "value"),
+                             ("lam3", "third-lowest eigenvalue of the constrained tangent (same solve)", "model units", "value"),
                              ("lam0", "lowest constrained eigenvalue at the reference state x0 (rc10 path)", "model units", "value"),
                              ("max_e", "largest element strain", "-", "value")],
         "post_snap.csv": [("eps", "normalized radial displacement of the post-snap equilibrium (explicit VFIFE from L1)", "-", "value"),
@@ -79,14 +80,18 @@ def plot():
                         Line2D([], [], ls="", marker="*", color="k", mfc="white", ms=MS["star"] - 1, mew=MEW["open"], label="post-snap")],
                loc="upper left", borderaxespad=0.1)
     i1 = folds[0]; w = np.arange(max(0, i1 - 10), min(len(A), i1 + 12)); l0 = float(A[0]["lam0"])
-    lo, hi = -8.0, 7.5
-    axc.bar(w - i1, np.where(nn[w] > 0, hi - lo, 0), bottom=lo, width=1.0, color="#E0E0E0", lw=0, zorder=0)
+    Lw = {key: num(A, key)[w] / l0 for key in ("lam1", "lam2", "lam3")}
+    lo = -10.0 ** np.ceil(np.log10(max(10.0, -np.nanmin(Lw["lam1"])))); hi = 10.0 ** (np.ceil(np.log10(np.nanmax(Lw["lam3"]))) + 1)   # headroom for the legend
+    axc.set_yscale("symlog", linthresh=1.0, linscale=0.6)      # the negative eigenvalue grows by orders of magnitude past L1
+    for i_ in w[nn[w] > 0]:
+        axc.axvspan(i_ - i1 - 0.5, i_ - i1 + 0.5, color="#E0E0E0", lw=0, zorder=0)
     for key, ls_, mk in (("lam1", "-", "o"), ("lam2", (0, (2, 1)), "s"), ("lam3", (0, (1, 1)), "D")):
-        axc.plot(w - i1, num(A, key)[w] / l0, marker=mk, ls=ls_, color=col, ms=MS["small"], lw=LW["sec"], mec="white", mew=MEW["edge"], zorder=3)
+        axc.plot(w - i1, Lw[key], marker=mk, ls=ls_, color=col, ms=MS["small"], lw=LW["sec"], mec="white", mew=MEW["edge"], zorder=3)
     axc.axhline(0, color=DARK, lw=LW["zero"])
-    axc.set_ylim(lo, hi); axc.set_xlabel("step from L$_1$"); axc.set_ylabel(r"$\lambda_k/\lambda_1(0)$")
+    axc.set_ylim(lo, hi); axc.set_xlim(w[0] - i1 - 0.5, w[-1] - i1 + 0.5)
+    axc.set_xlabel("step from L$_1$"); axc.set_ylabel(r"$\lambda_k/\lambda_1(0)$")
     axc.legend(handles=[Line2D([], [], color=col, marker=m_, ls=l_, ms=MS["small"], lw=LW["sec"], label=lb) for m_, l_, lb in
-                        (("o", "-", "$k$ = 1"), ("s", (0, (2, 1)), "2"), ("D", (0, (1, 1)), "3"))], loc="lower left", ncol=3, borderaxespad=0.1,
+                        (("o", "-", "$k$ = 1"), ("s", (0, (2, 1)), "2"), ("D", (0, (1, 1)), "3"))], loc="upper right", ncol=3, borderaxespad=0.1,
                handlelength=1.4, columnspacing=0.6)
     axc.set_title("Near L$_1$", loc="left")
     de = num(tp, "e_post") - num(tp, "e_pre"); bb = num(tp, "backbone").astype(bool)
@@ -99,9 +104,11 @@ def plot():
         style.letter(a_, tt)
     style.save(fig, NAME)
     style.describe(NAME, "Fig. 7 the Piezo1 tension path ends at a limit point. Continuation over {{n}} points shows {{nf}} folds; L1 at tau = {{t1}} "
-                   "(eps = {{e1}}), where the inertia count changes from 0 to 1. The ten elements whose strain changes most in the snap lie in chain {{ch}} "
+                   "(eps = {{e1}}), where the inertia count changes from 0 to 1; of the {{n1w}} continuation points with n_neg = 1 in panel c, {{nlw}} have a "
+                   "negative lowest eigenvalue (down to {{lmin}} lambda1(0)). The ten elements whose strain changes most in the snap lie in chain {{ch}} "
                    "(residues {{rmin}} to {{rmax}}), {{nbb}} of them backbone bonds.",
-                   dict(n=len(A), nf=len(folds), t1=f"{t[folds[0]]:.4f}", e1=f"{e[folds[0]]:.3f}", ch=tp[0]["chain"],
+                   dict(n=len(A), nf=len(folds), t1=f"{t[folds[0]]:.4f}", e1=f"{e[folds[0]]:.3f}", ch=tp[0]["chain"], n1w=int((nn[w] > 0).sum()), nlw=int(((nn[w] > 0) & (Lw["lam1"] < 0)).sum()),
+                        lmin=f"{np.nanmin(Lw['lam1']):.0f}",
                         rmin=min(min(int(q["res_i"]), int(q["res_j"])) for q in tp), rmax=max(max(int(q["res_i"]), int(q["res_j"])) for q in tp), nbb=int(bb.sum())),
                    [f"figure_data/{NAME}/load_control.csv", f"figure_data/{NAME}/continuation.csv", f"figure_data/{NAME}/snap_elements.csv"])
 

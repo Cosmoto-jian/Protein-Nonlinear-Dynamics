@@ -20,19 +20,22 @@ def extract():
         for i, r in enumerate(R["rows"]):
             q = r.get("enl_mem")
             rows.append(dict(structure=p, step=i + 1, eps=r["eps"], amp=q["amp"] if q else None, dir=q["dir"] if q else None,
-                             lam_rel=(r["lam"][0] / lam0) if r.get("lam") else None, max_e=r["max_e"]))
+                             lam_rel=(r["lam"][0] / lam0) if r.get("lam") else None, max_e=r["max_e"],
+                             n_neg=(r.get("inertia") or {}).get("n_neg")))
         st.append(dict(structure=p, eps_star=run["eps_star"], step_star=run["step_star"], stable_beyond=int(p != "6b3r"),
                        a_005=run["enl_mem_0.05"]["amp"], sin_005=run["enl_mem_0.05"]["dir"],
                        kappa_005=I[p]["mem_eps0.05"]["kappa"], chi_005=I[p]["mem_eps0.05"]["chi"]))
-    style.write_csv(DATA / "path.csv", rows, ["structure", "step", "eps", "amp", "dir", "lam_rel", "max_e"])
+    style.write_csv(DATA / "path.csv", rows, ["structure", "step", "eps", "amp", "dir", "lam_rel", "max_e", "n_neg"])
     style.write_csv(DATA / "structures.csv", st, ["structure", "eps_star", "step_star", "stable_beyond", "a_005", "sin_005", "kappa_005", "chi_005"])
     style.write_readme(DATA, "fig3 plotting data", "data/derived/paths/<id>_rc10.json and data/derived/summary.json (membrane nodes, r_c = 10 A)", {
         "path.csv": [("structure", "structure id", "-", "label"), ("step", "1-based step along the path", "-", "index"),
                      ("eps", "normalized radial displacement of the membrane nodes", "-", "value"),
                      ("amp", "amplitude ratio a = |u_L| / |u_NL| at the same tension", "-", "value"),
                      ("dir", "direction error sin(theta) between u_L and u_NL", "-", "value"),
-                     ("lam_rel", "lowest constrained eigenvalue relative to its reference value", "-", "value"),
-                     ("max_e", "largest element strain |eta|_max", "-", "value")],
+                     ("lam_rel", "lowest constrained eigenvalue relative to its reference value (true lowest: the shift-invert shift is chosen "
+                                 "from the inertia count, so it is negative wherever n_neg > 0, i.e. past the Piezo1 limit point)", "-", "value"),
+                     ("max_e", "largest element strain |eta|_max", "-", "value"),
+                     ("n_neg", "negative eigenvalues of the constrained tangent (inertia count)", "-", "count")],
         "structures.csv": [("structure", "structure id", "-", "label"), ("eps_star", "end of the validity range", "-", "value"),
                            ("step_star", "step at eps_star; for Piezo1 the limit point L1, later rows are the unstable continuation", "-", "index"),
                            ("stable_beyond", "rows beyond eps_star lie on a stable branch and are drawn thin", "-", "flag 0/1"),
@@ -81,9 +84,13 @@ def plot():
     b.text(0.03, 0.98, "not removable\nby scaling", transform=b.transAxes, ha="left", va="top", fontsize=style.FS, color=style.NOTE)
     c = ax[2]; draw(c, "lam"); c.axhline(1, color=GREY, lw=LW["zero"], ls=(0, (2, 2))); c.axhline(0, color=DARK, lw=LW["zero"])
     x, y, n, es, _ = curves("6b3r", "lam")
-    c.plot(x[n - 1:n + 1], y[n - 1:n + 1], color=COL["6b3r"], lw=LW["sec"], ls=(0, (1, 1.2)), zorder=3)   # next continuation point: n_neg = 1, clipped
+    nn6 = num([r for r in P if r["structure"] == "6b3r"], "n_neg")
+    YLO = -0.6; j1 = n
+    while j1 < len(nn6) and nn6[j1] > 0 and y[j1 - 1] >= YLO:   # unstable branch past L1 (n_neg > 0): the descent of lambda_1
+        j1 += 1                                                  # below zero, drawn until it leaves the axes (clipped)
+    c.plot(x[n - 1:j1], y[n - 1:j1], color=COL["6b3r"], lw=LW["sec"], ls=(0, (1, 1.2)), zorder=3)
     c.annotate("L$_1$", (x[n - 1], y[n - 1]), xytext=(10, -6), textcoords="offset points", fontsize=style.FS, ha="left", arrowprops=dict(arrowstyle="-", color="k", lw=LW["zero"]))
-    c.set_ylabel(r"$\lambda_1/\lambda_1(0)$"); c.set_title("Snapping", loc="left"); c.set_ylim(-0.15, 6.4)
+    c.set_ylabel(r"$\lambda_1/\lambda_1(0)$"); c.set_title("Snapping", loc="left"); c.set_ylim(YLO, 6.4)
     c.text(0.97, 0.98, "others:\n" + r"$n_{\rm neg}=0$ to the end", transform=c.transAxes, ha="right", va="top", fontsize=style.FS, color=style.NOTE)
     d = ax[3]; d.plot([1, 2], [1, 2], color="#BDBDBD", lw=LW["ref"], zorder=0)
     for p in ALL:

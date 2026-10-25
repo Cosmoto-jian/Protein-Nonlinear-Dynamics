@@ -401,8 +401,9 @@ def newton_eckart_fast(net, area, X, X0, tau, C, max_iter=40, tol=1e-9, stall=3)
 
 
 def spectrum(net, area, X, tau, C, dense_max=700, k=3):
-    """lowest eigenvalues of K_t - tau H on the constrained space {C dx = 0}.  Dense null-space basis for N <= dense_max,
-    otherwise shift-invert Lanczos with the constrained inverse applied by EckartSolver (no dense border rows)."""
+    """the k lowest eigenvalues of K_t - tau H on the constrained space {C dx = 0}.  Dense null-space basis for
+    N <= dense_max, otherwise shift-invert Lanczos (kkt.spectrum with PARDISO, else the scipy path below) with the shift
+    chosen from the inertia: sigma = -1e-4 when n_neg = 0, sigma below lambda_min (shift-count bracket) when n_neg > 0."""
     N = net.N; n = 3 * N
     K = (net.tangent(X) - tau * area.H)
     if N <= dense_max:
@@ -413,10 +414,16 @@ def spectrum(net, area, X, tau, C, dense_max=700, k=3):
         return dict(method='dense', lam=w[:k].tolist(), n_neg=int((w < -1e-10 * abs(w[-1])).sum()))
     if _kkt.AVAILABLE:                     # one PARDISO factorisation at sigma=-1e-8, warm-started shift-invert
         return _kkt.spectrum(net, area, X, tau, C, k=k)
-    sigma = -1e-4
+    # scipy fallback (no PARDISO): the k eigenvalues nearest sigma = -1e-4 (= the k lowest when n_neg = 0); n_neg from a
+    # dense Bunch-Kaufman count at -1e-8; when n_neg > 0, sigma below lambda_min is bracketed by dense shift counts.
+    from inertia import bordered_inertia
+    I_ = sp.identity(n, format='csr')
+    count = lambda sg: bordered_inertia((K - sg * I_).tocsr(), C)['n_neg']
+    nn = count(-_kkt.S_ZERO)
+    sigma = -1e-4 if nn == 0 else _kkt.bracket_below(count)
+    kk = k if nn == 0 else min(k + 2, n - C.shape[0] - 1)
     if C.shape[0] == 6:
         Sv = EckartSolver((K - sigma * sp.identity(n)).tocsc(), C, eckart_pivots(C))
-        P = np.eye(n) if False else None
         Q, _ = np.linalg.qr(C.T)
         def opinv(x):
             y = Sv.solve(x - Q @ (Q.T @ x), refine=1)[0]
@@ -424,13 +431,17 @@ def spectrum(net, area, X, tau, C, dense_max=700, k=3):
         op = spla.LinearOperator((n, n), matvec=opinv)
         Kp = spla.LinearOperator((n, n), matvec=lambda x: (lambda z: z - Q @ (Q.T @ z))(K @ (x - Q @ (Q.T @ x))))
         v0 = Q[:, 0] * 0 + 1.0; v0 = v0 - Q @ (Q.T @ v0)               # deterministic start vector
-        w = np.sort(spla.eigsh(Kp, k=k, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=v0))
-        return dict(method='eckart-shift-invert', lam=w.tolist(), n_neg=int((w < 0).sum()))
-    Cs = sp.csr_matrix(C); m_ = C.shape[0]
-    lu = spla.splu(sp.bmat([[(K - sigma * sp.identity(n)).tocsc(), Cs.T], [Cs, None]]).tocsc())
-    op = spla.LinearOperator((n, n), matvec=lambda x: lu.solve(np.concatenate([x, np.zeros(m_)]))[:n])
-    w = np.sort(spla.eigsh(K.tocsc(), k=k, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=np.ones(n)))
-    return dict(method='kkt-shift-invert', lam=w.tolist(), n_neg=int((w < 0).sum()))
+        w = np.sort(spla.eigsh(Kp, k=kk, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=v0))[:k]
+        method = 'eckart-shift-invert'
+    else:
+        Cs = sp.csr_matrix(C); m_ = C.shape[0]
+        lu = spla.splu(sp.bmat([[(K - sigma * sp.identity(n)).tocsc(), Cs.T], [Cs, None]]).tocsc())
+        op = spla.LinearOperator((n, n), matvec=lambda x: lu.solve(np.concatenate([x, np.zeros(m_)]))[:n])
+        w = np.sort(spla.eigsh(K.tocsc(), k=kk, sigma=sigma, OPinv=op, which='LM', return_eigenvectors=False, v0=np.ones(n)))[:k]
+        method = 'kkt-shift-invert'
+    if nn > 0:
+        _kkt.check_negatives(w, nn)
+    return dict(method=method, lam=w.tolist(), n_neg=int(nn))
 
 
 # ---------------- experimental mapping ----------------

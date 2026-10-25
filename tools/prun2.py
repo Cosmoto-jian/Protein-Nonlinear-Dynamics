@@ -11,7 +11,9 @@ their deps have finished, on the master (local subprocess) or on a remote worker
   2-3 slots are free on a VM and the others are held by long single-slot steps, a big step starts with as many
   threads as free slots instead of leaving them idle.  nulls takes 4 slots (its own pool of 4 single-threaded
   processes); every other step 1 slot x 1 thread.
-  OMP/OPENBLAS/MKL_NUM_THREADS are set per process so that processes x threads <= 4 per VM.
+  OMP/OPENBLAS/MKL_NUM_THREADS are set per process so that processes x threads <= 4 per VM.  MKL_CBWR=AUTO,STRICT
+  (MKL conditional numerical reproducibility) makes the PARDISO factorisations bitwise independent of the thread
+  count, so a malleable big step gives the same numbers with 2, 3 or 4 threads (checked on the Piezo1 tangent).
 * Data movement: the master keeps every output.  Before a step starts on the worker, deps whose digest differs from
   what the worker holds are pushed (one tar); after it finishes its outs are pulled back (one tar).  The worker
   records the digests of the deps it actually used; the master locks the step only if they equal its own digests
@@ -87,7 +89,8 @@ def slots_of(s):
 
 
 def envs(threads, extra=None):
-    e = {'OMP_NUM_THREADS': threads, 'OPENBLAS_NUM_THREADS': threads, 'MKL_NUM_THREADS': threads, 'NUMEXPR_NUM_THREADS': threads}
+    e = {'OMP_NUM_THREADS': threads, 'OPENBLAS_NUM_THREADS': threads, 'MKL_NUM_THREADS': threads, 'NUMEXPR_NUM_THREADS': threads,
+         'MKL_CBWR': 'AUTO,STRICT'}          # PARDISO results independent of the (malleable) thread count
     e.update(extra or {})
     return {k: str(v) for k, v in e.items()}
 

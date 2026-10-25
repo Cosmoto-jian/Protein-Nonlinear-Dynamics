@@ -43,6 +43,18 @@ make figures-fast   # figure_data/ -> results/ only
 make validate       # clean-copy validation -> results/logs/validation_report.md
 ```
 
+## Environment notes
+- `pypardiso` (MKL PARDISO) is optional and x86_64 only. With it, `src/kkt.py` does every Newton solve, inertia count
+  and eigenvalue computation with one sparse LDL^T factorisation of the bordered tangent; without it (or with
+  `PND_NO_PARDISO=1`) the scipy code path is used (same results, much slower; inertia by dense Bunch-Kaufman).
+- Reproducibility across thread counts: `src/kkt.py` sets `MKL_CBWR=AUTO,STRICT` before MKL is loaded (an explicit
+  value in the environment wins), and `tools/prun2.py` sets it for every step, so PARDISO factorisations are bitwise
+  independent of `MKL_NUM_THREADS`. Without it results differ between thread counts at the 1e-13 relative level.
+- Two-VM run: `python tools/prun2.py` on the master VM (env `PRUN2_WORKER`, `PRUN2_TEAM`, `FREESTYLE_API_KEY`), same
+  staleness and `pipeline.lock` semantics as `run_all.py`. Pass the API key in the environment only; do not leave it on
+  the VMs.
+- Unit tests: `python tests/test_kkt.py` (or `python -m pytest -q tests`); PARDISO tests are skipped without pypardiso.
+
 ## Layout
 | Path | Role |
 |---|---|

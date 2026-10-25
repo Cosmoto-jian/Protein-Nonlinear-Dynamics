@@ -13,6 +13,12 @@ The sparsity pattern of B is fixed per model (3x3 element blocks of the truss ta
 diagonal and the dense C^T columns), so the symbolic analysis (METIS ordering) is done once per model and every
 further factorisation is numeric only.
 
+Eigenvalues reported are the k LOWEST eigenvalues of the constrained tangent.  When the inertia count gives
+n_neg = 0 they are the k eigenvalues nearest SIGMA_LAM from the factorisation held at -S_ZERO (all eigenvalues lie
+above -S_ZERO, so nearest = lowest).  When n_neg > 0 a shift sigma below the lowest eigenvalue is bracketed by shift
+counts (n_neg(K - sigma I) = 0, trial shifts -1e-4 * 4^j, then a few bisection steps) and shift-invert is done around
+it, so every negative eigenvalue is captured; the number of negative eigenvalues returned is checked against n_neg.
+
 Zero modes / mechanisms are counted by a shift count, never from pivots at s = 0:
     n_zero = n_neg(K - s I) - n_neg(K + s I),  n_neg = n_neg(K + s I),  s = S_ZERO = 1e-8  (model units, k = 1)
 i.e. eigenvalues in (-s, s) are zero modes.  If PARDISO reports perturbed pivots in either shifted factorisation the
@@ -27,8 +33,14 @@ import scipy.sparse as sp
 import scipy.sparse.linalg as spla
 
 S_ZERO = 1e-8          # zero-mode window for the shift count
-SIGMA_LAM = -1e-4      # eigenvalue selection: the k eigenvalues nearest this shift (same as model.spectrum)
+SIGMA_LAM = -1e-4      # eigenvalue selection when n_neg = 0: the k eigenvalues nearest this shift (= the k lowest)
+NEG_START = 1e-4       # n_neg > 0: first trial shift -NEG_START of the bracket below the lowest eigenvalue
+NEG_BISECT = 3         # bisection steps that tighten the bracket before shift-invert
 EIG_METHOD = os.environ.get('PND_EIG', 'arpack')     # 'arpack' (default) or 'invit'
+
+# MKL conditional numerical reproducibility: PARDISO factorisations bitwise independent of the thread count (must be
+# set before MKL is loaded by pypardiso; an explicit MKL_CBWR in the environment wins).
+os.environ.setdefault('MKL_CBWR', 'AUTO,STRICT')
 
 AVAILABLE = False
 _MKL_PARDISO = None
@@ -41,7 +53,35 @@ if not os.environ.get('PND_NO_PARDISO'):
         AVAILABLE = False
 
 STATS = dict(analyse=0, factor=0, solve=0, dense_fallback=0, second_shift=0, eig_arpack=0, eig_invit=0,
-             invit_fallback=0, newton_stall_exit=0, pattern_rebuild=0)
+             invit_fallback=0, newton_stall_exit=0, pattern_rebuild=0, neg_lowest=0, neg_count=0)
+
+
+def bracket_below(count_below, s=S_ZERO, start=NEG_START, bisect=NEG_BISECT, maxit=60):
+    """a shift sigma < lambda_min of the constrained tangent, from shift counts only.
+    count_below(sigma) = number of constrained eigenvalues < sigma (an inertia count).  Trial shifts -start * 4^j until
+    the count is 0, then `bisect` bisection steps between the last shift with count 0 and the one before it (count > 0,
+    initially -s).  Returns the final shift with count 0."""
+    hi, sig = -s, -start
+    for _ in range(maxit):
+        if count_below(sig) == 0:
+            break
+        hi, sig = sig, 4.0 * sig
+    else:
+        raise RuntimeError('bracket_below: no shift with zero count found')
+    lo = sig
+    for _ in range(bisect):
+        mid = 0.5 * (lo + hi)
+        if count_below(mid) == 0:
+            lo = mid
+        else:
+            hi = mid
+    return lo
+
+
+def check_negatives(lam, n_neg, s=S_ZERO):
+    """the number of returned eigenvalues below -s must equal the inertia count (when k >= n_neg)."""
+    got = int(np.sum(np.asarray(lam) < -s)); want = min(int(n_neg), len(lam))
+    assert got == want, f'lowest eigenvalues {lam}: {got} negative, inertia count n_neg = {n_neg}'
 
 
 # --------------------------------------------------------------------------------------------- fixed pattern
@@ -222,20 +262,38 @@ class BorderedKKT:
         return self._rec(n, m, neg_p - m, neg_m - neg_p)
 
     def inertia_and_eigs(self, K, k=4, rtol=1e-13, s=S_ZERO, with_inertia=True):
-        """Scheme B: ONE factorisation of B(K + s I) gives n_neg (eigenvalues < -s) and the k eigenvalues nearest
-        SIGMA_LAM.  The zero count is read from the converged eigenvalues when they certify it (every eigenvalue
-        within 2s of the shift has been found and none lies in (-s, s)); otherwise the second shifted factorisation
-        is done (full shift count).  Returns (inertia or None, lam or None)."""
+        """Scheme B: ONE factorisation of B(K + s I) gives n_neg (eigenvalues < -s) and, when n_neg = 0, the k lowest
+        eigenvalues (nearest SIGMA_LAM).  The zero count is read from the converged eigenvalues when they certify it
+        (every eigenvalue within 2s of the shift has been found and none lies in (-s, s)); otherwise the second shifted
+        factorisation is done (full shift count).  When n_neg > 0 the full shift count is done and the k lowest
+        eigenvalues come from shift-invert below the bracketed lambda_min (lowest_neg).
+        Returns (inertia or None, lam or None)."""
         n, m = self.n, self.m
         self.factor(K, shift=-s); _, neg_p, pert_p = self.counts()
+        dense = self._dense(K, rtol) if pert_p else None
+        nn = dense['n_neg'] if dense is not None else neg_p - m
+        if nn > 0:                                                   # past a fold: true lowest eigenvalues
+            r = None
+            if with_inertia:
+                if dense is not None:
+                    r = dense
+                else:
+                    STATS['second_shift'] += 1
+                    self.factor(K, shift=s); _, neg_m, pert_m = self.counts()
+                    r = self._dense(K, rtol) if pert_m else self._rec(n, m, nn, neg_m - neg_p)
+            try:
+                lam = self.lowest_neg(K, k, nn, rtol, s)
+            except spla.ArpackError:
+                lam = None
+            return r, lam
         try:
             lam, allw = self.eigs(k, return_all=True)
         except Exception:
             lam, allw = None, None
         if not with_inertia:
             return None, lam
-        if pert_p:
-            return self._dense(K, rtol), lam
+        if dense is not None:
+            return dense, lam
         if allw is not None and np.max(np.abs(np.asarray(allw) + s)) >= 2 * s and not np.any(np.abs(allw) < s):
             return self._rec(n, m, neg_p - m, 0), lam
         STATS['second_shift'] += 1
@@ -246,6 +304,29 @@ class BorderedKKT:
             r = self._rec(n, m, neg_p - m, neg_m - neg_p)
         self.factor(K, shift=-s)                                       # restore the held factorisation
         return r, lam
+
+    def count_below(self, K, sigma, rtol=1e-13):
+        """number of constrained eigenvalues < sigma (factorises and holds B(K - sigma I)); dense if pivots perturbed."""
+        STATS['neg_count'] += 1
+        self.factor(K, shift=sigma); _, neg, pert = self.counts()
+        if pert:
+            return self._dense(sp.csr_matrix(K) - sigma * sp.identity(self.n, format='csr'), rtol)['n_neg']
+        return neg - self.m
+
+    def lowest_neg(self, K, k, n_neg, rtol=1e-13, s=S_ZERO):
+        """the k lowest constrained eigenvalues when the inertia count gives n_neg > 0: sigma < lambda_min from shift
+        counts (bracket_below), shift-invert around sigma (all eigenvalues lie above it, so the nearest are the lowest),
+        check against n_neg, then restore the factorisation held at -s."""
+        STATS['neg_lowest'] += 1
+        sig = bracket_below(lambda x: self.count_below(K, x, rtol), s=s)
+        self.count_below(K, sig, rtol)                                 # hold B(K - sigma I)
+        nev = min(k + 2, self.n - self.m - 1)
+        w, V = self._arpack(nev)
+        self.V = V
+        lam = np.sort(w)[:k].tolist()
+        check_negatives(lam, n_neg, s)
+        self.factor(K, shift=-s)
+        return lam
 
     # -- eigenvalues (shift-invert on the held factorisation, sigma_f = held shift)
     def _proj(self, X):
@@ -391,11 +472,13 @@ def newton_anchored(net, area, X, tau, fd, max_iter=40, tol=1e-9, stall=3):
 
 
 def spectrum(net, area, X, tau, C, k=3):
-    """k constrained eigenvalues nearest SIGMA_LAM (model.spectrum semantics for N > dense_max)."""
-    kk = get(net, area, C)
-    kk.factor(net.tangent(X) - tau * area.H, shift=-S_ZERO)
-    w = np.asarray(kk.eigs(k))
-    return dict(method='eckart-shift-invert' if kk.m == 6 else 'kkt-shift-invert', lam=w.tolist(), n_neg=int((w < 0).sum()))
+    """the k lowest constrained eigenvalues (model.spectrum semantics for N > dense_max); n_neg from the inertia
+    count of the same factorisation (eigenvalues < -S_ZERO)."""
+    kk = get(net, area, C); K = net.tangent(X) - tau * area.H
+    kk.factor(K, shift=-S_ZERO); _, neg, pert = kk.counts()
+    nn = kk._dense(K, 1e-13)['n_neg'] if pert else neg - kk.m
+    w = kk.eigs(k) if nn == 0 else kk.lowest_neg(K, k, nn)
+    return dict(method='eckart-shift-invert' if kk.m == 6 else 'kkt-shift-invert', lam=list(w), n_neg=int(nn))
 
 
 def constrained_inertia(net, area, X, tau, C, rtol=1e-13):
