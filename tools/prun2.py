@@ -7,8 +7,10 @@ their deps have finished, on the master (local subprocess) or on a remote worker
 
 * Priority: longest-processing-time first on the critical-path rank (own cost + longest downstream chain), costs
   from tools/prun2_costs.json (stored wall_s / time_s of the previous single-VM run; unknown steps 30 s).
-* Slots: every VM has SLOTS (4) cores.  Big Piezo1 (6b3r) steps take all 4 slots as 1 process x 4 threads; nulls
-  takes 4 slots (its own pool of 4 single-threaded processes); every other step 1 slot x 1 thread.
+* Slots: every VM has SLOTS (4) cores.  Big Piezo1 (6b3r) steps run as 1 process x 4 threads (4 slots); when only
+  2-3 slots are free on a VM and the others are held by long single-slot steps, a big step starts with as many
+  threads as free slots instead of leaving them idle.  nulls takes 4 slots (its own pool of 4 single-threaded
+  processes); every other step 1 slot x 1 thread.
   OMP/OPENBLAS/MKL_NUM_THREADS are set per process so that processes x threads <= 4 per VM.
 * Data movement: the master keeps every output.  Before a step starts on the worker, deps whose digest differs from
   what the worker holds are pushed (one tar); after it finishes its outs are pulled back (one tar).  The worker
@@ -41,6 +43,8 @@ def log(*a):
 def fs(args, timeout=600):
     """run the Freestyle CLI; returns (rc, stdout)."""
     env = dict(os.environ, FREESTYLE_API_KEY=KEY)
+    if args[0] == 'scp':                      # the CLI runs in /tmp: make local paths absolute
+        args = ['scp'] + [x if ':' in x else os.path.abspath(x) for x in args[1:]]
     cmd = ['npx', '-y', 'freestyle@latest', 'vm'] + args + (['--team', TEAM] if TEAM else [])
     for attempt in range(3):
         try:
@@ -76,7 +80,7 @@ def slots_of(s):
     n = s['name']
     if n == 'nulls':
         return 4, 1
-    if '6b3r' in n and cost[n] >= 300:
+    if '6b3r' in n and n.split('-')[0] in ('path', 'variant', 'arclength', 'load') and n != 'path-6b3r-rc8':
         return 4, 4                           # 1 process x 4 threads
     return 1, 1
 
@@ -99,12 +103,13 @@ if WORKER:
     code = ("import sys,json;sys.path.insert(0,'.');import run_all as R;"
             f"print('DIG'+json.dumps({{d:R.digest(d) for d in {dep_paths!r}}}))")
     open(f'{LOGD}/_dig.py', 'w').write(code)
+    wexec(f'mkdir -p {WROOT}/{LOGD} && rm -f {WROOT}/{LOGD}/*.rc {WROOT}/{LOGD}/*.log {WROOT}/{LOGD}/*.deps.json')
     fs(['scp', f'{LOGD}/_dig.py', f'{WORKER}:{WROOT}/{LOGD}/_dig.py'])
-    rc, outp = wexec(f'mkdir -p {WROOT}/{LOGD}; cd {WROOT} && {WPY} {LOGD}/_dig.py')
-    line = [l for l in outp.splitlines() if l.startswith('DIG')]
+    rc, outp = wexec(f'cd {WROOT} && {WPY} {LOGD}/_dig.py')
+    line = [l[l.index('DIG{') + 3:] for l in outp.splitlines() if 'DIG{' in l]
     if rc or not line:
-        sys.exit('worker digest check failed')
-    have = json.loads(line[-1][3:])
+        sys.exit(f'worker digest check failed rc={rc} out={outp[-500:]!r}')
+    have = json.loads(line[-1])
     loc = {d: R.digest(d) for d in dep_paths}
     diff = [d for d in dep_paths if have.get(d) != loc.get(d) and d in {x for s in steps for x in s['deps']}]
     log('worker', WORKER, 'dep digests differing from master:', len(diff), diff[:10])
@@ -148,8 +153,11 @@ T0 = time.time()
 log('todo', len(todo), 'worker', WORKER)
 
 
-def start(s, vm):
-    n = s['name']; sl, th = slots_of(s); e = envs(th, {'NULLS_JOBS': 4} if n == 'nulls' else None)
+def start(s, vm, grant=None):
+    n = s['name']; sl, th = slots_of(s)
+    if grant is not None and grant < sl and th > 1:          # malleable big step: threads = granted slots
+        sl = th = grant
+    e = envs(th, {'NULLS_JOBS': 4} if n == 'nulls' else None)
     attempts[n] = attempts.get(n, 0) + 1
     cmd = s['cmd']
     if vm == 'master':
@@ -163,8 +171,8 @@ def start(s, vm):
         ev = ' '.join(f'{k}={v}' for k, v in e.items())
         dig = ("import sys,json;sys.path.insert(0,'.');import run_all as R;"
                f"json.dump({{d:R.digest(d) for d in {s['deps']!r}}},open('{LOGD}/{n}.deps.json','w'))")
-        inner = (f'cd {WROOT} && rm -f {LOGD}/{n}.rc && {WPY} -c {shlex.quote(dig)} && '
-                 f'env {ev} {c} > {LOGD}/{n}.log 2>&1; echo $? > {LOGD}/{n}.rc')
+        inner = (f'cd {WROOT} && rm -f {LOGD}/{n}.rc && {{ {WPY} -c {shlex.quote(dig)} && env {ev} {c}; }} '
+                 f'> {LOGD}/{n}.log 2>&1; echo $? > {LOGD}/{n}.rc')
         rc, _ = wexec(f'mkdir -p {WROOT}/{LOGD}; setsid -f bash -c {shlex.quote(inner)} < /dev/null > /dev/null 2>&1; echo ok')
         if rc:
             log('REMOTE START FAILED', n); attempts[n] -= 1; return False
@@ -208,17 +216,21 @@ last_poll = 0.0
 while todo or running:
     if not failed:
         todo.sort(key=lambda s: -rank[s['name']])
-        reserved = set()                      # a VM drained for a blocked higher-rank 4-slot step
         for s in list(todo):
             n = s['name']
             if up[n] & (names - done):
                 continue
-            sl, _ = slots_of(s)
+            sl, th = slots_of(s); grant = None
             # place: the VM with enough free slots; prefer the master for steps whose deps the worker lacks
-            cands = [v for v in VMS if free[v] >= sl and v not in reserved]
+            cands = [v for v in VMS if free[v] >= sl]
+            if not cands and th > 1:
+                # big step: take >= 2 free slots on a VM whose other steps will not finish soon (> 60 s left)
+                def busy_left(v):
+                    return max([cost[m] - (time.time() - r['t0']) for m, r in running.items() if r['vm'] == v] or [0.0])
+                c2 = [v for v in VMS if free[v] >= 2 and busy_left(v) > 60]
+                if c2:
+                    v = max(c2, key=lambda v: free[v]); grant = free[v]; cands = [v]
             if not cands:
-                if sl == A.slots and len(reserved) < len(VMS) - 1:
-                    reserved.add(max((v for v in VMS if v not in reserved), key=lambda v: free[v]))
                 continue
             if len(cands) == 2:
                 miss = sum(1 for d in s['deps'] if have.get(d) != R.digest(d))
@@ -226,7 +238,7 @@ while todo or running:
             else:
                 v = cands[0]
             todo.remove(s)
-            if not start(s, v):
+            if not start(s, v, grant):
                 todo.insert(0, s)
                 break
     time.sleep(5)
@@ -235,11 +247,21 @@ while todo or running:
             finish(n, r['proc'].returncode == 0)
     if WORKER and any(r['vm'] == 'worker' for r in running.values()) and time.time() - last_poll > 20:
         last_poll = time.time()
-        rc, outp = wexec(f'cd {WROOT}/{LOGD} && for f in *.rc; do [ -e "$f" ] && echo "RC $f $(cat $f)"; done; true')
+        rc, outp = wexec(f'cd {WROOT}/{LOGD} && for f in *.rc; do [ -e "$f" ] && echo "RC $f $(cat $f)"; done; '
+                         f'for f in *.log; do [ -e "$f" ] && echo "LOG $f"; done; true')
         if rc == 0:
+            logs = {l[l.index('LOG ') + 4:].split()[0][:-4] for l in outp.splitlines() if 'LOG ' in l}
+            for n, r in list(running.items()):          # launch verification: no log 60 s after start -> relaunch
+                if r['vm'] == 'worker' and n not in logs and time.time() - r['t0'] > 60:
+                    log('LAUNCH LOST', n, '- relaunching')
+                    running.pop(n); free['worker'] += r['slots']
+                    if attempts[n] >= 2:
+                        failed.append(n)
+                    else:
+                        todo.insert(0, r['s'])
             for l in outp.splitlines():
-                if l.startswith('RC '):
-                    _, f, v = l.split()[:3]; n = f[:-3]
+                if 'RC ' in l and '.rc' in l:
+                    _, f, v = l[l.index('RC '):].split()[:3]; n = f[:-3]
                     if n in running and running[n]['vm'] == 'worker':
                         wexec(f'rm -f {WROOT}/{LOGD}/{f}')
                         finish(n, v == '0')

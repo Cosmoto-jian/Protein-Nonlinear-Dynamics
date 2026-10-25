@@ -1150,8 +1150,8 @@ steps:
     units: dimensionless
     purpose: second-order indicators chi and kappa from the reference state
   expensive: true
-- name: vfife-checks
-  cmd: python src/batch_vfife_checks.py
+- name: vfife-2oar-6
+  cmd: python src/batch_vfife_checks.py --part 2oar:6
   deps:
   - src/batch_vfife_checks.py
   - src/vfife_check.py
@@ -1163,21 +1163,275 @@ steps:
   - data/derived/models
   - data/raw/MANIFEST.yaml
   - data/derived/paths/2oar_rc10.json
-  - data/derived/paths/4xdk_rc10.json
-  - data/derived/paths/4wff_rc10.json
-  - data/derived/paths/6cq8_rc10.json
-  - data/derived/paths/6mgv_rc10.json
-  - data/derived/paths/6vtk_rc10.json
-  - data/derived/paths/6pwn_rc10.json
-  - data/derived/paths/6b3r_rc10.json
   - data/derived/paths/2oar_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/2oar_6.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 6 of the 2oar r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-2oar-7
+  cmd: python src/batch_vfife_checks.py --part 2oar:7
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/2oar_rc10.json
+  - data/derived/paths/2oar_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/2oar_7.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 7 of the 2oar r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-4xdk-9
+  cmd: python src/batch_vfife_checks.py --part 4xdk:9
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/4xdk_rc10.json
   - data/derived/paths/4xdk_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/4xdk_9.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 9 of the 4xdk r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-4wff-7
+  cmd: python src/batch_vfife_checks.py --part 4wff:7
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/4wff_rc10.json
   - data/derived/paths/4wff_rc10_Xs.npy
-  - data/derived/paths/6cq8_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/4wff_7.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 7 of the 4wff r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6mgv-22
+  cmd: python src/batch_vfife_checks.py --part 6mgv:22
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6mgv_rc10.json
   - data/derived/paths/6mgv_rc10_Xs.npy
-  - data/derived/paths/6vtk_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6mgv_22.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 22 of the 6mgv r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6mgv-44
+  cmd: python src/batch_vfife_checks.py --part 6mgv:44
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6mgv_rc10.json
+  - data/derived/paths/6mgv_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6mgv_44.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 44 of the 6mgv r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6pwn-7
+  cmd: python src/batch_vfife_checks.py --part 6pwn:7
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6pwn_rc10.json
   - data/derived/paths/6pwn_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6pwn_7.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 7 of the 6pwn r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6pwn-14
+  cmd: python src/batch_vfife_checks.py --part 6pwn:14
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6pwn_rc10.json
+  - data/derived/paths/6pwn_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6pwn_14.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 14 of the 6pwn r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6b3r-26
+  cmd: python src/batch_vfife_checks.py --part 6b3r:26
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6b3r_rc10.json
   - data/derived/paths/6b3r_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6b3r_26.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 26 of the 6b3r r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6b3r-59
+  cmd: python src/batch_vfife_checks.py --part 6b3r:59
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6b3r_rc10.json
+  - data/derived/paths/6b3r_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6b3r_59.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 59 of the 6b3r r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6b3r-60
+  cmd: python src/batch_vfife_checks.py --part 6b3r:60
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6b3r_rc10.json
+  - data/derived/paths/6b3r_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6b3r_60.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 60 of the 6b3r r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6cq8-13
+  cmd: python src/batch_vfife_checks.py --part 6cq8:13
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6cq8_rc10.json
+  - data/derived/paths/6cq8_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6cq8_13.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 13 of the 6cq8 r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-6vtk-5
+  cmd: python src/batch_vfife_checks.py --part 6vtk:5
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  - data/derived/paths/6vtk_rc10.json
+  - data/derived/paths/6vtk_rc10_Xs.npy
+  outs:
+  - path: data/derived/vfife_checks/6vtk_5.json
+    units: angstrom
+    purpose: explicit VFIFE restart from Newton step 5 of the 6vtk r_c=10 path (merged by vfife-checks)
+  expensive: true
+- name: vfife-work
+  cmd: python src/batch_vfife_checks.py --part work
+  deps:
+  - src/batch_vfife_checks.py
+  - src/vfife_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/vfife_checks/work.json
+    units: model units
+    purpose: work-energy convergence check (2oar, r_c=10), merged by vfife-checks
+  expensive: true
+- name: vfife-checks
+  cmd: python src/batch_vfife_checks.py --merge
+  deps:
+  - src/batch_vfife_checks.py
+  - data/derived/vfife_checks/2oar_6.json
+  - data/derived/vfife_checks/2oar_7.json
+  - data/derived/vfife_checks/4xdk_9.json
+  - data/derived/vfife_checks/4wff_7.json
+  - data/derived/vfife_checks/6mgv_22.json
+  - data/derived/vfife_checks/6mgv_44.json
+  - data/derived/vfife_checks/6pwn_7.json
+  - data/derived/vfife_checks/6pwn_14.json
+  - data/derived/vfife_checks/6b3r_26.json
+  - data/derived/vfife_checks/6b3r_59.json
+  - data/derived/vfife_checks/6b3r_60.json
+  - data/derived/vfife_checks/6cq8_13.json
+  - data/derived/vfife_checks/6vtk_5.json
+  - data/derived/vfife_checks/work.json
   outs:
   - path: data/derived/vfife_checks.json
     units: angstrom
