@@ -7,7 +7,8 @@
 (iii) rewired  : degree-preserving, length-limited double-edge-swap rewiring of the non-backbone elements
                  (stress-free rest lengths); the nonlinear tension path of the rewired network is computed with the
                  same load, gauge and validity criterion, best TM frame within its own validity range (10 seeds,
-                 run in parallel processes; NULLS_JOBS sets the number, default 4).
+                 run in parallel processes together with the real-network reference path; NULLS_JOBS sets the
+                 number, default 4).
 usage: python nulls.py [names...]        output: results/nulls.json
 """
 import sys, os, json, time
@@ -22,6 +23,14 @@ out = json.load(open(outf)) if os.path.exists(outf) else {}
 SEEDS = tuple(range(11, 21))
 NJ = int(os.environ.get('NULLS_JOBS', '4'))
 _G = {}
+
+
+def _task(sd):
+    """pool task: 'real' = reference path of the real network, an int = one rewiring seed."""
+    if sd == 'real':
+        g = _G
+        return best_path(g['net'], g['area'], g['X0'], g['C'], g['mem'], g['er'], g['R0'], g['idx'], g['XE'], g['P0'], g['tm'])
+    return _rewired_one(sd)
 
 
 def _rewired_one(sd):
@@ -72,7 +81,9 @@ def best_path(net, area, X0, C, mem, er, R0, idx, XE, P0, tm, eps_cap=0.4):
     eps_of = lambda X: float(((X[mem] - X0[mem]) * er).sum(1).mean() / R0)
     Cs = sp.csr_matrix(C); n = 3 * net.N
     g0 = area.grad(X0)
-    u1 = EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(g0.ravel())[0].reshape(-1, 3)
+    import kkt
+    u1 = (kkt.linear_response(net, area, C, X0, g0) if kkt.AVAILABLE else
+          EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(g0.ravel())[0]).reshape(-1, 3)
     ept = eps_of(X0 + u1)
     lin = min(tm_metric(X0 + s * u1, idx, XE, P0, tm)[0] for s in np.linspace(0, 0.6 / ept, 121))
     X = X0.copy(); tau = 0.0; dt = 0.01 / ept; best = (tm_metric(X0, idx, XE, P0, tm)[0], 0.0); steps = 0; eps_star = 0.0
@@ -110,7 +121,7 @@ for name in names:
     # (ii) ANM subspace
     K0 = net.tangent(X0).tocsc()
     kmax = 36
-    w, V = spla.eigsh(K0, k=kmax + 6, sigma=-1e-6, which='LM')
+    w, V = spla.eigsh(K0, k=kmax + 6, sigma=-1e-6, which='LM', v0=np.ones(n))      # deterministic start vector
     o = np.argsort(w); w, V = w[o][6:], V[:, o][:, 6:]           # drop the six rigid modes
     sel = idx[tm]
     R1, t1 = kabsch(XE[tm], P0[tm]); D = (XE[tm] @ R1.T + t1 - P0[tm]).ravel()
@@ -122,15 +133,16 @@ for name in names:
     # reference: same procedure on the real network, then rewired networks
     bb = np.array([order[i][0] == order[j][0] and abs(order[i][1] - order[j][1]) == 1 for i, j in M['pairs']])
     if name != '6b3r' or '--with-piezo-rewire' in sys.argv:
-        rec['real_path'] = best_path(net, area, X0, C, mem, er, R0, idx, XE, P0, tm)
-        _G.update(pairs=M['pairs'], X0=X0, bb=bb, area=area, C=C, mem=mem, er=er, R0=R0, idx=idx, XE=XE, P0=P0, tm=tm)
+        _G.update(net=net, pairs=M['pairs'], X0=X0, bb=bb, area=area, C=C, mem=mem, er=er, R0=R0, idx=idx, XE=XE, P0=P0, tm=tm)
+        tasks = ('real',) + SEEDS
         if NJ > 1:
             import multiprocessing as mp
-            with mp.get_context('fork').Pool(NJ) as pool:   # each seed is independent; results in seed order
-                rw = pool.map(_rewired_one, SEEDS, chunksize=1)
+            with mp.get_context('fork').Pool(NJ) as pool:   # every task independent; results in task order
+                res = pool.map(_task, tasks, chunksize=1)
         else:
-            rw = [_rewired_one(sd) for sd in SEEDS]
-        rec['rewired'] = rw
+            res = [_task(t) for t in tasks]
+        rec['real_path'] = res[0]
+        rec['rewired'] = res[1:]
     rec['time_s'] = time.time() - T0
     out[name] = rec; json.dump(out, open(outf, 'w'), indent=1, default=float)
     print(name, json.dumps({k: v for k, v in rec.items()}, default=lambda x: round(float(x), 3))[:900], flush=True)

@@ -21,6 +21,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from inertia import constrained_inertia
 import ckpt
+import kkt
 
 name, rc, e_start = sys.argv[1], float(sys.argv[2]), float(sys.argv[3])
 npts = int(sys.argv[4]) if len(sys.argv) > 4 else 300
@@ -41,8 +42,17 @@ eps_path = np.array([r['eps'] for r in P['rows']])
 k0 = int(np.argmin(np.abs(eps_path - e_start)))
 x = XsP[k0].ravel().copy(); lam = P['rows'][k0]['tau'] * e
 # linear response and target (same as run_path.py)
-(uL1, _), = [EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(area.H @ x0)]
-uL1 = uL1.reshape(-1, 3)
+if kkt.AVAILABLE:
+    KK = kkt.get(net, area, C)
+    uL1 = kkt.linear_response(net, area, C, X0, area.H @ x0).reshape(-1, 3)
+else:
+    (uL1, _), = [EckartSolver(net.tangent(X0).tocsc(), C, eckart_pivots(C)).solve(area.H @ x0)]
+    uL1 = uL1.reshape(-1, 3)
+
+
+def bsolver(K):
+    """the Eckart-bordered tangent J = [[K, C^T],[C, 0]] factorised once, .solve(r, s) as EckartSolver."""
+    return KK.factor(K) if kkt.AVAILABLE else EckartSolver(K, C, eckart_pivots(C))
 idx, P0, XE, Delta, info = build_target(name, M); unl = ~np.isin(idx, area.vertices); tm = np.isin(idx, mem)
 
 
@@ -67,7 +77,7 @@ def jac(x, lam):
 
 def tangent(x, lam, prev, sx2):
     K, Fl = jac(x, lam)
-    b, _ = EckartSolver(K, C, eckart_pivots(C)).solve(-Fl)
+    b, _ = bsolver(K).solve(-Fl)
     nrm = np.sqrt(b @ b / sx2 + 1.0); tx, tl = b / nrm, 1.0 / nrm
     if prev is not None and (tx @ prev[0] / sx2 + tl * prev[1]) < 0:
         tx, tl = -tx, -tl
@@ -82,12 +92,15 @@ def record(x, lam, t, it, ds):
                max_e=float(ee.max()), p10=float((ee > 0.1).mean()), p20=float((ee > 0.2).mean()),
                max_e_bb=float(ee[bb].max()), p05_bb=float((ee[bb] > 0.05).mean()), max_e_nonbb=float(ee[~bb].max()),
                enl_all=enl_parts(X, uL), enl_mem=enl_parts(X, uL, mem),
-               nl=target_metrics(X, idx, XE, P0, Delta, unl, tm), lin=target_metrics(X0 + uL, idx, XE, P0, Delta, unl, tm),
-               inertia=constrained_inertia(net, area, X, tau, C))
-    try:
-        rec['lam'] = spectrum(net, area, X, tau, C, k=4)['lam']
-    except Exception:
-        rec['lam'] = None
+               nl=target_metrics(X, idx, XE, P0, Delta, unl, tm), lin=target_metrics(X0 + uL, idx, XE, P0, Delta, unl, tm))
+    if kkt.AVAILABLE:                       # scheme B: inertia and lam from one factorisation
+        rec['inertia'], rec['lam'] = KK.inertia_and_eigs(net.tangent(X) - tau * area.H, k=4)
+    else:
+        rec['inertia'] = constrained_inertia(net, area, X, tau, C)
+        try:
+            rec['lam'] = spectrum(net, area, X, tau, C, k=4)['lam']
+        except Exception:
+            rec['lam'] = None
     f = net.internal_forces(X).ravel() + tau * (H @ x)
     mu = np.linalg.lstsq(C.T, -f, rcond=None)[0]
     rec['gauge_reaction_rel'] = float(np.linalg.norm(C.T @ mu) / np.linalg.norm(tau * (H @ x)))
@@ -96,7 +109,7 @@ def record(x, lam, t, it, ds):
 
 
 K, Fl = jac(x, lam)
-dxdl, _ = EckartSolver(K, C, eckart_pivots(C)).solve(-Fl)
+dxdl, _ = bsolver(K).solve(-Fl)
 sx2 = float(dxdl @ dxdl)
 t = tangent(x, lam, (dxdl, 1.0), sx2)
 mu = np.linalg.lstsq(C.T, -residual(x, np.zeros(6), lam)[0], rcond=None)[0]
@@ -117,7 +130,7 @@ while len(pts) < npts:
         if nr < 1e-9 and np.linalg.norm(r2) < 1e-9 and abs(rN) < 1e-10:
             ok = True; break
         K, Fl = jac(xi, li)
-        S = EckartSolver(K, C, eckart_pivots(C))
+        S = bsolver(K)
         a_x, a_m = S.solve(-r1, -r2); b_x, b_m = S.solve(-Fl)
         dl = (-rN - t[0] @ a_x / sx2) / (t[0] @ b_x / sx2 + t[1])
         xi += a_x + dl * b_x; mui += a_m + dl * b_m; li += dl
@@ -155,4 +168,4 @@ merged = dict(pre=dict(P['pre'], continuation=dict(start_step=k0 + 1, ds0=ds0, n
 json.dump(merged, open(f'{RES}/paths/{tag}.json', 'w'), default=float)
 np.save(f'{RES}/paths/{tag}_Xs.npy', np.concatenate([XsP[:k0 + 1], np.array(Xs[1:])]))
 ckpt.clear(tag + '_arclength')
-print('DONE', tag, stop, f'{time.time()-T0:.0f}s', flush=True)
+print('DONE', tag, stop, f'{time.time()-T0:.0f}s', kkt.stats_line() if kkt.AVAILABLE else 'scipy', flush=True)

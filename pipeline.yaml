@@ -34,6 +34,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -56,6 +57,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -78,6 +80,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -100,6 +103,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -122,6 +126,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -144,6 +149,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -166,6 +172,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -188,6 +195,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -210,6 +218,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -232,6 +241,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -254,6 +264,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -276,6 +287,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -298,6 +310,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -320,6 +333,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -342,6 +356,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -364,6 +379,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -386,6 +402,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -408,6 +425,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -430,6 +448,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -452,6 +471,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -474,6 +494,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -496,6 +517,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -518,6 +540,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -540,6 +563,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -562,6 +586,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -588,6 +613,7 @@ steps:
   - src/snap.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -610,6 +636,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -627,6 +654,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -644,6 +672,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -661,6 +690,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -678,6 +708,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -695,6 +726,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -712,6 +744,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -729,6 +762,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -746,6 +780,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -763,6 +798,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -780,6 +816,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -797,6 +834,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -814,6 +852,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -831,6 +870,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -848,6 +888,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -865,6 +906,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -882,6 +924,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -899,6 +942,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -916,6 +960,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -933,6 +978,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -943,16 +989,146 @@ steps:
     purpose: 'tension path record: per-step strains, stability, validation and linearization metrics'
   - data/derived/paths/6b3r_rc10_kbb100_Xs.npy
   expensive: true
-- name: load-check
-  cmd: python src/load_check.py
+- name: load-check-6b3r
+  cmd: python src/load_check.py --part 6b3r
   deps:
   - src/load_check.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
   - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/6b3r.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-6pwn
+  cmd: python src/load_check.py --part 6pwn
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/6pwn.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-2oar
+  cmd: python src/load_check.py --part 2oar
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/2oar.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-4xdk
+  cmd: python src/load_check.py --part 4xdk
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/4xdk.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-4wff
+  cmd: python src/load_check.py --part 4wff
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/4wff.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-6mgv
+  cmd: python src/load_check.py --part 6mgv
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/6mgv.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-6cq8
+  cmd: python src/load_check.py --part 6cq8
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/6cq8.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check-6vtk
+  cmd: python src/load_check.py --part 6vtk
+  deps:
+  - src/load_check.py
+  - src/paths.py
+  - src/model.py
+  - src/kkt.py
+  - src/inertia.py
+  - src/vfife
+  - data/derived/models
+  - data/raw/MANIFEST.yaml
+  outs:
+  - path: data/derived/load_check/6vtk.json
+    units: model units, angstrom
+    purpose: load verification record of one structure (merged by load-check)
+  expensive: true
+- name: load-check
+  cmd: python src/load_check.py --merge
+  deps:
+  - src/load_check.py
+  - data/derived/load_check/6b3r.json
+  - data/derived/load_check/6pwn.json
+  - data/derived/load_check/2oar.json
+  - data/derived/load_check/4xdk.json
+  - data/derived/load_check/4wff.json
+  - data/derived/load_check/6mgv.json
+  - data/derived/load_check/6cq8.json
+  - data/derived/load_check/6vtk.json
   outs:
   - path: data/derived/load_check.json
     units: model units, angstrom
@@ -964,6 +1140,7 @@ steps:
   - src/indicator.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -980,6 +1157,7 @@ steps:
   - src/vfife_check.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -1014,6 +1192,7 @@ steps:
   - src/ckpt.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -1041,6 +1220,7 @@ steps:
   - src/physcale.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -1056,6 +1236,7 @@ steps:
   - src/analyze.py
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - data/derived/paths/2oar_rc10.json
   - data/derived/paths/2oar_rc12.json
   - data/derived/paths/2oar_rc8.json
@@ -1127,6 +1308,7 @@ steps:
   - writing/tex/main.tex
   - src/paths.py
   - src/model.py
+  - src/kkt.py
   - src/inertia.py
   - src/vfife
   - data/derived/models
@@ -1143,6 +1325,7 @@ steps:
   - plot/derived.py
   - plot/style.py
   - src/model.py
+  - src/kkt.py
   - src/paths.py
   - src/vfife
   - data/derived/models
@@ -1291,6 +1474,7 @@ steps:
   - data/derived/paths/6b3r_rc10.json
   - data/derived/paths/6b3r_rc10_Xs.npy
   - src/model.py
+  - src/kkt.py
   - src/paths.py
   - src/vfife
   - data/derived/models

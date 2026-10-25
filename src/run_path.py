@@ -16,6 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from inertia import constrained_inertia
 import ckpt
+import kkt
 
 ap = argparse.ArgumentParser()
 ap.add_argument('name'); ap.add_argument('rc', type=float)
@@ -69,6 +70,15 @@ def lowest_eigs(X, tau, k=4):
         return None
 
 
+def stability(X, tau, k=4):
+    """(certified inertia or None, lowest eigenvalues) at an accepted state.  With kkt (PARDISO) and N > 700 both come
+    from ONE factorisation of the bordered tangent (scheme B); otherwise the separate calls."""
+    if kkt.AVAILABLE and net.N > 700:
+        return kkt.get(net, area, C).inertia_and_eigs(net.tangent(X) - tau * area.H, k=k, with_inertia=not a.no_inertia)
+    lam = lowest_eigs(X, tau, k=k)
+    return (None if a.no_inertia else constrained_inertia(net, area, X, tau, C)), lam
+
+
 # ---------- reference quantities
 # Mechanism guard: if the constrained tangent at X0 has zero eigenvalues beyond the six rigid modes (Eckart gauge),
 # the bordered KKT system below is singular, the linear response uL1 (and hence eps_per_tau and the load step) is
@@ -79,8 +89,11 @@ g0 = area.grad(X0)
 if mechanism:
     uL1, eps_per_tau = None, None
 else:
-    KKT0 = sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc()
-    uL1 = spla.spsolve(KKT0, np.concatenate([g0.ravel(), np.zeros(6)]))[:n].reshape(-1, 3)
+    if kkt.AVAILABLE:
+        uL1 = kkt.linear_response(net, area, C, X0, g0).reshape(-1, 3)
+    else:
+        KKT0 = sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc()
+        uL1 = spla.spsolve(KKT0, np.concatenate([g0.ravel(), np.zeros(6)]))[:n].reshape(-1, 3)
     eps_per_tau = eps_of(X0 + uL1)
 pre = dict(name=name, rc=rc, gauge='eckart', N=int(net.N), E=int(net.E), n_bb=int(bb.sum()), n_mem=int(len(mem)),
            options=vars(a), n_sector=n_sector, n_loaded=int(len(area.vertices)), n_slabs=len(area.polys),
@@ -147,9 +160,9 @@ while True:
     if tgt:
         rec['nl'] = target_metrics(Xn, tgt['idx'], tgt['XE'], tgt['P0'], tgt['Delta'], tgt['unl'], tgt['tm'])
         rec['lin'] = target_metrics(X0 + uL, tgt['idx'], tgt['XE'], tgt['P0'], tgt['Delta'], tgt['unl'], tgt['tm'])
-    rec['lam'] = lowest_eigs(Xn, t_new, k=4)
+    _in, rec['lam'] = stability(Xn, t_new, k=4)
     if not a.no_inertia:
-        rec['inertia'] = constrained_inertia(net, area, Xn, t_new, C)
+        rec['inertia'] = _in
     rows.append(rec); Xs.append(Xn.copy())
     X, tau, A_prev = Xn, t_new, A
     if it <= 5:
@@ -169,4 +182,4 @@ np.save(f'{RES}/paths/{tag}_Xs.npy', np.array(Xs))
 res = dict(pre=pre, rows=rows, stop=stop, n_fail=n_fail, wall_s=time.time() - T0)
 json.dump(res, open(f'{RES}/paths/{tag}.json', 'w'), default=float)
 ckpt.clear(tag)
-print('DONE', tag, stop, f'{time.time()-T0:.0f}s', flush=True)
+print('DONE', tag, stop, f'{time.time()-T0:.0f}s', kkt.stats_line() if kkt.AVAILABLE else 'scipy', flush=True)
