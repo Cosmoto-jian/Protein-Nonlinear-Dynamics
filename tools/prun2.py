@@ -17,8 +17,8 @@ their deps have finished, on the master (local subprocess) or on a remote worker
   records the digests of the deps it actually used; the master locks the step only if they equal its own digests
   (pipeline.lock semantics of run_all.py: cmd, params, dep and out digests).
 * A failing step is retried once; a second failure stops dispatching (running steps finish) and the run exits 1.
-Environment: PRUN2_WORKER (Freestyle VM id), PRUN2_TEAM, FREESTYLE_API_KEY (or ~/.fskey), PRUN2_WROOT (worker
-project root, default ~/pnd_fast), PRUN2_WPY (worker python, default ~/venv/bin/python).
+Environment: PRUN2_WORKER (Freestyle VM id), PRUN2_TEAM, FREESTYLE_API_KEY (or the file $HOME/.fskey), PRUN2_WROOT
+(worker project root, default $HOME/pnd_fast), PRUN2_WPY (worker python, default $HOME/venv/bin/python).
 Timing is written to results/logs/prun2/timing.json.
 """
 import sys, os, json, time, subprocess, shlex, argparse
@@ -30,8 +30,9 @@ ap.add_argument('--no-worker', action='store_true'); ap.add_argument('--slots', 
 A = ap.parse_args()
 WORKER = None if A.no_worker else os.environ.get('PRUN2_WORKER')
 TEAM = os.environ.get('PRUN2_TEAM', '')
-WROOT = os.environ.get('PRUN2_WROOT', '/home/ubuntu/pnd_fast'); WPY = os.environ.get('PRUN2_WPY', '/home/ubuntu/venv/bin/python')
-KEY = os.environ.get('FREESTYLE_API_KEY') or (open(os.path.expanduser('~/.fskey')).read().strip() if os.path.exists(os.path.expanduser('~/.fskey')) else '')
+WROOT = os.environ.get('PRUN2_WROOT', '$HOME/pnd_fast'); WPY = os.environ.get('PRUN2_WPY', '$HOME/venv/bin/python')   # expanded by the worker shell
+_KF = os.path.join(os.path.expanduser('~'), '.fskey')
+KEY = os.environ.get('FREESTYLE_API_KEY') or (open(_KF).read().strip() if os.path.exists(_KF) else '')
 LOGD = 'results/logs/prun2'; os.makedirs(LOGD, exist_ok=True)
 COST = json.load(open('tools/prun2_costs.json')) if os.path.exists('tools/prun2_costs.json') else {}
 
@@ -104,8 +105,8 @@ if WORKER:
             f"print('DIG'+json.dumps({{d:R.digest(d) for d in {dep_paths!r}}}))")
     open(f'{LOGD}/_dig.py', 'w').write(code)
     wexec(f'mkdir -p {WROOT}/{LOGD} && rm -f {WROOT}/{LOGD}/*.rc {WROOT}/{LOGD}/*.log {WROOT}/{LOGD}/*.deps.json')
-    fs(['scp', f'{LOGD}/_dig.py', f'{WORKER}:{WROOT}/{LOGD}/_dig.py'])
-    rc, outp = wexec(f'cd {WROOT} && {WPY} {LOGD}/_dig.py')
+    fs(['scp', f'{LOGD}/_dig.py', f'{WORKER}:/tmp/prun2_dig.py'])
+    rc, outp = wexec(f'cd {WROOT} && {WPY} /tmp/prun2_dig.py')
     line = [l[l.index('DIG{') + 3:] for l in outp.splitlines() if 'DIG{' in l]
     if rc or not line:
         sys.exit(f'worker digest check failed rc={rc} out={outp[-500:]!r}')
