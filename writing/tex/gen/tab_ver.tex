@@ -1,19 +1,19 @@
 \begin{table}[t]
 \centering\small
-\caption{Verification, gauge and stability ($r_c=10$\,\AA). $\delta_{\mathrm{VF}}$: largest VFIFE--Newton nodal deviation over the restarted increments (number in brackets). $M_{xy}$: tilting moment of the load at $\x_0$. $\rho$: Eckart reaction/load at $\eps^*$. $\delta_{\mathrm{sym}}$, $\delta_{\mathrm{anch}}$: RMSD of the tilt-free and anchored solutions from the Eckart solution. $\lambda_1(\eps^*)/\lambda_1(0)$: lowest constrained eigenvalue; $n_{\mathrm{neg}}=0$ at every step by the inertia count. Last column: condition that ends the validity range.}
+\caption{Verification, gauge and stability ($r_c=10$\,\AA). $\delta_{\mathrm{VF}}$: largest VFIFE--Newton nodal deviation over the restarted increments (number in brackets). $M_{xy}$: tilting moment of the load at $\x_0$. $q$: Eckart reaction/load at $\eps^*$. $\delta_{\mathrm{sym}}$, $\delta_{\mathrm{anch}}$: RMSD of the tilt-free and anchored solutions from the Eckart solution. $\lambda_1(\eps^*)/\lambda_1(0)$: lowest constrained eigenvalue; $n_{\mathrm{neg}}=0$ at every step by the inertia count. Last column: condition that ends the validity range.}
 \label{tab:ver}
 \setlength{\tabcolsep}{3pt}\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccl}
 \toprule
-Channel & $\delta_{\mathrm{VF}}$ (\AA) & $M_{xy}$ & $\rho$ & $\delta_{\mathrm{sym}}$ (\AA) & $\delta_{\mathrm{anch}}$ (\AA) & $\lambda_1(\eps^*)/\lambda_1(0)$ & $\eps^*$ & ended by\\
+Channel & $\delta_{\mathrm{VF}}$ (\AA) & $M_{xy}$ & $q$ & $\delta_{\mathrm{sym}}$ (\AA) & $\delta_{\mathrm{anch}}$ (\AA) & $\lambda_1(\eps^*)/\lambda_1(0)$ & $\eps^*$ & ended by\\
 \midrule
-Piezo1 & $6.9\times10^{-6}$ (2) & $9.8\times10^{-5}$ & $3.4\times10^{-4}$ & 0.034 & 0.12 & 0.57$^a$ & 0.123 & limit point\\
-MscS & $5.9\times10^{-7}$ (2) & $8.0\times10^{-6}$ & $1.6\times10^{-5}$ & 0.006 & 0.13 & 1.08 & 0.227 & $|e|_{\max}$\\
-MscL & $1.4\times10^{-7}$ (2) & $1.6\times10^{-4}$ & $2.2\times10^{-4}$ & 0.002 & 0.02 & 2.05 & 0.110 & $|e|_{\max}$\\
-TREK-2 & $2.4\times10^{-7}$ (1) & $1.3\times10^{-3}$ & $1.9\times10^{-3}$ & 0.019 & 0.89 & 1.76 & 0.120 & $|e|_{\max}$\\
-TRAAK & $1.1\times10^{-6}$ (1) & $7.7\times10^{-4}$ & $3.1\times10^{-3}$ & 0.315 & 0.40 & 1.43 & 0.110 & $|e|_{\max}$\\
+Piezo1 & $6.9\times10^{-6}$ (2) & $9.8\times10^{-5}$ & $3.4\times10^{-4}$ & 0.034 & 0.12 & 0.57$^\dagger$ & 0.123 & limit point\\
+MscS & $5.9\times10^{-7}$ (2) & $8.0\times10^{-6}$ & $1.6\times10^{-5}$ & 0.006 & 0.13 & 1.08 & 0.227 & $|\eta|_{\max}$\\
+MscL & $1.4\times10^{-7}$ (2) & $1.6\times10^{-4}$ & $2.2\times10^{-4}$ & 0.002 & 0.02 & 2.05 & 0.110 & $|\eta|_{\max}$\\
+TREK-2 & $2.4\times10^{-7}$ (1) & $1.3\times10^{-3}$ & $1.9\times10^{-3}$ & 0.019 & 0.89 & 1.76 & 0.120 & $|\eta|_{\max}$\\
+TRAAK & $1.1\times10^{-6}$ (1) & $7.7\times10^{-4}$ & $3.1\times10^{-3}$ & 0.315 & 0.40 & 1.43 & 0.110 & $|\eta|_{\max}$\\
 OSCA1.2 & $9.4\times10^{-7}$ (2) & $8.0\times10^{-4}$ & $1.1\times10^{-3}$ & 0.007 & 1.07 & 2.99 & 0.404 & end of range\\
 \bottomrule
-\multicolumn{9}{l}{\footnotesize $^a$At the limit point the eigenvalue tends to zero; maximum along the stable branch 1.7.}
 \end{tabular}}
+\par\smallskip{\footnotesize\raggedright $^\dagger$Last stable step before L$_1$. The critical eigenvalue, the third lowest before it descends, has become the lowest (mode exchange) and is negative at the next continuation point. Maximum along the stable branch: 1.7.\par}
 \end{table}

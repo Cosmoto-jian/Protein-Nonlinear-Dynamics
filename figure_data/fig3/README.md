@@ -11,7 +11,7 @@ Source: data/derived/paths/<id>_rc10.json and data/derived/summary.json (membran
 | amp | amplitude ratio a = |u_L| / |u_NL| at the same tension | - | value |
 | dir | direction error sin(theta) between u_L and u_NL | - | value |
 | lam_rel | lowest constrained eigenvalue relative to its reference value | - | value |
-| max_e | largest element strain |e|_max | - | value |
+| max_e | largest element strain |eta|_max | - | value |
 
 ## structures.csv
 | Column | Meaning | Unit | Kind |

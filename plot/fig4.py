@@ -40,8 +40,8 @@ def extract():
                          ("stable_steps", "number of rows on the stable branch (Piezo1: up to the limit point L1)", "-", "count"),
                          ("limit_point", "the path ends at a limit point", "-", "flag 0/1"),
                          ("dilation", "best TM RMSD of an isotropic in-plane dilation", "angstrom", "value"),
-                         ("rewired_min", "best TM RMSD over three rewired networks (lowest)", "angstrom", "value"),
-                         ("rewired_max", "best TM RMSD over three rewired networks (highest)", "angstrom", "value")]})
+                         ("rewired_min", "best TM RMSD over all rewired networks (lowest)", "angstrom", "value"),
+                         ("rewired_max", "best TM RMSD over all rewired networks (highest)", "angstrom", "value")]})
 
 
 def plot():
@@ -52,46 +52,47 @@ def plot():
     from figcommon import num
     NL = style.read_csv(f"figure_data/{NAME}/nonlinear.csv"); LI = style.read_csv(f"figure_data/{NAME}/linear.csv")
     C = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/channels.csv")}
-    style.apply()
-    fig, axs = plt.subplots(2, 3, figsize=(style.W2, 104 * MM), gridspec_kw=dict(wspace=0.30, hspace=0.50, left=0.07, right=0.99, top=0.86))
+    from style import LW, MS, MEW
+    fig, axs = style.figure(2, 3, height_mm=80)
     f = lambda r, k: float(r[k]) if r[k] != "" else None
     for a, p, t in zip(axs.ravel(), CH, "abcdef"):
         c = C[p]; rr = [r for r in NL if r["structure"] == p]; E = num(rr, "eps"); T = num(rr, "rmsd_tm")
         ll = [r for r in LI if r["structure"] == p]; ge, gt = num(ll, "eps"), num(ll, "rmsd_tm"); es = f(c, "eps_star")
         xmax = min(max(E.max(), es) * 1.04, 0.42, max(2.2 * es, 0.06) if p in ("4xdk", "4wff") else 1)
         a.axvspan(es, xmax * 1.2, color=LIGHT, lw=0, zorder=0)
-        a.axhline(f(c, "closed"), color=GREY, lw=0.6, ls=(0, (4, 2)), zorder=1)
+        a.axhline(f(c, "closed"), color=GREY, lw=LW["ref"], ls=(0, (4, 2)), zorder=1)
         if c["dilation"] != "":
-            a.axhline(f(c, "dilation"), color="#7F7F7F", lw=0.7, ls=(0, (1, 1.5)), zorder=1)
+            a.axhline(f(c, "dilation"), color="#7F7F7F", lw=LW["sec"], ls=(0, (1, 1.5)), zorder=1)
             if c["rewired_min"] != "":
                 a.axhspan(f(c, "rewired_min"), f(c, "rewired_max"), color=COL[p], alpha=0.18, lw=0, zorder=1)
         m = ge <= xmax
-        a.plot(ge[m], gt[m], color=COL[p], lw=0.9, ls=(0, (3, 1.6)), zorder=2)
+        a.plot(ge[m], gt[m], color=COL[p], lw=LW["sec"], ls=(0, (3, 1.6)), zorder=2)
         ks = int(c["stable_steps"])
         if ks < len(E):
-            a.plot(E[ks - 1:], T[ks - 1:], color="#9E9E9E", lw=0.5, zorder=2)
-        a.plot(E[:ks], T[:ks], color=COL[p], lw=1.2, zorder=3)
-        a.plot(f(c, "eps_best"), f(c, "nl_best"), marker="*", color="k", ms=7, mec="white", mew=0.4, zorder=5, ls="")
+            a.plot(E[ks - 1:], T[ks - 1:], color="#9E9E9E", lw=LW["thin"], zorder=2)
+        a.plot(E[:ks], T[:ks], color=COL[p], lw=LW["data"], zorder=3)
+        a.plot(f(c, "eps_best"), f(c, "nl_best"), marker="*", color="k", ms=MS["star"], mec="white", mew=MEW["edge"], zorder=5, ls="")
         if c["limit_point"] == "1":
-            k = ks - 1; a.plot(E[k], T[k], marker="|", color="k", ms=8, mew=1.0, zorder=5)
+            k = ks - 1; a.plot(E[k], T[k], marker="|", color="k", ms=MS["star"], mew=LW["data"], zorder=5)
             a.annotate("L$_1$", (E[k], T[k]), xytext=(-10, 6), textcoords="offset points", fontsize=style.FS)
         a.set_xlim(0, xmax); a.set_title(LABEL[p], color=COL[p], fontweight="bold", loc="left")
         lo = min(T.min(), gt[m].min(), f(c, "closed"), f(c, "dilation") if c["dilation"] != "" else 1e9)
         hi = max(f(c, "closed"), max(T[:ks][E[:ks] <= xmax]))
         pad = 0.10 * (hi - lo + 0.2); a.set_ylim(lo - pad, hi + pad)
         a.yaxis.set_major_locator(MaxNLocator(4)); a.xaxis.set_major_locator(MaxNLocator(4))
-        a.set_title(f"{f(c, 'closed'):.2f}→{f(c, 'nl_best'):.2f} Å, lin. {f(c, 'lin_best'):.2f}", loc="right", fontsize=style.FS, color=style.NOTE)
-        if t in "ad": a.set_ylabel(r"RMSD$_{\rm TM}$ to partner (Å)")
-        if t in "def": a.set_xlabel(r"normalised radial displacement $\varepsilon$")
+        a.set_title(f"{f(c, 'closed'):.2f}→{f(c, 'nl_best'):.2f}, lin. {f(c, 'lin_best'):.2f}", loc="right", fontsize=style.FS, color=style.NOTE)
+        if t in "ad": a.set_ylabel(r"RMSD$_{\rm TM}$ (Å)")
+        if t in "def": a.set_xlabel(r"$\varepsilon$")
         style.letter(a, t)
-    h = [Line2D([], [], color="k", lw=1.2, label="nonlinear tension path"),
-         Line2D([], [], color="k", lw=0.9, ls=(0, (3, 1.6)), label="linear response (own $\\varepsilon$)"),
-         Line2D([], [], color="#7F7F7F", lw=0.7, ls=(0, (1, 1.5)), label="best isotropic dilation"),
-         Patch(color="k", alpha=0.18, label="rewired networks (3 seeds)"),
-         Line2D([], [], color=GREY, lw=0.6, ls=(0, (4, 2)), label="closed state"),
-         Line2D([], [], ls="", marker="*", color="k", ms=6, label=r"best frame, $\varepsilon\leq\varepsilon^*$"),
+    h = [Line2D([], [], color="k", lw=LW["data"], label="nonlinear tension path"),
+         Line2D([], [], color="k", lw=LW["sec"], ls=(0, (3, 1.6)), label="linear response (own $\\varepsilon$)"),
+         Line2D([], [], color="#7F7F7F", lw=LW["sec"], ls=(0, (1, 1.5)), label="best isotropic dilation"),
+         Patch(color=COL["6b3r"], alpha=0.25, lw=0, label="rewired networks (10 seeds)"),
+         Line2D([], [], color=GREY, lw=LW["ref"], ls=(0, (4, 2)), label="closed state"),
+         Line2D([], [], ls="", marker="*", color="k", ms=MS["star"] - 1, label=r"best frame, $\varepsilon\leq\varepsilon^*$"),
          Patch(color=LIGHT, label=r"$\varepsilon>\varepsilon^*$")]
-    fig.legend(handles=h, loc="upper center", ncol=4, bbox_to_anchor=(0.5, 1.0), handletextpad=0.4)
+    fig.canvas.draw()
+    style.top_legend(fig, [h])
     style.save(fig, NAME)
     pz = C["6b3r"]
     style.describe(NAME, "Fig. 4 validation against the partner structures (TM C-alpha RMSD, r_c = 10 A) for {{n}} channels. Piezo1: closed {{pz_closed}} A, "

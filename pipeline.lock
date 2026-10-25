@@ -30,15 +30,15 @@
   "deps": {
    "figure_data/fig1": "a757439176be762d172e64b3c51fe63270321c22368556c33b5cdf9977bdd21c",
    "figure_data/fig1_render": "2bbfe5c680f7bb963b3e109ed5480f578679197caac26f1bba0a1f08afb0af82",
-   "plot/fig1.py": "2003a4374c173c650ad606f6adb2016e38e9a41b65dabc429c05216af89fe872",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig1.py": "866a5e351f9fb18819808a490890ae60ed9238cb8471e05ef1537d7ac8898dfb",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "results/descriptions/fig1.md": "97a2f84631da6985c5954127e616198c2cea952b006131b427220821c01cc2b3",
-   "results/figures/fig1.pdf": "7eebeb145547443a8256373737df1c7caf85ba45d494bf774293820b8711a24e",
-   "results/figures/fig1.png": "b927a1dd23665451c0852f5035edffc3bd823212a687afacced7aa1050820a15",
-   "results/figures/fig1.svg": "960a7d2d92bc07255436bd23dc2165dfe80874266483c67c641e1da8b3dd8021"
+   "results/descriptions/fig1.md": "86a779d443c3604207e36766acc3f9d9bb57631a5e7cdf73a1429b3f5803bf01",
+   "results/figures/fig1.pdf": "9dc1e9149bfde6bbc713fc93e943a4fb0211e8ad6d83a789cd64bbed89944c3d",
+   "results/figures/fig1.png": "84e217098bd0a04338d575f08ce125e5a22df7121cc9a8c56c65b5b87e264a19",
+   "results/figures/fig1.svg": "d2c96d8df975b1fc18c0743e68f16366452e560c608ce076c176a26241f27170"
   },
   "params": null
  },
@@ -48,8 +48,8 @@
    "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
    "data/raw/MANIFEST.yaml": "ef33b8942bb0184e0ead2ad2f9eedcc14cc448512cdbebe7cafe0455b6d4cf08",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig1.py": "2003a4374c173c650ad606f6adb2016e38e9a41b65dabc429c05216af89fe872",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3",
+   "plot/fig1.py": "866a5e351f9fb18819808a490890ae60ed9238cb8471e05ef1537d7ac8898dfb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c",
    "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
    "src/vfife": "c568ff6ae83ea816a7a22cce87f8c367131c059710c11cfe3e1c1e05e6527a8a"
@@ -64,7 +64,7 @@
   "deps": {
    "figure_data/fig1": "a757439176be762d172e64b3c51fe63270321c22368556c33b5cdf9977bdd21c",
    "plot/fig1_render.py": "be2f18073b24d1759759e8ac9627b06fc91216d294da60db483eae52015056b9",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "figure_data/fig1_render": "2bbfe5c680f7bb963b3e109ed5480f578679197caac26f1bba0a1f08afb0af82"
@@ -77,25 +77,25 @@
   "cmd": "python plot/fig2.py plot",
   "deps": {
    "figure_data/fig2": "1b2caa05c0e3567ec25970210197f7b0ba3b6bc0a69a03e7b3740c9167e98b7a",
-   "plot/fig2.py": "c5cc3d51f65c9e369688aaf8ce5040a76bfe6fcd1fb7d429690d9203c488ce24",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig2.py": "3c10c527023d757fee7cf06e6b6c2bf7bc9e8be5a1ffae868b449a6d78c53ee9",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/fig2.md": "97a976b6f134e412526aad864e8e2747aa43123004b1aec89f6246ea595dfea8",
-   "results/figures/fig2.pdf": "008bc1311cb54d807ddf46ca1f0fdaafd3e15a4b8dbbfa458eda453b0007e8ed",
-   "results/figures/fig2.png": "b7ac98af2f7af86dcc9b770868bd28faf82b7c22ae8fe0b51070204fafd83b1a",
-   "results/figures/fig2.svg": "521b05d3a0de666ab8a24f2d06a79638a2bcbdbb96a1e9918b12b942e1a54e45"
+   "results/figures/fig2.pdf": "710519b4996fb30890bfd3dd609e464cf1f55f5921bf0e149b61a5231e579b4e",
+   "results/figures/fig2.png": "1de4fd5a501ff241363ce47c4ae120041ac6ff7904fc96fbeb6322ee304f6ce6",
+   "results/figures/fig2.svg": "d6292ea71e7065652b9e5a54c33cfa0e5de75098bae7bb3c71fb09d34dce6ded"
   },
   "params": null
  },
  "fig2-data": {
   "cmd": "python plot/fig2.py extract",
   "deps": {
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig2.py": "c5cc3d51f65c9e369688aaf8ce5040a76bfe6fcd1fb7d429690d9203c488ce24",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig2.py": "3c10c527023d757fee7cf06e6b6c2bf7bc9e8be5a1ffae868b449a6d78c53ee9",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "figure_data/fig2": "1b2caa05c0e3567ec25970210197f7b0ba3b6bc0a69a03e7b3740c9167e98b7a"
@@ -105,16 +105,16 @@
  "fig3": {
   "cmd": "python plot/fig3.py plot",
   "deps": {
-   "figure_data/fig3": "ecbec8fd008e50ae1e5ca243c8e2d94a0cf7fdee8146f373f2d60ecd84500ccd",
-   "plot/fig3.py": "6c5a8ea8fb83b893b7f00799de9c567a99b266400cc422b74ef21b1ac463aa52",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "figure_data/fig3": "0fb1f8a5f6f479d4004eea7ceff52fa11f7459e182ca9d02cb0e2010a7028b29",
+   "plot/fig3.py": "fddbee9a7320ef9b2aa07c1f692d2b744f7e9a7bbffeda44fd999aa79477fc01",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/fig3.md": "a28ad4437929263f2949960eb0c7d93075d272f97e3db1561edab36e2318702e",
-   "results/figures/fig3.pdf": "514e2fad32a734f2379c0a3ef5c732b8f0e770cb5569cfcec8413bc4acbf3caf",
-   "results/figures/fig3.png": "e6663b126608a5a34e5ae268de711fc6194b772e212fa9853b6b895603cf9656",
-   "results/figures/fig3.svg": "4a68ec666d1219d1ea2a4f7040ab756adac395ebffc8a5436585a80e9d7f7462"
+   "results/figures/fig3.pdf": "6f97e9140c69d8759a65996f3b537549feef2e145d623f86c85a267e823708d0",
+   "results/figures/fig3.png": "32ef0877d8e600674929d1aa190d23ced2971a6d94cc41d69c5662833883d72f",
+   "results/figures/fig3.svg": "85b2d85776b2c6c3733f61d510031d0c2356fab52b33a4810f3632cab6db7120"
   },
   "params": null
  },
@@ -129,29 +129,29 @@
    "data/derived/paths/6mgv_rc10.json": "dfb64302dde423bdbe13e4eefda0432edc5b28f2025316c6ad352b58ff68bc85",
    "data/derived/paths/6pwn_rc10.json": "98c52efe3e4741b660fca2a2d6eeb58b63da3d4b24bf0df9a8e92cbe796da235",
    "data/derived/paths/6vtk_rc10.json": "90c2a7a3f4dba9856e5efb19d181292ba6ab4ef953289e0e083698f49fea33d7",
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig3.py": "6c5a8ea8fb83b893b7f00799de9c567a99b266400cc422b74ef21b1ac463aa52",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig3.py": "fddbee9a7320ef9b2aa07c1f692d2b744f7e9a7bbffeda44fd999aa79477fc01",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "figure_data/fig3": "ecbec8fd008e50ae1e5ca243c8e2d94a0cf7fdee8146f373f2d60ecd84500ccd"
+   "figure_data/fig3": "0fb1f8a5f6f479d4004eea7ceff52fa11f7459e182ca9d02cb0e2010a7028b29"
   },
   "params": null
  },
  "fig4": {
   "cmd": "python plot/fig4.py plot",
   "deps": {
-   "figure_data/fig4": "a9266ce1419d8c0c46632b9b55241e69bd9c444fa16fd63111b70c2cffc745c2",
-   "plot/fig4.py": "7c7a54bbbbb0aadb6dc25d99d68a8c9bc5bdaab481acb21ae09349b0f79550e8",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "figure_data/fig4": "a393a26c19f90561596f63f824e72b2f25c9ea15bebbb789b6d39dcec5e2a0e3",
+   "plot/fig4.py": "9a3bcf59404c90152356a5b0fc976fba31f89372eda39c7997dff61d8f54ee8d",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "results/descriptions/fig4.md": "b2ea835080aa8db8bfe4ae2ff8f394d49378eaf6ee1362924497501b8ba72c13",
-   "results/figures/fig4.pdf": "ca080cee9bfca27e172cf89aa16927ae8f90dffa15f7e9b1613cc4236fbc3576",
-   "results/figures/fig4.png": "63d6752404d4248733affb7a68c1650c48af90b73c654ba22e3cba8b33a9beed",
-   "results/figures/fig4.svg": "ca2e9944f8e3b04c690e836b37932a0caac43abc9d562fd5c1706ad1b09e1124"
+   "results/descriptions/fig4.md": "b571cb71cc1d56fe0113b7a24f14663a158584d369466e0447e09b8d4c105329",
+   "results/figures/fig4.pdf": "d54ff0eb14d0aca75f40319ec02a659f3a3df3e6a8d4ea349e68041689534e26",
+   "results/figures/fig4.png": "0adbd8f5583b556a53969f8fee70378f0765a07071f91e43b7855256f3f6ea1c",
+   "results/figures/fig4.svg": "8e2a7a01409071af3015a2284cee17b40e7c85fc6cf2b968e483db770e5d68ae"
   },
   "params": null
  },
@@ -164,42 +164,42 @@
    "data/derived/paths/6b3r_rc10.json": "eb4eaf94eb87b8f2b8b0b2cf7930ff2c4746561d4e0d0d6fc27c8c7a21f68995",
    "data/derived/paths/6mgv_rc10.json": "dfb64302dde423bdbe13e4eefda0432edc5b28f2025316c6ad352b58ff68bc85",
    "data/derived/paths/6pwn_rc10.json": "98c52efe3e4741b660fca2a2d6eeb58b63da3d4b24bf0df9a8e92cbe796da235",
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig4.py": "7c7a54bbbbb0aadb6dc25d99d68a8c9bc5bdaab481acb21ae09349b0f79550e8",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig4.py": "9a3bcf59404c90152356a5b0fc976fba31f89372eda39c7997dff61d8f54ee8d",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "figure_data/fig4": "a9266ce1419d8c0c46632b9b55241e69bd9c444fa16fd63111b70c2cffc745c2"
+   "figure_data/fig4": "a393a26c19f90561596f63f824e72b2f25c9ea15bebbb789b6d39dcec5e2a0e3"
   },
   "params": null
  },
  "fig5": {
   "cmd": "python plot/fig5.py plot",
   "deps": {
-   "figure_data/fig5": "ba47cda7b0934d31b5d6b04cc93b597f3fa04e030baee67e31e2b160900aa3ae",
-   "plot/fig5.py": "b8260df754d07ff4b87165abaf8ec4d13cad9b96203acfd98656b7cb81b9730a",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "figure_data/fig5": "6faf8b29f49b751b07914f80196d15f635f64f4f5fc0ef24d4ba73ffacbb2faa",
+   "plot/fig5.py": "0d7a2582cee3ce2bc28d96e4289d506b1f3fd4a2bb51716d25dc750bbeeae171",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/fig5.md": "7a51494e726fab8b79f2a28a716bd8623f76dc8013538ea548a47d3f5cea0b56",
-   "results/figures/fig5.pdf": "75724034c0e780d9265d7c02e76d29e80035ab90cf590cbca583245bf02f1f6f",
-   "results/figures/fig5.png": "aac82e866f35a40d11a9bb3d18da9999fe6e1738cd4d14411621894f54067f62",
-   "results/figures/fig5.svg": "c119c27d2275c92f987b2552e8c994b87e3260459568da8195cb86b5331597a2"
+   "results/figures/fig5.pdf": "2a163fd93ee269184497ea727f789057b8132161e255e7f757eddc139c72941b",
+   "results/figures/fig5.png": "f9bbe6a38a0988556a3a59ec2024375d4f0e98f5a8219e334b79259b31e85cc3",
+   "results/figures/fig5.svg": "2b8a2e09adb14fe72474c8e4496adf95717486ee86196d19dd7d15fd31cb6ba3"
   },
   "params": null
  },
  "fig5-data": {
   "cmd": "python plot/fig5.py extract",
   "deps": {
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig5.py": "b8260df754d07ff4b87165abaf8ec4d13cad9b96203acfd98656b7cb81b9730a",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig5.py": "0d7a2582cee3ce2bc28d96e4289d506b1f3fd4a2bb51716d25dc750bbeeae171",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "figure_data/fig5": "ba47cda7b0934d31b5d6b04cc93b597f3fa04e030baee67e31e2b160900aa3ae"
+   "figure_data/fig5": "6faf8b29f49b751b07914f80196d15f635f64f4f5fc0ef24d4ba73ffacbb2faa"
   },
   "params": null
  },
@@ -207,15 +207,15 @@
   "cmd": "python plot/fig6.py plot",
   "deps": {
    "figure_data/fig6": "f3a5e13a93040cd4f9a5aea02a52cb40d0bfdda2cbe042baa7e80c7e0ce4c802",
-   "plot/fig6.py": "1a553c4b2cbbd6af82d154866d16d3e7498ea5aa2e0f0c7b6b30f5c7db4ae1d4",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig6.py": "9c6e9b8b65558cbdaaf4aa1f955fe3363daa4a77763743f92153c7a9623937d7",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/fig6.md": "61a543edecad3d4ea3221057b82b6238576c41d13f7188d4dd3e0d9ee0d13b57",
-   "results/figures/fig6.pdf": "0c5cd5d07a10f4f8afa93f54000cd4d7c4db85b3594f9eb324b45f8ee9fce333",
-   "results/figures/fig6.png": "fb818779051aff6e7ab97065effa572b4ef66e46f56e957919aa8a36416e587a",
-   "results/figures/fig6.svg": "4dbc9d6c8c8c6ebf208fbe55562f6052f918e0cf2de722d200e52bffbee002ae"
+   "results/figures/fig6.pdf": "be027445028bbf6cb90e6589405dfd548495a1f23f476fe7785c5609af8ab8dc",
+   "results/figures/fig6.png": "f52eb1aefd97bc3468debb83b00c876b4db9d8c55065d94e1350a15d63a42147",
+   "results/figures/fig6.svg": "51348d50d8b9fb0d80124ed20d9a4bb7a532e1bd46ba8302fad37c18fbcc2d79"
   },
   "params": null
  },
@@ -225,11 +225,11 @@
    "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
    "data/derived/paths/6b3r_rc10.json": "eb4eaf94eb87b8f2b8b0b2cf7930ff2c4746561d4e0d0d6fc27c8c7a21f68995",
    "data/derived/paths/6b3r_rc10_Xs.npy": "d63270f6eb32716d23397bbfa79f0cfbd715eaceb7ea4fb6091e6c2a5136b461",
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "data/raw/MANIFEST.yaml": "ef33b8942bb0184e0ead2ad2f9eedcc14cc448512cdbebe7cafe0455b6d4cf08",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig6.py": "1a553c4b2cbbd6af82d154866d16d3e7498ea5aa2e0f0c7b6b30f5c7db4ae1d4",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3",
+   "plot/fig6.py": "9c6e9b8b65558cbdaaf4aa1f955fe3363daa4a77763743f92153c7a9623937d7",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c",
    "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
    "src/vfife": "c568ff6ae83ea816a7a22cce87f8c367131c059710c11cfe3e1c1e05e6527a8a"
@@ -242,16 +242,16 @@
  "fig7": {
   "cmd": "python plot/fig7.py plot",
   "deps": {
-   "figure_data/fig7": "b03ac5941041ce5998ca0eb6c411401c38f31d08ccb855b05edcfb4b01342359",
-   "plot/fig7.py": "773a88628987c98700e788931fc99f5dc614526e69b48505089527b235bcba3e",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "figure_data/fig7": "b305a9ecabcc637e4e7ecb5c9cf9a608a394bcbeff7c719ad8e7189e5cf0740f",
+   "plot/fig7.py": "c4cea333c78e9ea655b01fe892390a97836033c30cd152cd8fd94e579744c37d",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/fig7.md": "ca5343735e7e60d69bdb30481cb9d1e84b9e2f154a0fcf63df9ba78bb31384cc",
-   "results/figures/fig7.pdf": "5869679bea2410d2843fd66201afdd83c802a0b88de7bad98020120d2b668f1c",
-   "results/figures/fig7.png": "2801df50313d833e8883e823bdddb203fc71f0959d6c02f5cac928c931724a0b",
-   "results/figures/fig7.svg": "27631523ad18f8f984a1578069db357f86c613a1e4a1887be4a85e91cad52d16"
+   "results/figures/fig7.pdf": "da026d82e4815950bcf81782d1dba57c0d860d83e6fe2618a6f9db16dd963033",
+   "results/figures/fig7.png": "b8e295b9afeb60abd25de6541f81ed7d9053485ccfebdff66a323dcb5f20346f",
+   "results/figures/fig7.svg": "2f9f585a3eae4a366c811f4113ea891ca94a5566a03fb75a6097da341033c84a"
   },
   "params": null
  },
@@ -262,40 +262,40 @@
    "data/derived/paths/6b3r_rc10_loadcontrol.json": "8a703d2d2bef8906b411c13b4e07d7a9a0d4eb321bab699e4ae7cc50a0caddfb",
    "data/derived/paths/6b3r_rc10_snap.json": "ba3557c751b8670cb0fbea4c97a6f0601c6816d3296768bc52a90ac477c94f6e",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/fig7.py": "773a88628987c98700e788931fc99f5dc614526e69b48505089527b235bcba3e",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/fig7.py": "c4cea333c78e9ea655b01fe892390a97836033c30cd152cd8fd94e579744c37d",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "figure_data/fig7": "b03ac5941041ce5998ca0eb6c411401c38f31d08ccb855b05edcfb4b01342359"
+   "figure_data/fig7": "b305a9ecabcc637e4e7ecb5c9cf9a608a394bcbeff7c719ad8e7189e5cf0740f"
   },
   "params": null
  },
  "figA1": {
   "cmd": "python plot/figA1.py plot",
   "deps": {
-   "figure_data/figA1": "1821dffe5e05eb1ee49fdf628b252368251e3aa8ced5ed00f15746783a936a5c",
-   "plot/figA1.py": "dad0fd39bc7d4f64c2d104b51dde2d751fdff3c9a64f25bef06a4886609aa782",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "figure_data/figA1": "0d71b5deff2b56e6ac3ee40cfe0fbd3576282f96ad85f1628712ba9cd70fbab3",
+   "plot/figA1.py": "7e08d1f60daaf4d2eb0263e7b9f0872545c3fee645c3dae302ec592cbf91a59d",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "results/descriptions/figA1.md": "0957811d871c7b3a1d7cdfa257860e2c64d1df3481d23b2c7bd0f0b7f1ec1fda",
-   "results/figures/figA1.pdf": "20ddb2ab25a5d4b87ae652d3f18066f9eafb22a77fd01ffc9976b654c4ea7b6c",
-   "results/figures/figA1.png": "6b65ea391bec14b050b589bb9e51220cd49166f4014d3f1b3d17fc16c6358b6a",
-   "results/figures/figA1.svg": "15066fb637bdbc855ea2102a6fd1dc9f838506bebdb4f5ca82224b883dd0e354"
+   "results/descriptions/figA1.md": "e16f9ad85929747227154936cdfa12c5252edbd85860ca9065ab8411080a46c5",
+   "results/figures/figA1.pdf": "9635b80fef4b7bcb8bd5c6fd976bcc27c5f4bd9b662723f0e621c66c391af4a0",
+   "results/figures/figA1.png": "f59620956b24e304645f768ef1602672ede95011d970cf04e0f7eb6b236cb522",
+   "results/figures/figA1.svg": "7f6666c12df681cab579a1538101f5f8952ecd085bd01486accdaa5756857645"
   },
   "params": null
  },
  "figA1-data": {
   "cmd": "python plot/figA1.py extract",
   "deps": {
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/figA1.py": "dad0fd39bc7d4f64c2d104b51dde2d751fdff3c9a64f25bef06a4886609aa782",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/figA1.py": "7e08d1f60daaf4d2eb0263e7b9f0872545c3fee645c3dae302ec592cbf91a59d",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
-   "figure_data/figA1": "1821dffe5e05eb1ee49fdf628b252368251e3aa8ced5ed00f15746783a936a5c"
+   "figure_data/figA1": "0d71b5deff2b56e6ac3ee40cfe0fbd3576282f96ad85f1628712ba9cd70fbab3"
   },
   "params": null
  },
@@ -303,25 +303,25 @@
   "cmd": "python plot/figA2.py plot",
   "deps": {
    "figure_data/figA2": "ed14c7b9b24a21554a29d7cca7ce2fbadac63b6bfb0b1be23add5b54d683e749",
-   "plot/figA2.py": "b34f7107988542159089d3366b3ef570b168ff12400823133572b44bd81d7264",
-   "plot/figcommon.py": "985962f5481dd51cd3865747468c45c7aaf0388d165a17220ff94607c67920dd",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/figA2.py": "eaf4b5beb60005c52027897df4a04481d955a44a18fa782628ffe27fc6e4ffa0",
+   "plot/figcommon.py": "4b7af4190ab82b48cc7b7c676554a259296c159e79c7de58ca17d43408f5e4bb",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "results/descriptions/figA2.md": "36ea20939a2ac29a0236dc4872f6be7c01008d4a32b1f05f1c17db4921990784",
-   "results/figures/figA2.pdf": "3d1502a8a0f11a2036cd7fd5c2312c8ae205feab83478150ba8e9a7c4d6e7ebc",
-   "results/figures/figA2.png": "a90d655a48e2779414c97b20da64c79aab672c88b30e443c28eb0707918551e1",
-   "results/figures/figA2.svg": "cb38b7f09acd64f3775ad1caa59dc8549cf63c3340f57ae64f851879f6f74eea"
+   "results/figures/figA2.pdf": "9d69ea22ad3958c5135b1dfba87a4551d09997f1b1afae085ad6c2121ac78ddc",
+   "results/figures/figA2.png": "d2baaab4a03055785ce4418402012066db36ae0c15b7488876b9ca5246a98911",
+   "results/figures/figA2.svg": "43a9170cf8545fa8f6171cf7b5b1ada6e3a24ef3000e594d41ee22fd2894034a"
   },
   "params": null
  },
  "figA2-data": {
   "cmd": "python plot/figA2.py extract",
   "deps": {
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "plot/derived.py": "41f7e2de5a7955304bd02efbd321e69dbb5f38c65a53636447ae9858f9770095",
-   "plot/figA2.py": "b34f7107988542159089d3366b3ef570b168ff12400823133572b44bd81d7264",
-   "plot/style.py": "665052267cb32154081d2eac34bbaa8f2e1adec82b3a4baf3583ed1f659fadb3"
+   "plot/figA2.py": "eaf4b5beb60005c52027897df4a04481d955a44a18fa782628ffe27fc6e4ffa0",
+   "plot/style.py": "6e33d5b4a18aa3f547b255e24c58d457298e9d07eaf3c549389cbc2f003da94c"
   },
   "outs": {
    "figure_data/figA2": "ed14c7b9b24a21554a29d7cca7ce2fbadac63b6bfb0b1be23add5b54d683e749"
@@ -389,19 +389,26 @@
    "src/ckpt.py": "f30d9189edef3be6ca5b27e63f99ff02d08fa886bef968a75313a956a50db6a1",
    "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
    "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
-   "src/nulls.py": "5bee1d83f391b4cd3314a7a153c5d8fa394a800df64bf04e639290527111857b",
+   "src/nulls.py": "5c3469e1de0ccb1c7e3b3d74068670471141e6f9270fd1559cf6370085653e13",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
    "src/run_path.py": "f3034a0e1451d738da693e2f1ecea5096524e649ddd309a0dc1b29c3fa84ff1d",
    "src/vfife": "c568ff6ae83ea816a7a22cce87f8c367131c059710c11cfe3e1c1e05e6527a8a"
   },
   "outs": {
-   "data/derived/nulls.json": "fe6e5c035b2f58790de37bb066f475ee7deb257aba6556788d998526eb889b3a"
+   "data/derived/nulls.json": "df2fbb1f1884a60fba32027cb5ea1ea45d4c28f42f50784b49b00813d9f4c303"
   },
   "params": {
    "rewire_seeds": [
     11,
     12,
-    13
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20
    ]
   }
  },
@@ -410,17 +417,17 @@
   "deps": {
    "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
    "data/derived/paths/6b3r_rc10_Xs.npy": "d63270f6eb32716d23397bbfa79f0cfbd715eaceb7ea4fb6091e6c2a5136b461",
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984",
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30",
    "data/raw/MANIFEST.yaml": "ef33b8942bb0184e0ead2ad2f9eedcc14cc448512cdbebe7cafe0455b6d4cf08",
    "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
-   "src/make_tex.py": "78fc440eacddd4382fa7142d0c32b0a55ccaaaaf3a1a82c72e88425a1acdf4e9",
+   "src/make_tex.py": "00b4ab0827ce45fa98569599947ff68c582e25ab2df7fdab4f71ccc6e994faa3",
    "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
    "src/vfife": "c568ff6ae83ea816a7a22cce87f8c367131c059710c11cfe3e1c1e05e6527a8a",
-   "writing/tex/main.tex": "7e16ee0ac496587e12d550458de0a2c8f58f67d5ac08f2423de86fd01561c7b0"
+   "writing/tex/main.tex": "5273d41965f10302ddba3fc762496a80e9087f41fca4daad6c6ecb2ed477a394"
   },
   "outs": {
-   "writing/tex/gen": "d5273cf794ece505255ee30335619b60d05f61db240885b0af7d3de089999bb1"
+   "writing/tex/gen": "4c593e0c5d3637c1a3fa8aa18c1fbb22ea2f24ddb2e24e81f391508e2eecfb7c"
   },
   "params": null
  },
@@ -1019,7 +1026,7 @@
   "deps": {
    "data/derived/indicator.json": "bc4ad9d0780744722af35781ec19910c95b0429e792d336b5e65686b7d4b8fb0",
    "data/derived/load_check.json": "2eea5162faa45d8fd94b1382fc45e04cd852ca49cd0816e5a12882c6a1c655fe",
-   "data/derived/nulls.json": "fe6e5c035b2f58790de37bb066f475ee7deb257aba6556788d998526eb889b3a",
+   "data/derived/nulls.json": "df2fbb1f1884a60fba32027cb5ea1ea45d4c28f42f50784b49b00813d9f4c303",
    "data/derived/paths/2oar_rc10.json": "fa0a47fc1447fcf76b2242a9b6a2ad6b5625e702a50da49a78bc1c28512e8cca",
    "data/derived/paths/2oar_rc12.json": "20d02f1dfa33bbfcdf35c0f34c95b97d5caa4c2d6dd54b0fc2cb66fcfb07931d",
    "data/derived/paths/2oar_rc8.json": "814bf79f1e1125f0a10cde3be5ef12fa902e037f458ea8ea8f56ce1deee9de84",
@@ -1074,7 +1081,7 @@
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1"
   },
   "outs": {
-   "data/derived/summary.json": "b9aac059b85b9c8c592df9647a9fec6e48cb34d846234c719f88930e3195f984"
+   "data/derived/summary.json": "e08b7cbfc6a3c1eb18babb2da629846621244073b60e76c734c0994e35320f30"
   },
   "params": {
    "approach_rel": 0.05,

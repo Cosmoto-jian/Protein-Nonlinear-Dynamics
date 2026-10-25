@@ -6,7 +6,8 @@
                  an upper bound for any linear model built on these modes (it uses the target to choose k amplitudes);
 (iii) rewired  : degree-preserving, length-limited double-edge-swap rewiring of the non-backbone elements
                  (stress-free rest lengths); the nonlinear tension path of the rewired network is computed with the
-                 same load, gauge and validity criterion, best TM frame within its own validity range (3 seeds).
+                 same load, gauge and validity criterion, best TM frame within its own validity range (10 seeds,
+                 run in parallel processes; NULLS_JOBS sets the number, default 4).
 usage: python nulls.py [names...]        output: results/nulls.json
 """
 import sys, os, json, time
@@ -18,7 +19,21 @@ from model import _rmsd_ovl
 names = [a for a in sys.argv[1:] if not a.startswith("--")] or PANEL
 outf = f'{RES}/nulls.json'
 out = json.load(open(outf)) if os.path.exists(outf) else {}
-SEEDS = (11, 12, 13)
+SEEDS = tuple(range(11, 21))
+NJ = int(os.environ.get('NULLS_JOBS', '4'))
+_G = {}
+
+
+def _rewired_one(sd):
+    g = _G
+    pr, acc = rewire(g['pairs'], g['X0'], g['bb'], sd, rmax=1.5 * 10.0)
+    netr = TrussNetwork(g['X0'], pr, k=1.0)
+    lam = spectrum(netr, g['area'], g['X0'], 0.0, g['C'], k=2)['lam'][0]
+    if lam < 1e-8:
+        return dict(seed=sd, lambda1=lam, note='mechanism, skipped', **acc)
+    r = best_path(netr, g['area'], g['X0'], g['C'], g['mem'], g['er'], g['R0'], g['idx'], g['XE'], g['P0'], g['tm'])
+    r.update(seed=sd, lambda1=lam, **acc)
+    return r
 
 
 def rewire(pairs, X0, bb, seed, rmax, target=3.0):
@@ -108,14 +123,13 @@ for name in names:
     bb = np.array([order[i][0] == order[j][0] and abs(order[i][1] - order[j][1]) == 1 for i, j in M['pairs']])
     if name != '6b3r' or '--with-piezo-rewire' in sys.argv:
         rec['real_path'] = best_path(net, area, X0, C, mem, er, R0, idx, XE, P0, tm)
-        rw = []
-        for sd in SEEDS:
-            pr, acc = rewire(M['pairs'], X0, bb, sd, rmax=1.5 * 10.0)
-            netr = TrussNetwork(X0, pr, k=1.0)
-            lam = spectrum(netr, area, X0, 0.0, C, k=2)['lam'][0]
-            if lam < 1e-8:
-                rw.append(dict(seed=sd, lambda1=lam, note='mechanism, skipped', **acc)); continue
-            r = best_path(netr, area, X0, C, mem, er, R0, idx, XE, P0, tm); r.update(seed=sd, lambda1=lam, **acc); rw.append(r)
+        _G.update(pairs=M['pairs'], X0=X0, bb=bb, area=area, C=C, mem=mem, er=er, R0=R0, idx=idx, XE=XE, P0=P0, tm=tm)
+        if NJ > 1:
+            import multiprocessing as mp
+            with mp.get_context('fork').Pool(NJ) as pool:   # each seed is independent; results in seed order
+                rw = pool.map(_rewired_one, SEEDS, chunksize=1)
+        else:
+            rw = [_rewired_one(sd) for sd in SEEDS]
         rec['rewired'] = rw
     rec['time_s'] = time.time() - T0
     out[name] = rec; json.dump(out, open(outf, 'w'), indent=1, default=float)

@@ -47,20 +47,19 @@ def plot():
     N = style.read_csv(f"figure_data/{NAME}/nodes.csv"); PR = {r["key"]: float(r["value"]) for r in style.read_csv(f"figure_data/{NAME}/params.csv")}
     P0 = np.c_[num(N, "x0"), num(N, "y0"), num(N, "z0")]; X = np.c_[num(N, "xm"), num(N, "ym"), num(N, "zm")]; XE = np.c_[num(N, "xe"), num(N, "ye"), num(N, "ze")]
     tm = num(N, "tm").astype(bool); c = np.array([PR["axis_x"], PR["axis_y"]])
-    style.apply()
-    fig = plt.figure(figsize=(style.W2, 70 * MM))
-    axa = fig.add_axes([0.0, 0.02, 0.33, 0.86]); axb = fig.add_axes([0.42, 0.15, 0.30, 0.70]); axc = fig.add_axes([0.81, 0.15, 0.19, 0.70])
+    from style import LW, MS, MEW
+    fig, ax = style.figure(1, 3, height_mm=54, gridspec_kw=dict(width_ratios=[0.95, 1.3, 0.8])); axa, axb, axc = ax[0]
     q = np.where(tm)[0][::3]
     xy0 = P0[q, :2] - c[:2]
-    axa.scatter(P0[tm, 0] - c[0], P0[tm, 1] - c[1], s=0.8, c="#BDBDBD", lw=0, zorder=1)
+    axa.scatter(P0[tm, 0] - c[0], P0[tm, 1] - c[1], s=MS["dot"] ** 2, c="#BDBDBD", lw=0, zorder=1)
     dm = (X[q, :2] - P0[q, :2]); de = (XE[q, :2] - P0[q, :2])
-    axa.quiver(xy0[:, 0], xy0[:, 1], de[:, 0], de[:, 1], angles="xy", scale_units="xy", scale=1, color=style.EXP, width=0.0035, headwidth=3, headlength=3.5, zorder=2, alpha=0.9)
-    axa.quiver(xy0[:, 0], xy0[:, 1], dm[:, 0], dm[:, 1], angles="xy", scale_units="xy", scale=1, color=COL["6b3r"], width=0.0035, headwidth=3, headlength=3.5, zorder=3, alpha=0.9)
+    axa.quiver(xy0[:, 0], xy0[:, 1], de[:, 0], de[:, 1], angles="xy", scale_units="xy", scale=1, color=style.EXP, width=0.0045, headwidth=3, headlength=3.5, zorder=2, alpha=0.9)
+    axa.quiver(xy0[:, 0], xy0[:, 1], dm[:, 0], dm[:, 1], angles="xy", scale_units="xy", scale=1, color=COL["6b3r"], width=0.0045, headwidth=3, headlength=3.5, zorder=3, alpha=0.9)
     axa.set_aspect("equal"); axa.axis("off")
     xmn = (P0[tm, 0] - c[0]).min(); ymn = (P0[tm, 1] - c[1]).min()
-    axa.plot([xmn, xmn + 20], [ymn - 6] * 2, color=DARK, lw=1.0); axa.text(xmn + 10, ymn - 8, "20 Å", ha="center", va="top", fontsize=style.FS)
+    axa.plot([xmn, xmn + 20], [ymn - 6] * 2, color=DARK, lw=LW["data"]); axa.text(xmn, ymn - 8, "20 Å (arrows to scale)", ha="left", va="top", fontsize=style.FS)
 
-    axa.set_title("In-plane displacement, TM C$\\alpha$", loc="left")
+    axa.set_title("In-plane, TM C$\\alpha$", loc="left")
     r0 = np.linalg.norm(P0[:, :2] - c[:2], axis=1); bins = np.arange(0, r0.max() + 8, 8)
     for Y, col, lab in ((X, COL["6b3r"], "model"), (XE, style.EXP, "8IXO")):
         dz = Y[:, 2] - P0[:, 2]; k = np.digitize(r0, bins)
@@ -69,27 +68,28 @@ def plot():
             m = k == b_
             if m.sum() >= 15:
                 mids.append(0.5 * (bins[b_ - 1] + bins[b_])); v = dz[m]; med.append(np.median(v)); q1.append(np.percentile(v, 25)); q3.append(np.percentile(v, 75))
-        axb.fill_between(mids, q1, q3, color=col, alpha=0.18, lw=0); axb.plot(mids, med, color=col, lw=1.2, marker="o", ms=2.5, mec="white", mew=0.3, label=lab)
-    axb.axhline(0, color=GREY, lw=0.5, ls=(0, (2, 2)))
-    axb.set_xlabel("in-plane radius $r$ in closed state (Å)"); axb.set_ylabel(r"axial displacement $\Delta z$ (Å)")
-    axb.set_title("Axial flattening not reproduced", loc="left")
+        axb.fill_between(mids, q1, q3, color=col, alpha=0.18, lw=0); axb.plot(mids, med, color=col, lw=LW["data"], marker="o", ms=MS["small"], mec="white", mew=MEW["edge"], label=lab)
+    axb.axhline(0, color=GREY, lw=LW["zero"], ls=(0, (2, 2)))
+    axb.set_xlabel("closed-state radius $r$ (Å)"); axb.set_ylabel(r"axial displacement $\Delta z$ (Å)")
+    axb.set_title("Axial displacement", loc="left")
 
     def desc(Y):
         rr = np.linalg.norm(Y[tm, :2] - c[:2], axis=1); return rr.mean(), np.sqrt(((Y[:, 2] - Y[:, 2].mean()) ** 2).mean())
     r_0, z_0 = desc(P0); r_m, z_m = desc(X); r_e, z_e = desc(XE); A0 = PR["A0_nm2"]
-    groups = [("mean $r$\n(TM)", r_0, r_m, r_e), ("axial RMS", z_0, z_m, z_e), ("shell area", A0, A0 + PR["dA_model_nm2"], A0 + PR["dA_exp_nm2"])]
+    groups = [("mean $r$\nTM (Å)", r_0, r_m, r_e), ("axial\nRMS\n(Å)", z_0, z_m, z_e), ("shell\narea\n(nm$^2$)", A0, A0 + PR["dA_model_nm2"], A0 + PR["dA_exp_nm2"])]
     for i, (lab, a0, am, ae) in enumerate(groups):
         for j, (val_, col) in enumerate(((am / a0, COL["6b3r"]), (ae / a0, style.EXP))):
             axc.bar(i + (j - 0.5) * 0.36, val_ - 1, width=0.34, bottom=1, color=col, lw=0)
             axc.text(i + (j - 0.5) * 0.36, max(val_, 1) + 0.006, f"{(am if j == 0 else ae):.0f}", ha="center", va="bottom", fontsize=style.FS, rotation=90)
-    axc.axhline(1, color=DARK, lw=0.6)
+    axc.axhline(1, color=DARK, lw=LW["ref"])
     axc.set_xticks(range(3)); axc.set_xticklabels([g[0] for g in groups], fontsize=style.FS)
     axc.set_ylabel("relative to closed"); axc.set_ylim(0.85, 1.32); axc.set_xlim(-0.6, 2.6)
     axc.set_title("Global shape", loc="left")
     for a_, t, dx in ((axa, "a", 0.0), (axb, "b", -0.2), (axc, "c", -0.38)):
         style.letter(a_, t)
-    style.top_legend(fig, [[Line2D([], [], color=COL["6b3r"], lw=1.4, label="Piezo1 model, best frame"),
-                            Line2D([], [], color=style.EXP, lw=1.4, label="experiment, closed → 8IXO")]], y=0.93)
+    fig.canvas.draw()
+    style.top_legend(fig, [[Line2D([], [], color=COL["6b3r"], lw=LW["data"], label="Piezo1 model, best frame"),
+                            Line2D([], [], color=style.EXP, lw=LW["data"], label="experiment, closed → 8IXO")]])
     style.save(fig, NAME)
     style.describe(NAME, "Fig. 6 Piezo1 at its best frame (eps = {{eps}}). Mean in-plane TM radius {{r0}} -> {{rm}} A in the model and {{re}} A in 8IXO "
                    "({{rfrac}} % of the experimental increase); axial RMS spread {{z0}} -> {{zm}} A (8IXO {{ze}} A); outer-shell area change "

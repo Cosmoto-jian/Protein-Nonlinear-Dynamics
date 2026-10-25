@@ -42,61 +42,56 @@ def extract():
 
 def plot():
     import matplotlib.pyplot as plt
-    from matplotlib.lines import Line2D
-    from matplotlib.ticker import FixedLocator, NullFormatter
-    from figcommon import logticks, chan_handles
+    from matplotlib.ticker import FixedLocator, FixedFormatter, NullFormatter
+    from figcommon import logticks, chan_handles, mkh
+    from style import LW, MS, MEW
     Vf = style.read_csv(f"figure_data/{NAME}/vfife.csv"); W = style.read_csv(f"figure_data/{NAME}/work_energy.csv")
     G = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/gauge.csv")}
-    style.apply()
-    fig, ax = plt.subplots(1, 4, figsize=(style.W2, 66 * MM), gridspec_kw=dict(wspace=0.62, left=0.07, right=0.99, bottom=0.24, top=0.82))
-    xs = np.arange(len(CH)); rot = dict(rotation=90, ha="right", va="center", rotation_mode="anchor")
+    fig, ax = style.figure(1, 4, height_mm=50); ax = ax[0]
+    xs = np.arange(len(CH)); names = [LABEL[p] for p in CH]
     a = ax[0]
     for r in Vf:
         p = r["structure"]; i = CH.index(p); dev = float(r["max_deviation"]); near = float(r["eps_end"]) >= 0.8 * float(r["eps_star"])
         if dev > 1e-3:          # the increment that ends exactly at the limit point snaps
-            a.annotate("", xy=(i + 0.12, 9e-5), xytext=(i + 0.12, 2.5e-5), arrowprops=dict(arrowstyle="-|>", color=COL[p], lw=0.8, mutation_scale=6))
-            a.text(i + 0.30, 3e-5, f"snap at L$_1$\n({dev:.1f} Å)", fontsize=style.FS, color=COL[p], va="center")
+            a.annotate("", xy=(i, 9e-5), xytext=(i, 2.5e-5), arrowprops=dict(arrowstyle="-|>", color=COL[p], lw=LW["sec"], mutation_scale=6))
+            a.text(i + 0.25, 4.7e-5, f"snap at L$_1$ ({dev:.1f} Å)", fontsize=style.FS, color=COL[p], va="center")
             continue
-        a.plot(i + (0.12 if near else -0.12), dev, MK[p], color=COL[p], mfc=COL[p] if near else "white", ms=4, mew=0.8, zorder=3)
-    a.axhline(1e-5, color=GREY, lw=0.6, ls=(0, (4, 2)))
-    a.text(len(CH) - 0.5, 7e-6, "tolerance", ha="right", va="top", fontsize=style.FS, color="#555555")
+        a.plot(i + (0.12 if near else -0.12), dev, MK[p], color=COL[p], mfc=COL[p] if near else "white", ms=MS["cat"], mew=MEW["open"], zorder=3)
+    a.axhline(1e-5, color=GREY, lw=LW["ref"], ls=(0, (4, 2)))
+    a.text(len(CH) - 0.5, 7e-6, "tolerance", ha="right", va="top", fontsize=style.FS, color=style.NOTE)
     a.set_yscale("log"); logticks(a); a.set_ylim(1e-9, 1e-4)
-    a.set_xticks(xs); a.set_xticklabels([LABEL[p] for p in CH], **rot); a.set_xlim(-0.6, len(CH) - 0.4)
-    a.set_ylabel("max. nodal deviation (Å)"); a.set_title("VFIFE vs. Newton", loc="left")
-    a.legend(handles=[Line2D([], [], ls="", marker="o", mfc="white", mec="k", ms=4, label="mid-path"),
-                      Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label=r"near $\varepsilon^*$")], loc="lower left", fontsize=style.FS, handletextpad=0.2)
+    a.set_xticks(xs); style.catlabels(a.xaxis, names); a.set_xlim(-0.6, len(CH) - 0.4)
+    a.set_ylabel("max. deviation (Å)"); a.set_title("VFIFE vs. Newton", loc="left")
+    a.legend(handles=[mkh("o", "mid-path", filled=False), mkh("o", r"near $\varepsilon^*$")], loc="lower left", handletextpad=0.1, borderaxespad=0.1)
     b = ax[1]
     h = np.array([float(r["dtau"]) for r in W]); e = np.array([float(r["mismatch"]) for r in W])
-    b.loglog(h, e, "o-", color=COL["2oar"], ms=4, mec="white", mew=0.4)
-    ref = e[-1] * (h / h[-1]) ** 2; b.loglog(h, ref, color=GREY, lw=0.6, ls=(0, (4, 2)))
-    b.text(h[1], ref[1] * 0.45, "slope 2", fontsize=style.FS, color="#555555", ha="left", va="top")
+    b.loglog(h, e, "o-", color=COL["2oar"], ms=MS["line"], mec="white", mew=MEW["edge"])
+    ref = e[-1] * (h / h[-1]) ** 2; b.loglog(h, ref, color=GREY, lw=LW["ref"], ls=(0, (4, 2)))
+    b.text(h[1] * 1.15, ref[1] * 0.75, "slope 2", fontsize=style.FS, color=style.NOTE, ha="left", va="top")
     b.xaxis.set_minor_formatter(NullFormatter())
-    from matplotlib.ticker import FixedLocator as _FL, FixedFormatter as _FF
-    xt = [v for v in (0.1, 0.2, 0.5, 1.0) if h.min() * 0.95 <= v <= h.max() * 1.05]; b.xaxis.set_major_locator(_FL(xt)); b.xaxis.set_major_formatter(_FF([f"{v:g}" for v in xt]))
-    b.set_xlabel(r"tension increment $\Delta\tau$"); b.set_ylabel(r"$|U-W|/U$"); b.set_title("Work–energy balance", loc="left")
-    b.text(0.97, 0.05, "MscL, $\\tau$ = 3.0", transform=b.transAxes, ha="right", fontsize=style.FS, color="#555555")
+    xt = [v for v in (0.1, 0.2, 0.5, 1.0) if h.min() * 0.95 <= v <= h.max() * 1.05]; b.xaxis.set_major_locator(FixedLocator(xt)); b.xaxis.set_major_formatter(FixedFormatter([f"{v:g}" for v in xt]))
+    b.set_xlabel(r"$\Delta\tau$"); b.set_ylabel(r"$|U-W|/U$"); b.set_title("Work–energy", loc="left")
+    b.text(0.97, 0.04, "MscL, $\\tau$ = 3", transform=b.transAxes, ha="right", fontsize=style.FS, color=style.NOTE)
     c = ax[2]
     for i, p in enumerate(CH):
         g = G[p]
         for k, (v, mk, fc) in enumerate(((g["reaction_symmetry"], "o", "white"), (g["reaction_eckart"], "s", COL[p]), (g["reaction_anchor"], "^", COL[p]))):
-            c.plot(i + (k - 1) * 0.22, max(float(v), 1e-18), mk, color=COL[p], mfc=fc, ms=3.8, mew=0.7)
+            c.plot(i + (k - 1) * 0.22, max(float(v), 1e-18), mk, color=COL[p], mfc=fc, ms=MS["cat"], mew=MEW["open"])
     c.set_yscale("log"); c.set_ylim(1e-19, 3); c.yaxis.set_major_locator(FixedLocator([1e-18, 1e-14, 1e-10, 1e-6, 1e-2])); c.yaxis.set_minor_formatter(NullFormatter())
-    c.set_xticks(xs); c.set_xticklabels([LABEL[p] for p in CH], **rot); c.set_xlim(-0.6, len(CH) - 0.4)
-    c.set_ylabel("constraint reaction / load"); c.set_title("Gauge reactions", loc="left")
+    c.set_xticks(xs); style.catlabels(c.xaxis, names); c.set_xlim(-0.6, len(CH) - 0.4)
+    c.set_ylabel("reaction / load"); c.set_title("Gauge reactions", loc="left")
     d = ax[3]
     for i, p in enumerate(CH):
-        d.plot(i - 0.12, float(G[p]["rmsd_symmetry"]), "o", color=COL[p], mfc="white", ms=3.8, mew=0.7)
-        d.plot(i + 0.12, float(G[p]["rmsd_anchor"]), "^", color=COL[p], ms=3.8, mew=0.7)
+        d.plot(i - 0.12, float(G[p]["rmsd_symmetry"]), "o", color=COL[p], mfc="white", ms=MS["cat"], mew=MEW["open"])
+        d.plot(i + 0.12, float(G[p]["rmsd_anchor"]), "^", color=COL[p], ms=MS["cat"], mew=MEW["open"])
     d.set_yscale("log"); logticks(d); d.set_ylim(1e-3, 3)
-    d.set_xticks(xs); d.set_xticklabels([LABEL[p] for p in CH], **rot); d.set_xlim(-0.6, len(CH) - 0.4)
-    d.set_ylabel("RMSD to Eckart solution (Å)"); d.set_title("Gauge distortion", loc="left")
-    gh = [Line2D([], [], ls="", marker="o", mfc="white", mec="k", ms=4, label="4 symmetry constraints (tilt free)"),
-          Line2D([], [], ls="", marker="s", mfc="k", mec="k", ms=4, label="6 Eckart conditions"),
-          Line2D([], [], ls="", marker="^", mfc="k", mec="k", ms=4, label="6 isostatic anchors")]
-
+    d.set_xticks(xs); style.catlabels(d.xaxis, names); d.set_xlim(-0.6, len(CH) - 0.4)
+    d.set_ylabel("RMSD to Eckart (Å)"); d.set_title("Gauge distortion", loc="left")
+    gh = [mkh("o", "4 symmetry constraints (tilt free)", filled=False), mkh("s", "6 Eckart conditions"), mkh("^", "6 isostatic anchors")]
     for a_, t in zip(ax, "abcd"):
         style.letter(a_, t)
-    style.top_legend(fig, [chan_handles(), gh], y=0.88)
+    fig.canvas.draw()
+    style.top_legend(fig, [chan_handles(), gh])
     style.save(fig, NAME)
     devs = [float(r["max_deviation"]) for r in Vf if float(r["max_deviation"]) <= 1e-3]
     order = float(np.log(e[-2] / e[-1]) / np.log(h[-2] / h[-1]))      # observed order between the two finest increments

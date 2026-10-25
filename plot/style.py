@@ -1,10 +1,13 @@
 """Plotting style and paired descriptions. Every figure takes fonts, sizes, colours and widths from here.
 
-Elsevier (JMPS) layout: single column 90 mm, 1.5 column 140 mm, double column 190 mm; font ladder 8/7/7 pt
-(axis labels and panel titles / legends, annotations and ticks), panel letters 10 pt bold, aligned per row by save();
-legend rule: the structure legend is the first line on top, an encoding shared by several panels the second line on top,
-an encoding used by one panel sits inside that panel; experiment drawn in EXP (black), never in a structure colour; bundled Liberation Sans (Arial metrics); Okabe-Ito colour-blind-safe palette with one
-colour and marker per structure in every figure; vector PDF and SVG with text kept as text, 600 dpi PNG."""
+Manuscript layout (a4, 2.5 cm margins): full width 160 mm (= \\textwidth), 1.5 column 120 mm, single column 78 mm; figures are
+included at 100 %. Font ladder at print size: axis labels and panel titles 9 pt; tick labels, legends and in-panel annotations
+8 pt (never smaller anywhere); panel letters 12 pt bold, aligned per row by save(). Panels are kept as small as the text allows
+(compact layout engine, small pads). Legend rule: the structure legend is the first line on top (wrapped onto two rows rather than
+shrunk), an encoding shared by several panels the next line on top, an encoding used by one panel sits inside that panel;
+experiment drawn in EXP (black), never in a structure colour; bundled Liberation Sans (Arial metrics); Okabe-Ito colour-blind-safe
+palette with one colour and marker per structure in every figure; line widths and marker sizes from LW / MS; vector PDF and SVG
+with text kept as text, 600 dpi PNG."""
 from pathlib import Path
 import csv, json, re
 import matplotlib as mpl
@@ -13,10 +16,15 @@ import matplotlib.pyplot as plt
 
 ROOT = Path(__file__).resolve().parents[1]
 MM = 1 / 25.4
-WIDTH = {"single": 90 * MM, "onehalf": 140 * MM, "double": 190 * MM}
+WIDTH = {"single": 78 * MM, "onehalf": 120 * MM, "double": 160 * MM}
 W1, W15, W2 = WIDTH["single"], WIDTH["onehalf"], WIDTH["double"]
-SIZE = {"label": 10, "axis": 8, "title": 8, "tick": 7, "note": 7, "legend": 7}
-FS = SIZE["note"]                                          # every in-panel annotation
+SIZE = {"label": 12, "axis": 9, "title": 9, "tick": 8, "note": 8, "legend": 8}
+FS = SIZE["note"]                                          # every in-panel annotation (also categorical tick labels)
+FS_MIN = 8                                                 # no text below this size, checked by save()
+LW = {"data": 1.2, "sec": 0.9, "thin": 0.6, "ref": 0.6, "zero": 0.5, "axis": 0.6, "arrow": 0.7}   # line widths (pt)
+MS = {"pt": 4.5, "cat": 4.0, "line": 3.5, "small": 2.5, "dot": 0.9, "star": 7.0}  # marker sizes (pt): scatter points, points on categorical
+#     axes, markers on lines/legends, dense series, background cloud, best frame / tick marks
+MEW = {"edge": 0.4, "open": 0.8}                           # white edge of filled markers, outline of open markers
 EXP = "#1A1A1A"                                            # experimental structure / target, all figures
 NOTE = "#555555"                                           # colour of in-panel annotations
 CH = ["6b3r", "6pwn", "2oar", "4xdk", "4wff", "6mgv"]             # channels with a partner structure
@@ -69,15 +77,18 @@ def apply():
         "mathtext.fontset": "custom", "mathtext.rm": FONT, "mathtext.it": FONT + ":italic", "mathtext.bf": FONT + ":bold",
         "mathtext.sf": FONT, "mathtext.fallback": "cm",
         "font.size": SIZE["axis"], "axes.labelsize": SIZE["axis"], "axes.titlesize": SIZE["axis"], "legend.fontsize": SIZE["legend"],
-        "xtick.labelsize": SIZE["tick"], "ytick.labelsize": SIZE["tick"], "axes.linewidth": 0.6,
+        "xtick.labelsize": SIZE["tick"], "ytick.labelsize": SIZE["tick"], "axes.linewidth": LW["axis"],
         "xtick.direction": "out", "ytick.direction": "out", "xtick.major.size": 2.5, "ytick.major.size": 2.5,
         "xtick.minor.size": 1.5, "ytick.minor.size": 1.5,
-        "xtick.major.width": 0.6, "ytick.major.width": 0.6, "xtick.minor.width": 0.4, "ytick.minor.width": 0.4,
+        "xtick.major.width": LW["axis"], "ytick.major.width": LW["axis"], "xtick.minor.width": 0.4, "ytick.minor.width": 0.4,
         "axes.spines.top": False, "axes.spines.right": False, "axes.grid": False, "legend.frameon": False,
-        "legend.handlelength": 1.6, "legend.borderaxespad": 0.2, "legend.columnspacing": 1.0,
+        "legend.handlelength": 1.5, "legend.borderaxespad": 0.2, "legend.columnspacing": 1.0, "legend.handletextpad": 0.3,
+        "legend.labelspacing": 0.25, "legend.borderpad": 0.2,
         "figure.dpi": 150, "savefig.dpi": 600, "savefig.pad_inches": 0.02,
         "axes.titleweight": "normal", "axes.titlelocation": "left", "axes.titlepad": 3,
-        "lines.linewidth": 1.0, "lines.markersize": 3.5, "patch.linewidth": 0.6,
+        "lines.linewidth": LW["data"], "lines.markersize": MS["line"], "patch.linewidth": LW["axis"],
+        "figure.constrained_layout.w_pad": 2.0 / 72, "figure.constrained_layout.h_pad": 2.5 / 72,
+        "figure.constrained_layout.wspace": 0.0, "figure.constrained_layout.hspace": 0.0,
         "pdf.fonttype": 42, "ps.fonttype": 42, "svg.fonttype": "none", "svg.hashsalt": "fixed", "axes.labelpad": 2,
     })
 
@@ -91,27 +102,47 @@ def color(obj: str) -> str:
     return OBJECT_COLOR[obj]
 
 
-def top_legend(fig, rows, y=1.0, row_h_mm=4.2, ncol=None):
-    """Legend block above the panels: rows[0] (the structures) on top, rows[1] (encodings shared by several panels) below."""
-    out = []
-    for i, h in enumerate(reversed(rows)):
-        out.append(fig.legend(handles=h, loc="lower center", ncol=ncol or len(h), bbox_to_anchor=(0.5, y + i * row_h_mm * MM / fig.get_figheight()),
-                              handletextpad=0.35, columnspacing=1.2, borderaxespad=0.0))
+def top_legend(fig, rows, y=None, gap_mm=0.6, ncol=None):
+    """Legend block above the panels: rows[0] (the structures) on top, rows[1] (encodings shared by several panels) below.
+    y is the lower edge of the block in figure coordinates (1.0 = just above the panels; save() crops tightly). A row that does
+    not fit the figure width at the legend font size is wrapped onto two lines instead of being shrunk."""
+    out = []; r = fig.canvas.get_renderer(); W, H = fig.bbox.width, fig.bbox.height
+    yb = 1.0 + 1.0 * MM * fig.dpi / H if y is None else y
+    for h in reversed(rows):
+        n = ncol or len(h); h0 = list(h)
+        while True:
+            lg = fig.legend(handles=h, loc="lower center", ncol=n, bbox_to_anchor=(0.5, yb), handletextpad=0.35,
+                            columnspacing=1.1, borderaxespad=0.0, borderpad=0.0)
+            bb = lg.get_window_extent(r)
+            if bb.width <= W * 0.995 or n <= 1:
+                break
+            lg.remove(); n = -(-len(h) // 2) if n > -(-len(h) // 2) else n - 1
+            nr = -(-len(h) // n)                          # matplotlib fills columns first: reorder so rows read left to right
+            h = [h0[r_ * n + c_] for c_ in range(n) for r_ in range(nr) if r_ * n + c_ < len(h0)] if nr > 1 else h0
+        out.append(lg); yb += (bb.height + gap_mm * MM * fig.dpi) / H
     return out
 
 
-def figure(nrows, ncols, width="double", height_mm=None, **kw):
+def figure(nrows, ncols, width="double", height_mm=None, layout="constrained", **kw):
+    """Figure of the given manuscript width; panels packed by the constrained layout engine with small pads."""
     apply()
-    w = WIDTH[width]
+    w = WIDTH[width] if isinstance(width, str) else width
     h = (height_mm * MM) if height_mm else w * nrows / ncols * 0.8
-    fig, axes = plt.subplots(nrows, ncols, figsize=(w, h), squeeze=False, **kw)
+    fig, axes = plt.subplots(nrows, ncols, figsize=(w, h), squeeze=False, layout=layout, **kw)
     return fig, axes
+
+
+def catlabels(axis, labels, rotation=90):
+    """Categorical tick labels (structure names) at the annotation size, vertical."""
+    kw = dict(rotation=rotation, ha="right", va="center", rotation_mode="anchor") if axis.axis_name == "x" else {}
+    axis.set_ticklabels(labels, fontsize=FS, **kw)
 
 
 def letter(ax, s, dx=-0.16, dy=1.0):
     """Panel letter; save() moves it to the left edge of the panel (tick labels and axis title included) and to the
     common top of its row, so dx, dy only matter before alignment."""
     t = ax.text(dx, dy, s, transform=ax.transAxes, fontsize=SIZE["label"], fontweight="bold", va="top", ha="left")
+    t.set_in_layout(False)
     t._panel_axes = ax
     LETTERS.append(t)
     return t
@@ -171,13 +202,14 @@ def _align_letters(fig):
         top = max(max(tb.y1, pb.y1) for _, tb, pb in row)
         for t, tb, pb in row:
             t.set_transform(fig.transFigure); t.set_position(((tb.x0) / W, (top + 2) / H)); t.set_ha("left"); t.set_va("top")
-            t.set_visible(True)
+            t.set_visible(True); t.set_in_layout(True)        # layout is frozen now; tight cropping must include the letter
             ax = t._panel_axes; lb = t.get_window_extent(r)
-            for tt in (ax.title, ax._left_title, ax._right_title):
+            for tt in (ax.title, ax._left_title):
                 if tt.get_text().strip():
                     bb = tt.get_window_extent(r)
-                    if lb.overlaps(bb):
-                        t.set_position(((bb.x0 - lb.width - 9) / W, (top + 2) / H)); lb = t.get_window_extent(r)
+                    if lb.overlaps(bb):                       # panel without axes: move its title right of the letter
+                        x, y = tt.get_position(); pw = ax.get_window_extent(r).width
+                        tt.set_x(x + (lb.x1 + 4 - bb.x0) / pw)
 
 
 def label_panels(axes, start="a", dx=-0.30, dy=1.02):
@@ -246,16 +278,28 @@ def save(fig, name, outdir=None, tight=False):
     except Exception:
         pass
     fig.canvas.draw()
+    if fig.get_layout_engine() is not None:          # freeze the packed positions before letters are placed
+        fig.set_layout_engine("none")
     _align_letters(fig)
     fig.canvas.draw()
     bad = check_overlaps(fig)
+    small = sorted({round(t.get_fontsize(), 2) for t in fig.findobj(mpl.text.Text) if t.get_text().strip() and t.get_visible() and t.get_fontsize() < FS_MIN - 1e-6})
+    if small:
+        bad.append(("font-below-min", small))
     out = Path(outdir) if outdir else ROOT / "results/figures"
     out.mkdir(parents=True, exist_ok=True)
     meta = {"pdf": {"CreationDate": None, "ModDate": None}, "svg": {"Date": None}, "png": {"Software": None}}
     for ext in ("pdf", "svg", "png"):
         fig.savefig(out / f"{name}.{ext}", bbox_inches="tight", metadata=meta[ext])
     plt.close(fig)
-    print(name, "overlaps:", bad if bad else "none")
+    import subprocess
+    try:
+        wpt = float(re.search(r"Page size:\s+([\d.]+) x ([\d.]+)", subprocess.run(["pdfinfo", str(out / f"{name}.pdf")], capture_output=True, text=True).stdout).group(1))
+        hpt = float(re.search(r"Page size:\s+([\d.]+) x ([\d.]+)", subprocess.run(["pdfinfo", str(out / f"{name}.pdf")], capture_output=True, text=True).stdout).group(2))
+        size = f" size: {wpt / 72 * 25.4:.1f} x {hpt / 72 * 25.4:.1f} mm"
+    except Exception:
+        size = ""
+    print(name, "overlaps:", bad if bad else "none", size)
     return bad
 
 

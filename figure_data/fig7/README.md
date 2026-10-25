@@ -17,6 +17,16 @@ Source: data/derived/paths/6b3r_rc10_loadcontrol.json, _arclength.json, _snap.js
 | dlam_ds | load-parameter component of the unit tangent | - | value |
 | n_neg | negative eigenvalues of the constrained tangent (inertia count) | - | count |
 | lam1 | lowest eigenvalue returned by shift-invert Lanczos (sigma = -1e-4) | model units | value |
+| lam2 | second eigenvalue returned by the same solve | model units | value |
+| lam3 | third eigenvalue returned by the same solve | model units | value |
+| lam0 | lowest constrained eigenvalue at the reference state x0 (rc10 path) | model units | value |
+| max_e | largest element strain | - | value |
+
+## post_snap.csv
+| Column | Meaning | Unit | Kind |
+|---|---|---|---|
+| eps | normalized radial displacement of the post-snap equilibrium (explicit VFIFE from L1) | - | value |
+| tau | membrane tension of the post-snap equilibrium | model units | value |
 | max_e | largest element strain | - | value |
 
 ## snap_elements.csv

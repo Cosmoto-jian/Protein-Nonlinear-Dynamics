@@ -6,7 +6,7 @@ Source: data/derived/summary.json (thresholds, variants, runs)
 | Column | Meaning | Unit | Kind |
 |---|---|---|---|
 | structure | structure id | - | label |
-| criterion | validity thresholds P20_|e|max, or backbone_0.05 (|e|_bb <= 5 %) | - | label |
+| criterion | validity thresholds P20_|eta|max, or backbone_0.05 (|eta|_bb <= 5 %) | - | label |
 | delta | advantage Delta_L-NL under that criterion | angstrom | value |
 
 ## margins.csv

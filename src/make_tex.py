@@ -92,7 +92,10 @@ V['trek-red'] = f(val('4xdk')['closed'] - val('4xdk')['nl'], 2)
 V['traak-closed'] = f(val('4wff')['closed'])
 V['mscl-dil'] = f(N['2oar']['dilation']['best_tm'])
 rew = lambda p: [r['best_tm'] for r in N[p].get('rewired', []) if 'best_tm' in r]
-V['mscs-rew-gap'] = f(min(rew('6pwn')) - val('6pwn')['nl'], 2); V['trek-rew-gap'] = f(min(rew('4xdk')) - val('4xdk')['nl'], 2)
+def _gap(p):
+    g = min(rew(p)) - val(p)['nl']
+    return r'$<$0.01' if abs(g) < 0.005 else f(g, 2)
+V['mscs-rew-gap'] = _gap('6pwn'); V['trek-rew-gap'] = _gap('4xdk')
 V['rewire-frac'] = f(100 * np.mean([r['frac_changed'] for p in N for r in N[p].get('rewired', [])]), 0)
 pz = val('6b3r')
 V['piezo-nl'] = f(pz['nl']); V['piezo-lin'] = f(pz['lin']); V['piezo-closed'] = f(pz['closed'])
@@ -166,7 +169,7 @@ dev = [abs(1 / (1 + k05[p]) / a05[p] - 1) for p in PANEL]; V['kappa-dev-max'] = 
 ok = [p for p in ALL8 if k05[p] > -1]; V['kappa-rank'] = f(spearmanr([a05[p] for p in ok], [1 / (1 + k05[p]) for p in ok]).correlation, 2); V['kappa-rank-n'] = str(len(ok))
 V['kappa-cq8'] = f(k05['6cq8'], 2)
 amps10 = [R[f'{p}_rc10']['enl_mem_0.10']['amp'] for p in PANEL if p != '6b3r']; V['amp-min10'] = f(min(amps10), 2); V['amp-max10'] = f(max(amps10), 2)
-# snapping: only Piezo1 loses stability; the others stay certified stable to the end of their computed paths
+# snapping: only Piezo1 loses stability; the others keep n_neg = 0 to the end of their computed paths
 stab = [p for p in ALL8 if R[f'{p}_rc10']['n_neg_max'] == 0 and R[f'{p}_rc10']['limit'] != 'limit point']
 V['n-stable'] = {7: 'seven'}.get(len(stab), str(len(stab)))
 ee = [R[f'{p}_rc10']['eps_end'] for p in stab]; V['stable-eps-min'] = f(min(ee), 2); V['stable-eps-max'] = f(max(ee), 2)
@@ -202,40 +205,99 @@ V['mscs-tphys-best'] = tp(val('6pwn')['tau_best']); V['mscl-tphys-best'] = tp(va
 ept = {p: R[f'{p}_rc10']['eps_per_tau'] for p in PANEL}
 V['piezo-ept'] = f(ept['6b3r'], 1); o = [ept[p] for p in PANEL if p not in ('6b3r', '6mgv')]; V['ept-min'] = f(min(o), 2); V['ept-max'] = f(max(o), 2)
 
+# ---------------------------------------------------------------- minimum-publishable revision: derived summary numbers
+_W = {0: 'none', 1: 'one', 2: 'two', 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven', 8: 'eight', 9: 'nine', 10: 'ten'}
+V['n-rewired'] = _W.get(len(rew('6b3r')), str(len(rew('6b3r'))))
+V['piezo-delta'] = f(val('6b3r')['delta'])
+# membrane slab: OPM half-thickness written into the C-alpha models by prepare_models.py
+_ht = []
+for p in PANEL + EXTRA:
+    for l in open(f'{RES}/models/{p}.pdb', encoding='utf-8'):
+        if l.startswith('REMARK') and 'bilayer thickness' in l.lower():
+            _ht.append(float(l.split(':')[1])); break
+V['ht-min'] = f(min(_ht), 1); V['ht-max'] = f(max(_ht), 1)
+from paths import raw as _raw
+from prepare_models import opm_half_thickness as _opm_ht, HALF_THICKNESS_OVERRIDE as _HTO
+for _p, _k in (('4wff', 'traak'),):
+    if _p in _HTO:
+        V[f'ht-{_k}'] = f(_HTO[_p], 1); V[f'ht-{_k}-opm'] = f(_opm_ht(open(_raw(f'opm_{_p}.pdb'), encoding='utf-8').read().splitlines()), 1)
+# Piezo1 backbone-stiffened paths and r_c = 12 A: inertia count at every step, end of the computed path
+for _v, _k in (('6b3r_rc10_kbb10', 'kbb10'), ('6b3r_rc10_kbb100', 'kbb100'), ('6b3r_rc12', 'rc12')):
+    _r = json.load(open(f'{RES}/paths/{_v}.json')); _nn = [(q.get('inertia') or {}).get('n_neg') for q in _r['rows']]
+    V[f'piezo-{_k}-nneg0'] = str(all(x == 0 for x in _nn) and all(x is not None for x in _nn))
+    V[f'piezo-{_k}-end'] = f(_r['rows'][-1]['eps'], 3)
+    V[f'piezo-{_k}-lamend'] = f(_r['rows'][-1]['lam'][0] / _r['pre']['lam0'][0], 2)
+# which condition ends the validity range at r_c = 10 A
+V['n-strain-end'] = _W[sum(R[f'{p}_rc10']['limit'] == 'max strain' for p in ALL8)]
+V['n-eps-end'] = _W[sum(R[f'{p}_rc10']['limit'] == 'eps>=0.4' for p in ALL8)]
+# turning indicator with and without 6CQ8 (kappa excludes it because 1 + kappa < 0)
+_ex = [p for p in ALL8 if p != '6cq8']
+V['chi-rank-ex'] = f(spearmanr([I[p]['mem_eps0.05']['chi'] for p in _ex], [R[f'{p}_rc10']['enl_mem_0.05']['dir'] for p in _ex]).correlation, 2)
+V['chi-rank-ex-n'] = str(len(_ex))
+V['kappa-dev-vtk'] = f(100 * abs(1 / (1 + k05['6vtk']) / a05['6vtk'] - 1), 0)
+a10 = {p: R[f'{p}_rc10']['enl_mem_0.10']['amp'] for p in ALL8}; k10 = {p: I[p]['mem_eps0.10']['kappa'] for p in ALL8}
+_d10 = {p: abs(1 / (1 + k10[p]) / a10[p] - 1) for p in PANEL if k10[p] > -1}
+V['kappa-dev10-max'] = f(100 * max(_d10.values()), 0); V['kappa-dev10-who'] = LABEL[max(_d10, key=_d10.get)]
+V['kappa-piezo10'] = f(k10['6b3r'], 2)
+V['eps-start-min'] = f(min(json.load(open(f'{RES}/paths/{p}_rc10.json'))['rows'][0]['eps'] for p in PANEL), 3)
+V['eps-start-max'] = f(max(json.load(open(f'{RES}/paths/{p}_rc10.json'))['rows'][0]['eps'] for p in PANEL), 3)
+V['traak-gain'] = f(100 * val('4wff')['gain_nl'], 0).replace('-', '$-$')
+# TREK-2 reduction against its approach margin max(0.2 A, 5 % of closed)
+_tm = max(0.2, 0.05 * val('4xdk')['closed']); V['trek-red-excess'] = f(val('4xdk')['closed'] - val('4xdk')['nl'] - _tm, 3)
+# ANM-subspace bounds against the tension path
+_lo10 = [p for p in PANEL if N[p]['anm_10']['best_tm'] < val(p)['nl']]; _hi10 = [LABEL[p] for p in PANEL if p not in _lo10]
+V['n-anm10-lower'] = _W[len(_lo10)]; V['anm10-higher-list'] = ' and '.join(_hi10) if len(_hi10) <= 2 else ', '.join(_hi10)
+_lo30 = [p for p in PANEL if N[p]['anm_30']['best_tm'] < val(p)['nl']]
+V['n-anm30-lower'] = 'all six' if len(_lo30) == 6 else _W[len(_lo30)]
+# physical scale: lytic-tension multiple and Piezo1's own calibration
+LYSIS = 10.0                                         # mN/m, typical lytic tension quoted in the text (evans2003)
+V['lysis'] = f(LYSIS, 0)
+V['lysis-x-min'] = f(10 * gmin * min(val('6pwn')['tau_best'], val('2oar')['tau_best']) / LYSIS, 0)
+V['lysis-x-max'] = f(10 * gmax * max(val('6pwn')['tau_best'], val('2oar')['tau_best']) / LYSIS, 0)
+_gp = P['6b3r']['gamma_trace_pN_per_A']; V['piezo-gamma-own'] = f(_gp, 0)
+V['piezo-tphys-c-own'] = f(10 * _gp * float(V['piezo-tauc']), 0); V['piezo-tphys-best-own'] = f(10 * _gp * pz['tau_best'], 0)
+# Piezo1 lowest eigenvalue at the last stable step and the spectral position of the critical mode before it descends
+V['piezo-lam-l1'] = f(R['6b3r_rc10']['lam_ratio'], 2)
+_rows = json.load(open(f'{RES}/paths/6b3r_rc10.json'))['rows']; _ks = R['6b3r_rc10']['step_star']
+_Lb, _La = np.array(_rows[_ks - 12]['lam'][:4]), np.array(_rows[_ks - 1]['lam'][:4])
+_mis = [min(abs(_La - x)) / x for x in _Lb]; V['piezo-crit-rank'] = ['lowest', 'second', 'third', 'fourth'][int(np.argmax(_mis))]
+V['piezo-crit-rel'] = f(_Lb[int(np.argmax(_mis))] / R['6b3r_rc10']['lam0'], 1)
+V['piezo-crit-deps'] = f(_rows[_ks - 1]['eps'] - _rows[_ks - 12]['eps'], 3)
+
 # ================================================================ tables
 PART = {'6b3r': ('Piezo1 (mouse)', '6B3R', 'EM', '8IXO', 'S2472E, intermediate open (EM)', 'guo2017,liu2025'),
         '6pwn': ('MscS (\\textit{E.\\,coli})', '6PWN', 'EM, nanodisc', '2VV5', 'A106V, open (X-ray)', 'reddy2019,wang2008'),
-        '2oar': ('MscL (\\textit{M.\\,tb})', '2OAR', 'X-ray', '4Y7K$\\to$4Y7J', 'homologue, expanded (X-ray)', 'steinbacher2007,li2015'),
+        '2oar': ('MscL (\\textit{M.\\,tb})', '2OAR', 'X-ray', '4Y7K$\\to$\\allowbreak 4Y7J', 'homologue, expanded (X-ray)', 'steinbacher2007,li2015'),
         '4xdk': ('TREK-2 (human)', '4XDK', 'X-ray, norfluoxetine', '4BW5', 'TM4 up (X-ray)', 'dong2015,dong2015'),
         '4wff': ('TRAAK (human)', '4WFF', 'X-ray', '4WFE', 'K$^+$-bound, conductive (X-ray)', 'brohawn2014,brohawn2014'),
         '6mgv': ('OSCA1.2 (\\textit{A.\\,thaliana})', '6MGV', 'EM', '8XAJ', 'open, liposome (EM)', 'jojoacruz2018,han2024')}
 T = ['\\begin{table}[t]', '\\centering\\small',
-     '\\caption{Channel panel. $N$, $E$: nodes and elements at $r_c=10$\\,\\AA; $N_{\\mathrm{TM}}$: mapped transmembrane C$\\alpha$ used for validation; $N_{\\mathrm{load}}$: loaded outer-shell nodes.}',
-     '\\label{tab:panel}', '\\footnotesize\\setlength{\\tabcolsep}{3pt}', '\\begin{tabular}{@{}l>{\\raggedright\\arraybackslash}p{2.45cm}l>{\\raggedright\\arraybackslash}p{2.7cm}rrrr@{}}', '\\toprule',
-     'Channel & Closed & Partner & Partner state & $N$ & $E$ & $N_{\\mathrm{TM}}$ & $N_{\\mathrm{load}}$\\\\', '\\midrule']
+     '\\caption{Channel panel. $N$, $N_e$: nodes and elements at $r_c=10$\\,\\AA; $N_{\\mathrm{TM}}$: mapped transmembrane C$\\alpha$ used for validation; $N_{\\mathrm{load}}$: loaded outer-shell nodes.}',
+     '\\label{tab:panel}', '\\footnotesize\\setlength{\\tabcolsep}{3pt}', '\\begin{tabular}{@{}l>{\\raggedright\\arraybackslash}p{2.3cm}>{\\raggedright\\arraybackslash}p{2.1cm}>{\\raggedright\\arraybackslash}p{2.3cm}rrrr@{}}', '\\toprule',
+     'Channel & Closed & Partner & Partner state & $N$ & $N_e$ & $N_{\\mathrm{TM}}$ & $N_{\\mathrm{load}}$\\\\', '\\midrule']
 for p in PANEL:
     a, b, m, c_, s_, ref = PART[p]; r = R[f'{p}_rc10']; refs = ref.split(',')
     cite2 = ('~\\citep{' + refs[-1] + '}') if len(refs) > 1 else ''
     T.append(f"{a} & {b}~\\citep{{{refs[0]}}} ({m}) & {c_}{cite2} & {s_} & {r['N']} & {r['E']} & {val(p)['n_tm']} & {r['n_loaded']}\\\\")
-T[2] = T[2].replace('loaded outer-shell nodes.}', 'loaded outer-shell nodes; EM: cryo-electron microscopy.}')
+T[2] = T[2].replace('loaded outer-shell nodes.}', 'loaded outer-shell nodes; EM: cryo-electron microscopy. Two further structures without a tension-related partner serve as controls for the nonlinearity measures (Table~\\ref{tab:nl}): 6CQ8, mouse TREK-1 in complex with the activator ML335 (X-ray)~\\citep{lolicato2017}, and 6VTK, chicken ASIC1a, a proton-gated channel, in a desensitized state at low pH (EM)~\\citep{yoder2020}.}')
 T += ['\\bottomrule', '\\end{tabular}', '\\end{table}']
 open(f'{OUT}/tab_panel.tex', 'w').write('\n'.join(T) + '\n')
 
-LIM = {'max strain': '$|e|_{\\max}$', 'P20': '$P_{20}$', 'eps>=0.4': 'end of range', 'newton stalled': 'solver stall', 'limit point': 'limit point', 'negative eigenvalue': 'loss of stability'}
+LIM = {'max strain': '$|\\eta|_{\\max}$', 'P20': '$P_{20}$', 'eps>=0.4': 'end of range', 'newton stalled': 'solver stall', 'limit point': 'limit point', 'negative eigenvalue': 'loss of stability'}
 T = ['\\begin{table}[t]', '\\centering\\small',
-     '\\caption{Verification, gauge and stability ($r_c=10$\\,\\AA). $\\delta_{\\mathrm{VF}}$: largest VFIFE--Newton nodal deviation over the restarted increments (number in brackets). $M_{xy}$: tilting moment of the load at $\\x_0$. $\\rho$: Eckart reaction/load at $\\eps^*$. $\\delta_{\\mathrm{sym}}$, $\\delta_{\\mathrm{anch}}$: RMSD of the tilt-free and anchored solutions from the Eckart solution. $\\lambda_1(\\eps^*)/\\lambda_1(0)$: lowest constrained eigenvalue; $n_{\\mathrm{neg}}=0$ at every step by the inertia count. Last column: condition that ends the validity range.}',
+     '\\caption{Verification, gauge and stability ($r_c=10$\\,\\AA). $\\delta_{\\mathrm{VF}}$: largest VFIFE--Newton nodal deviation over the restarted increments (number in brackets). $M_{xy}$: tilting moment of the load at $\\x_0$. $q$: Eckart reaction/load at $\\eps^*$. $\\delta_{\\mathrm{sym}}$, $\\delta_{\\mathrm{anch}}$: RMSD of the tilt-free and anchored solutions from the Eckart solution. $\\lambda_1(\\eps^*)/\\lambda_1(0)$: lowest constrained eigenvalue; $n_{\\mathrm{neg}}=0$ at every step by the inertia count. Last column: condition that ends the validity range.}',
      '\\label{tab:ver}', '\\setlength{\\tabcolsep}{3pt}\\resizebox{\\textwidth}{!}{%', '\\begin{tabular}{lcccccccl}', '\\toprule',
-     'Channel & $\\delta_{\\mathrm{VF}}$ (\\AA) & $M_{xy}$ & $\\rho$ & $\\delta_{\\mathrm{sym}}$ (\\AA) & $\\delta_{\\mathrm{anch}}$ (\\AA) & $\\lambda_1(\\eps^*)/\\lambda_1(0)$ & $\\eps^*$ & ended by\\\\', '\\midrule']
+     'Channel & $\\delta_{\\mathrm{VF}}$ (\\AA) & $M_{xy}$ & $q$ & $\\delta_{\\mathrm{sym}}$ (\\AA) & $\\delta_{\\mathrm{anch}}$ (\\AA) & $\\lambda_1(\\eps^*)/\\lambda_1(0)$ & $\\eps^*$ & ended by\\\\', '\\midrule']
 for p in PANEL:
     r = R[f'{p}_rc10']; lc_ = L[p]
     lim = LIM.get(r['limit'], r['limit'])
     T.append(f"{LABEL[p]} & ${sci(max(x['maxdev'] for x in vf[p] if x['maxdev'] <= 1e-3))}$ ({len([x for x in vf[p] if x['maxdev'] <= 1e-3])}) & ${sci(lc_['resultants_x0']['raw']['Mxy'])}$ & ${sci(r['gauge_reaction_max'])}$ & "
-             f"{lc_['gauge_symmetry']['rmsd_vs_eckart6']:.3f} & {lc_['gauge_raw']['rmsd_anchored_vs_eckart']:.2f} & {r['lam_ratio']:.2f}{'$^a$' if r['limit'] == 'limit point' else ''} & {r['eps_star']:.3f} & {lim}\\\\")
-T += ['\\bottomrule', '\\multicolumn{9}{l}{\\footnotesize $^a$At the limit point the eigenvalue tends to zero; maximum along the stable branch ' + V['piezo-lam-peak'] + '.}', '\\end{tabular}}', '\\end{table}']
+             f"{lc_['gauge_symmetry']['rmsd_vs_eckart6']:.3f} & {lc_['gauge_raw']['rmsd_anchored_vs_eckart']:.2f} & {r['lam_ratio']:.2f}{'$^\\dagger$' if r['limit'] == 'limit point' else ''} & {r['eps_star']:.3f} & {lim}\\\\")
+T += ['\\bottomrule', '\\end{tabular}}', '\\par\\smallskip{\\footnotesize\\raggedright $^\\dagger$Last stable step before L$_1$. The critical eigenvalue, the ' + V['piezo-crit-rank'] + ' lowest before it descends, has become the lowest (mode exchange) and is negative at the next continuation point. Maximum along the stable branch: ' + V['piezo-lam-peak'] + '.\\par}', '\\end{table}']
 open(f'{OUT}/tab_ver.tex', 'w').write('\n'.join(T) + '\n')
 
 T = ['\\begin{table}[t]', '\\centering\\small',
-     '\\caption{Validation (TM subset, $r_c=10$\\,\\AA; RMSD in \\AA). NL: best frame of the nonlinear path within $\\eps\\le\\eps^*$ (at $\\eps$). Linear: best-amplitude linear response, unrestricted [restricted to $\\eps\\le\\eps^*$]; same $\\tau$: linear response at the tension of the NL frame. Dilation, rewired (best of three), ANM$_{10}$: null models of Section~\\ref{sec:nulls}. Class: NL vs.\\ unrestricted linear with margin $\\max(0.2\\,\\text{\\AA},3\\%)$; $\\checkmark$: approaches the partner.}',
+     '\\caption{Validation (TM subset, $r_c=10$\\,\\AA; RMSD in \\AA). NL: best frame of the nonlinear path within $\\eps\\le\\eps^*$ (at $\\eps$). Linear: best-amplitude linear response, unrestricted [restricted to $\\eps\\le\\eps^*$]; same $\\tau$: linear response at the tension of the NL frame. NL frames start at the earliest computed step ($\\eps=$' + V['eps-start-min'] + '--' + V['eps-start-max'] + '), whereas the linear amplitude grid includes $s=0$, the closed structure. Dilation, rewired (best of ' + V['n-rewired'] + '), ANM$_{10}$: null models of Section~\\ref{sec:nulls}. Class: NL vs.\\ unrestricted linear with margin $\\max(0.2\\,\\text{\\AA},3\\%)$; $\\checkmark$: approaches the partner.}',
      '\\label{tab:val}', '\\setlength{\\tabcolsep}{2.6pt}\\resizebox{\\textwidth}{!}{%', '\\begin{tabular}{lccccccccccl}', '\\toprule',
      'Channel & closed & NL & $\\eps$ & linear & same $\\tau$ & ovl NL/L & dilation & rewired & ANM$_{10}$ & whole: closed$\\to$NL & class\\\\', '\\midrule']
 for p in PANEL:
@@ -248,21 +310,31 @@ for p in PANEL:
 T += ['\\bottomrule', '\\end{tabular}}', '\\end{table}']
 open(f'{OUT}/tab_val.tex', 'w').write('\n'.join(T) + '\n')
 
-T = ['\\begin{table}[t]', '\\centering\\small',
-     '\\caption{Measures of nonlinearity on the membrane nodes. $a$: amplitude ratio $\\|\\mathbf{u}_L\\|/\\|\\mathbf{u}_{NL}\\|$; $\\sin\\theta$: direction error; $E_{NL}$: linearization error, Eq.~\\eqref{eq:enl}, at $\\eps=0.10$. $\\chi$, $\\kappa$: a-priori second-order indicators at the tension for which the linear response reaches $\\eps=0.10$. $\\Delta_{L-NL}$: advantage of the NL path over the best-amplitude linear response (\\AA) at $r_c=10$ and 12\\,\\AA.}',
-     '\\label{tab:nl}', '\\setlength{\\tabcolsep}{4pt}', '\\begin{tabular}{lccccccc}', '\\toprule',
-     'Structure & $a$ & $\\sin\\theta$ & $E_{NL}$ & $\\chi$ & $\\kappa$ & $\\Delta_{L-NL}^{10}$ & $\\Delta_{L-NL}^{12}$\\\\', '\\midrule']
+NLCAP = (r'\caption{Measures of nonlinearity on the membrane nodes ($r_c=10$\,\AA). $a$: amplitude ratio $\|\mathbf{u}_L\|/\|\mathbf{u}_{NL}\|$; '
+         r'$\sin\theta$: direction error; $E_{NL}$: linearization error, Eq.~\eqref{eq:enl}; all three measured on the nonlinear path where its own '
+         r'$\eps=0.10$, with $\mathbf{u}_L$ taken at the same tension. $\chi$, $\kappa$: second-order indicators from the reference state, evaluated at '
+         r'the tension at which the linear response reaches $\eps=0.05$ (superscript) or $\eps=0.10$. '
+         r'$\Delta_{L-NL}=\mathrm{RMSD}_{L}-\mathrm{RMSD}_{NL}$ (\AA): advantage of the NL path over the best-amplitude linear response, positive when the '
+         r'NL path is closer to the partner, at $r_c=10$ and 12\,\AA. 6CQ8 (TREK-1 with ML335) and 6VTK (desensitized ASIC1a) have no partner.}')
+T = ['\\begin{table}[t]', '\\centering\\small', NLCAP,
+     '\\label{tab:nl}', '\\setlength{\\tabcolsep}{4pt}', '\\begin{tabular}{lccccccccc}', '\\toprule',
+     r'Structure & $a$ & $\sin\theta$ & $E_{NL}$ & $\chi^{0.05}$ & $\kappa^{0.05}$ & $\chi$ & $\kappa$ & $\Delta_{L-NL}^{10}$ & $\Delta_{L-NL}^{12}$\\', '\\midrule']
 for p in PANEL + EXTRA:
-    q = R[f'{p}_rc10'].get('enl_mem_0.10'); ii = I[p]['mem_eps0.10']
+    q = R[f'{p}_rc10'].get('enl_mem_0.10'); ii = I[p]['mem_eps0.10']; i5 = I[p]['mem_eps0.05']
     d10 = f(val(p)['delta']) if R[f'{p}_rc10']['validation'] else '--'
     d12 = f(val(p, 12)['delta']) if f'{p}_rc12' in R and R[f'{p}_rc12']['validation'] else '--'
-    T.append(f"{LABEL[p]} & {q['amp']:.2f} & {q['dir']:.2f} & {q['E_NL']:.2f} & {ii['chi']:.2f} & {ii['kappa']:.2f} & {d10} & {d12}\\\\" if q else
-             f"{LABEL[p]} & -- & -- & -- & {ii['chi']:.2f} & {ii['kappa']:.2f} & {d10} & {d12}\\\\")
+    m3 = f"{q['amp']:.2f} & {q['dir']:.2f} & {q['E_NL']:.2f}" if q else '-- & -- & --'
+    T.append(f"{LABEL[p]} & {m3} & {i5['chi']:.2f} & {i5['kappa']:.2f} & {ii['chi']:.2f} & {ii['kappa']:.2f} & {d10} & {d12}" + r'\\')
 T += ['\\bottomrule', '\\end{tabular}', '\\end{table}']
+T = [re.sub(r'(?<=& )-(?=\d)', '$-$', r) for r in T]
 open(f'{OUT}/tab_nl.tex', 'w').write('\n'.join(T) + '\n')
 
-T = ['\\begin{table}[!h]', '\\centering\\small',
-     f'\\caption{{Physical scale. $\\gamma$: spring constant from B-factors (trace estimate; node median in brackets), with correlation between predicted and measured B-factors. $A_0$: outer-shell area of the closed structure; $\\Delta A$: change at the best NL frame and between the closed and partner structures, same operator. $\\tau_{{\\mathrm{{phys}}}}$: tension at the best frame for $\\gamma$ = {gmin:.0f}--{gmax:.0f}\\,pN\\,\\AA$^{{-1}}$ (crystal-structure range).}}',
+PHYSCAP = (r'\caption{Physical scale. $\gamma$: spring constant from B-factors (trace estimate; node median in brackets), with correlation between '
+           r'predicted and measured B-factors. $A_0$: outer-shell area of the closed structure; $\Delta A$: change at the best NL frame and between the '
+           r'closed and partner structures, same operator. $\tau_{\mathrm{phys}}$: tension at the best frame for $\gamma$ = ' + f'{gmin:.0f}--{gmax:.0f}'
+           + r'\,pN\,\AA$^{-1}$ (crystal-structure range). $\tau_{\mathrm{phys}}$ scales with the calibration: with its own $\gamma$ the Piezo1 best frame lies at '
+           + V['piezo-tphys-best-own'] + r'\,mN\,m$^{-1}$.}')
+T = ['\\begin{table}[!h]', '\\centering\\small', PHYSCAP,
      '\\label{tab:phys}', '\\setlength{\\tabcolsep}{4pt}', '\\begin{tabular}{llcccccc}', '\\toprule',
      'Channel & B-factors & $\\gamma$ (pN\\,\\AA$^{-1}$) & corr. & $A_0$ (nm$^2$) & $\\Delta A_{\\mathrm{model}}$ & $\\Delta A_{\\mathrm{exp}}$ & $\\tau_{\\mathrm{phys}}$ (mN\\,m$^{-1}$)\\\\', '\\midrule']
 for p in PANEL:
