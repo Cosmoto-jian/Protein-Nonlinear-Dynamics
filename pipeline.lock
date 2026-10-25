@@ -1172,15 +1172,16 @@
   "cmd": "python src/prs.py",
   "deps": {
    "data/derived/models": "3b0c28c58168eb8f1a37fb57a6c56f640cdf51a300b8d40d74f3ac3b17a2483c",
-   "data/raw/MANIFEST.yaml": "0c57ac0f826d3098e6bc622feeb21fdeeb544771bdea6963ee17b22d8f19320e",
-   "src/inertia.py": "4d888a24de3017ee4e426c25b242be1a359bcb097b2c2d6ccde7814790cefade",
-   "src/model.py": "ee6ac47dcb62c400706056020e914fb3ab29800256904fc29808ea6c2841148a",
+   "data/raw/MANIFEST.yaml": "ef33b8942bb0184e0ead2ad2f9eedcc14cc448512cdbebe7cafe0455b6d4cf08",
+   "src/inertia.py": "c27c38341a687a631625495db71afb4512b4e7ca1e95a4c8f94419a2c251749e",
+   "src/kkt.py": "a303a870c9e830d5a7b4d256701bea5bb88cbbc90b9f4b155bc5b6652577a6c3",
+   "src/model.py": "ccad6d40a6823644cd32776e2b119a8be80c396232fc3e74329c073b2811d540",
    "src/paths.py": "af099d47049d3bb098ca48f5569064e3eab163df8d3940dd16cda8eddf3cb0a1",
-   "src/prs.py": "448a02c4b52096adfc0d1bf6da0b1fc6650827b3acd846df20045e9d5be200cc",
-   "src/vfife": "7827820896f26ff71ea4d416ef98f43ac3cb0decb7f811a8251521d50e231827"
+   "src/prs.py": "5dd803014d25b73616c10f4a193d41362bb4ffb6351d5e8af796c7c30e02034a",
+   "src/vfife": "c568ff6ae83ea816a7a22cce87f8c367131c059710c11cfe3e1c1e05e6527a8a"
   },
   "outs": {
-   "data/derived/prs.json": "122273d7ea394ad291c72a3facb72160b7ba6dde896fa89c9f4a17f01f833b75"
+   "data/derived/prs.json": "d49fb30950b2f5f1fe31f3e87b837d7561fa42a50696596bff87f4a78d1fa02d"
   },
   "params": {
    "n_top": 30,
