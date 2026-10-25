@@ -31,28 +31,28 @@ def plot():
     import matplotlib.pyplot as plt
     from figcommon import chan_handles
     R = style.read_csv(f"figure_data/{NAME}/anchors.csv")
-    style.apply()
-    fig, ax = plt.subplots(1, 2, figsize=(style.W15, 68 * MM), gridspec_kw=dict(wspace=0.45, top=0.80))
+    from style import LW, MS, MEW
+    from figcommon import mkh
+    fig, ax = style.figure(1, 2, width="onehalf", height_mm=50); ax = ax[0]
     for r in R:
         p = r["structure"]; x = float(r["anchor_reaction"]); a, b = float(r["rmsd_raw"]), float(r["rmsd_equilibrated"])
-        ax[0].plot(x, a, MK[p], color=COL[p], ms=4.5, mec="white", mew=0.4)
-        ax[0].plot(x, b, MK[p], color=COL[p], mfc="white", ms=4.5, mew=0.8)
-        ax[0].plot([x] * 2, [a, b], color=COL[p], lw=0.5)
-        ax[1].plot(float(r["lambda_eckart"]), float(r["lambda_anchored"]), MK[p], color=COL[p], ms=4.5, mec="white", mew=0.4)
-    ax[0].set_xscale("log"); ax[0].set_yscale("log"); ax[0].set_xlabel("anchor reaction / load"); ax[0].set_ylabel("anchored vs. Eckart RMSD (Å)")
-    ax[0].set_title("Anchors distort", loc="left")
-    from matplotlib.lines import Line2D
-    ax[0].legend(handles=[Line2D([], [], ls="", marker="o", mfc="k", mec="k", ms=4, label="load $A$"),
-                          Line2D([], [], ls="", marker="o", mfc="white", mec="k", ms=4, label="equilibrated $A'$")], loc="lower right", handletextpad=0.2)
+        ax[0].plot(x, a, MK[p], color=COL[p], ms=MS["pt"], mec="white", mew=MEW["edge"])
+        ax[0].plot(x, b, MK[p], color=COL[p], mfc="white", ms=MS["pt"], mew=MEW["open"])
+        ax[0].plot([x] * 2, [a, b], color=COL[p], lw=LW["thin"])
+        ax[1].plot(float(r["lambda_eckart"]), float(r["lambda_anchored"]), MK[p], color=COL[p], ms=MS["pt"], mec="white", mew=MEW["edge"])
+    ax[0].set_xscale("log"); ax[0].set_yscale("log"); ax[0].set_xlabel("anchor reaction / load"); ax[0].set_ylabel("RMSD to Eckart (Å)")
+    ax[0].set_title("Anchor distortion", loc="left")
+    ax[0].legend(handles=[mkh("o", "load $A$"), mkh("o", "equilibrated $A'$", filled=False)], loc="lower right", handletextpad=0.1, borderaxespad=0.1)
     xx = np.logspace(-5.5, -1.5, 10)
     for f_ in (1, 0.1, 0.01):
-        ax[1].plot(xx, xx * f_, color="#BDBDBD", lw=0.6, ls=(0, (1, 1.5)), zorder=0)
+        ax[1].plot(xx, xx * f_, color="#BDBDBD", lw=LW["ref"], ls=(0, (1, 1.5)), zorder=0)
         ax[1].text(xx[-1], xx[-1] * f_, {1: "1", 0.1: "1/10", 0.01: "1/100"}[f_], fontsize=style.FS, color=style.NOTE, ha="left", va="center")
     ax[1].set_xscale("log"); ax[1].set_yscale("log"); ax[1].set_xlabel(r"$\lambda_1$, Eckart"); ax[1].set_ylabel(r"$\lambda_1$, anchored")
-    ax[1].set_title("Anchors soften the spectrum", loc="left")
+    ax[1].set_title("Lowest eigenvalue", loc="left")
     for a_, tt in zip(ax, "ab"):
         style.letter(a_, tt)
-    style.top_legend(fig, [chan_handles(style.ALL)], y=0.90, ncol=4)
+    fig.canvas.draw()
+    style.top_legend(fig, [chan_handles(style.ALL)])
     style.save(fig, NAME)
     ratio = [float(r["lambda_eckart"]) / float(r["lambda_anchored"]) for r in R]
     worse = sum(float(r["rmsd_equilibrated"]) > float(r["rmsd_raw"]) + 0.01 for r in R)      # same rule as src/make_tex.py (eq-worse)

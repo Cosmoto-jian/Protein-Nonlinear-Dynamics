@@ -6,6 +6,8 @@ squares to the TM displacement closed -> target (target superposed on the closed
 response gives the lowest TM RMSD is reported.  Single-node scan only: this is not a multi-node or multi-mode PRS.
 The fit uses the target to choose the node and three amplitudes, so the result is a target-informed reference, not a
 prediction.  G is symmetric, so only the columns of the TM rows are solved.
+Linear algebra: one factorisation of the bordered tangent by kkt (MKL PARDISO, block solves with iterative refinement);
+scipy splu of the same bordered matrix when PARDISO is not available.
 The node ranking uses the residual of the least-squares fit; the exact TM RMSD (_rmsd_ovl) is evaluated on the
 N_TOP best-ranked nodes.
 usage: python src/prs.py [names...]        output: data/derived/prs.json
@@ -15,6 +17,7 @@ import numpy as np, scipy.sparse as sp, scipy.sparse.linalg as spla
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from model import *
 from model import _rmsd_ovl
+import kkt
 
 RC = 10.0
 N_TOP = 30
@@ -28,13 +31,19 @@ for name in names:
     idx, P0, XE, Delta, info = build_target(name, M)
     tm = np.isin(idx, M['mem']); itm = idx[tm]
     R, t = kabsch(XE[tm], P0[tm]); D = ((XE[tm] @ R.T + t) - P0[tm]).ravel()
-    C = sp.csr_matrix(gauge_C(X0))
-    lu = spla.splu(sp.bmat([[net.tangent(X0).tocsc(), C.T], [C, None]]).tocsc())
+    C = gauge_C(X0)
+    if kkt.AVAILABLE:
+        KK = kkt.get(net, None, C).factor(net.tangent(X0))
+        solve = lambda F: KK.solve(F)[0]
+    else:
+        Cs = sp.csr_matrix(C)
+        lu = spla.splu(sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc())
+        solve = lambda F: lu.solve(np.vstack([F, np.zeros((Cs.shape[0], F.shape[1]))]))[:n]
     rows = (3 * itm[:, None] + np.arange(3)).ravel()
     G = np.zeros((n, len(rows)))
     for s in range(0, len(rows), BLOCK):
-        r = rows[s:s + BLOCK]; F = np.zeros((n + 6, len(r))); F[r, np.arange(len(r))] = 1.0
-        G[:, s:s + len(r)] = lu.solve(F)[:n]
+        r = rows[s:s + BLOCK]; F = np.zeros((n, len(r))); F[r, np.arange(len(r))] = 1.0
+        G[:, s:s + len(r)] = solve(F)
     rank = []
     for i in range(N):
         Gi = G[3 * i:3 * i + 3].T

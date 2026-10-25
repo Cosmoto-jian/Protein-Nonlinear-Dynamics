@@ -19,3 +19,4 @@
 
 ## 其他
 科学等价改动单独 PR 并标 `needs-user`；未运行的检查不得写成通过；正文数字来自 `writing/tex/gen/numbers.tex`。
+环境：`pypardiso` 可选（仅 x86_64，否则走 scipy）；保持 `MKL_CBWR=AUTO,STRICT`（`src/kkt.py` 与 `tools/prun2.py` 中设置），使结果与线程数无关；改动 `src/kkt.py` 后运行 `python tests/test_kkt.py`。

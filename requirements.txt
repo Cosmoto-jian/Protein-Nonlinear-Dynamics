@@ -5,3 +5,4 @@ numpy==2.5.4
 pyyaml==6.0.2
 scipy==1.17.1
 pyvista==0.49.1   # Fig 1a off-screen rendering (vtk 9.7.1; needs OSMesa or EGL)
+pypardiso==0.4.7  # optional: MKL PARDISO fast path in src/kkt.py (x86_64; mkl 2026.2). Without it the scipy code path is used

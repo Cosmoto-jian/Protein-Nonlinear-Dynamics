@@ -20,19 +20,22 @@ def extract():
         for i, r in enumerate(R["rows"]):
             q = r.get("enl_mem")
             rows.append(dict(structure=p, step=i + 1, eps=r["eps"], amp=q["amp"] if q else None, dir=q["dir"] if q else None,
-                             lam_rel=(r["lam"][0] / lam0) if r.get("lam") else None, max_e=r["max_e"]))
+                             lam_rel=(r["lam"][0] / lam0) if r.get("lam") else None, max_e=r["max_e"],
+                             n_neg=(r.get("inertia") or {}).get("n_neg")))
         st.append(dict(structure=p, eps_star=run["eps_star"], step_star=run["step_star"], stable_beyond=int(p != "6b3r"),
                        a_005=run["enl_mem_0.05"]["amp"], sin_005=run["enl_mem_0.05"]["dir"],
                        kappa_005=I[p]["mem_eps0.05"]["kappa"], chi_005=I[p]["mem_eps0.05"]["chi"]))
-    style.write_csv(DATA / "path.csv", rows, ["structure", "step", "eps", "amp", "dir", "lam_rel", "max_e"])
+    style.write_csv(DATA / "path.csv", rows, ["structure", "step", "eps", "amp", "dir", "lam_rel", "max_e", "n_neg"])
     style.write_csv(DATA / "structures.csv", st, ["structure", "eps_star", "step_star", "stable_beyond", "a_005", "sin_005", "kappa_005", "chi_005"])
     style.write_readme(DATA, "fig3 plotting data", "data/derived/paths/<id>_rc10.json and data/derived/summary.json (membrane nodes, r_c = 10 A)", {
         "path.csv": [("structure", "structure id", "-", "label"), ("step", "1-based step along the path", "-", "index"),
                      ("eps", "normalized radial displacement of the membrane nodes", "-", "value"),
                      ("amp", "amplitude ratio a = |u_L| / |u_NL| at the same tension", "-", "value"),
                      ("dir", "direction error sin(theta) between u_L and u_NL", "-", "value"),
-                     ("lam_rel", "lowest constrained eigenvalue relative to its reference value", "-", "value"),
-                     ("max_e", "largest element strain |e|_max", "-", "value")],
+                     ("lam_rel", "lowest constrained eigenvalue relative to its reference value (true lowest: the shift-invert shift is chosen "
+                                 "from the inertia count, so it is negative wherever n_neg > 0, i.e. past the Piezo1 limit point)", "-", "value"),
+                     ("max_e", "largest element strain |eta|_max", "-", "value"),
+                     ("n_neg", "negative eigenvalues of the constrained tangent (inertia count)", "-", "count")],
         "structures.csv": [("structure", "structure id", "-", "label"), ("eps_star", "end of the validity range", "-", "value"),
                            ("step_star", "step at eps_star; for Piezo1 the limit point L1, later rows are the unstable continuation", "-", "index"),
                            ("stable_beyond", "rows beyond eps_star lie on a stable branch and are drawn thin", "-", "flag 0/1"),
@@ -46,8 +49,8 @@ def plot():
     from matplotlib.ticker import MaxNLocator
     from figcommon import logticks, chan_handles, num
     P = style.read_csv(f"figure_data/{NAME}/path.csv"); ST = {r["structure"]: r for r in style.read_csv(f"figure_data/{NAME}/structures.csv")}
-    style.apply()
-    fig, ax = plt.subplots(2, 3, figsize=(style.W2, 116 * MM), gridspec_kw=dict(wspace=0.42, hspace=0.58, left=0.07, right=0.99, bottom=0.08, top=0.86)); ax = ax.ravel()
+    from style import LW, MS, MEW
+    fig, ax = style.figure(2, 3, height_mm=88); ax = ax.ravel()
     XM = 0.25
 
     def curves(p, key):
@@ -63,51 +66,59 @@ def plot():
     def draw(a, key):
         for p in ALL:
             x, y, n, es, stable = curves(p, key)
-            w = 1.1 if p in CH else 0.8
+            w = LW["data"] if p in CH else LW["sec"]
             v = x[:n] <= es + 1e-12
             a.plot(x[:n][v], y[:n][v], color=COL[p], lw=w, zorder=3 if p == "6b3r" else 2)
             if stable:
-                a.plot(x[x >= es - 1e-12], y[x >= es - 1e-12], color=COL[p], lw=0.5, alpha=0.45, zorder=1)
+                a.plot(x[x >= es - 1e-12], y[x >= es - 1e-12], color=COL[p], lw=LW["thin"], alpha=0.45, zorder=1)
             j = np.where(v)[0][-1]
-            a.plot(x[:n][j], y[:n][j], MK[p], color=COL[p], ms=3.6, mec="white", mew=0.4, zorder=4)
+            a.plot(x[:n][j], y[:n][j], MK[p], color=COL[p], ms=MS["line"], mec="white", mew=MEW["edge"], zorder=4)
         a.set_xlim(0, XM); a.xaxis.set_major_locator(MaxNLocator(5))
-        a.set_xlabel(r"normalised radial displacement $\varepsilon$")
+        a.set_xlabel(r"$\varepsilon$")
 
-    a = ax[0]; draw(a, "amp"); a.axhline(1, color=GREY, lw=0.5, ls=(0, (2, 2)))
+    a = ax[0]; draw(a, "amp"); a.axhline(1, color=GREY, lw=LW["zero"], ls=(0, (2, 2)))
     a.set_ylabel(r"amplitude ratio $a$"); a.set_title("Stiffening", loc="left"); a.set_ylim(0.9, 4.4)
-    a.text(0.97, 0.55, "removed by one scalar", transform=a.transAxes, ha="right", va="top", fontsize=style.FS, color="#555555")
+    a.text(0.97, 0.62, "removed by\none scalar", transform=a.transAxes, ha="right", va="top", fontsize=style.FS, color=style.NOTE)
     b = ax[1]; draw(b, "dir")
-    b.set_ylabel(r"direction error $\sin\theta$"); b.set_title("Turning", loc="left"); b.set_ylim(0, 0.75)
-    b.text(0.03, 0.94, "not removable by scaling", transform=b.transAxes, ha="left", va="top", fontsize=style.FS, color="#555555")
-    c = ax[2]; draw(c, "lam"); c.axhline(1, color=GREY, lw=0.5, ls=(0, (2, 2))); c.axhline(0, color=DARK, lw=0.5)
+    b.set_ylabel(r"direction error $\sin\theta$"); b.set_title("Turning", loc="left"); b.set_ylim(0, 0.82)
+    b.text(0.03, 0.98, "not removable\nby scaling", transform=b.transAxes, ha="left", va="top", fontsize=style.FS, color=style.NOTE)
+    c = ax[2]; draw(c, "lam"); c.axhline(1, color=GREY, lw=LW["zero"], ls=(0, (2, 2))); c.axhline(0, color=DARK, lw=LW["zero"])
     x, y, n, es, _ = curves("6b3r", "lam")
-    c.annotate("L$_1$", (x[n - 1], y[n - 1]), xytext=(-14, -6), textcoords="offset points", fontsize=style.FS, ha="right", arrowprops=dict(arrowstyle="-", color="k", lw=0.5))
-    c.set_ylabel(r"$\lambda_1/\lambda_1(0)$"); c.set_title("Snapping", loc="left"); c.set_ylim(-0.15, 5.4)
-    c.text(0.97, 0.94, r"others: $n_{\rm neg}=0$ to the end", transform=c.transAxes, ha="right", va="top", fontsize=style.FS, color="#555555")
-    d = ax[3]; d.plot([1, 2], [1, 2], color="#BDBDBD", lw=0.6, zorder=0)
+    nn6 = num([r for r in P if r["structure"] == "6b3r"], "n_neg")
+    YLO = -0.6; j1 = n
+    while j1 < len(nn6) and nn6[j1] > 0 and y[j1 - 1] >= YLO:   # unstable branch past L1 (n_neg > 0): the descent of lambda_1
+        j1 += 1                                                  # below zero, drawn until it leaves the axes (clipped)
+    c.plot(x[n - 1:j1], y[n - 1:j1], color=COL["6b3r"], lw=LW["sec"], ls=(0, (1, 1.2)), zorder=3)
+    c.annotate("L$_1$", (x[n - 1], y[n - 1]), xytext=(10, -6), textcoords="offset points", fontsize=style.FS, ha="left", arrowprops=dict(arrowstyle="-", color="k", lw=LW["zero"]))
+    c.set_ylabel(r"$\lambda_1/\lambda_1(0)$"); c.set_title("Snapping", loc="left"); c.set_ylim(YLO, 6.4)
+    c.text(0.97, 0.98, "others:\n" + r"$n_{\rm neg}=0$ to the end", transform=c.transAxes, ha="right", va="top", fontsize=style.FS, color=style.NOTE)
+    d = ax[3]; d.plot([1, 2], [1, 2], color="#BDBDBD", lw=LW["ref"], zorder=0)
     for p in ALL:
         k5 = float(ST[p]["kappa_005"]); am = float(ST[p]["a_005"])
         if k5 > -1:
-            d.plot(am, 1 / (1 + k5), MK[p], color=COL[p], ms=4.5, mec="white", mew=0.4, zorder=3)
+            d.plot(am, 1 / (1 + k5), MK[p], color=COL[p], ms=MS["pt"], mec="white", mew=MEW["edge"], zorder=3)
         else:
-            d.annotate("", xy=(min(am, 1.98), 1.98), xytext=(min(am, 1.98), 1.80), arrowprops=dict(arrowstyle="-|>", color=COL[p], lw=0.8, mutation_scale=6))
+            d.annotate("", xy=(min(am, 1.98), 1.98), xytext=(min(am, 1.98), 1.80), arrowprops=dict(arrowstyle="-|>", color=COL[p], lw=LW["sec"], mutation_scale=6))
             d.text(min(am, 1.98) - 0.04, 1.89, f"{LABEL[p]}: $\\kappa<-1$", ha="right", va="center", fontsize=style.FS, color=COL[p])
     d.set_xlim(1, 2); d.set_ylim(1, 2)
-    d.set_xlabel(r"measured $a$ ($\varepsilon=0.05$)"); d.set_ylabel(r"predicted $1/(1+\kappa)$"); d.set_title("Stiffening is predictable", loc="left")
-    e_ = ax[4]; mm = np.array([0.012, 1.2]); e_.loglog(mm, mm, color="#BDBDBD", lw=0.6, zorder=0)
+    d.set_xlabel(r"measured $a$ ($\varepsilon=0.05$)"); d.set_ylabel(r"estimate $1/(1+\kappa)$"); d.set_title("Second-order amplitude", loc="left")
+    e_ = ax[4]; mm = np.array([0.012, 1.2]); e_.loglog(mm, mm, color="#BDBDBD", lw=LW["ref"], zorder=0)
     for p in ALL:
-        e_.plot(float(ST[p]["sin_005"]), float(ST[p]["chi_005"]), MK[p], color=COL[p], ms=4.5, mec="white", mew=0.4, zorder=3)
+        e_.plot(float(ST[p]["sin_005"]), float(ST[p]["chi_005"]), MK[p], color=COL[p], ms=MS["pt"], mec="white", mew=MEW["edge"], zorder=3)
     e_.set_xlim(*mm); e_.set_ylim(*mm); logticks(e_); logticks(e_, "x")
-    e_.set_xlabel(r"measured $\sin\theta$ ($\varepsilon=0.05$)"); e_.set_ylabel(r"predicted $\chi$"); e_.set_title("Turning is predictable", loc="left")
+    e_.set_xlabel(r"measured $\sin\theta$ ($\varepsilon=0.05$)"); e_.set_ylabel(r"indicator $\chi$"); e_.set_title("Second-order direction", loc="left")
     xs_ = [float(ST[p]["sin_005"]) for p in ALL]; ys_ = [float(ST[p]["chi_005"]) for p in ALL]
     rk = lambda v: np.argsort(np.argsort(v)); rho = np.corrcoef(rk(xs_), rk(ys_))[0, 1]
-    e_.text(0.04, 0.95, f"Spearman $\\rho_s$ = {rho:.2f}, $n$ = {len(ALL)}", transform=e_.transAxes, ha="left", va="top", fontsize=style.FS, color="#555555")
-    f = ax[5]; draw(f, "maxe"); f.axhline(0.5, color=GREY, lw=0.6, ls=(0, (4, 2)))
-    f.text(0.03, 0.52, r"$|e|_{\max}=0.5$", transform=f.get_yaxis_transform(), fontsize=style.FS, va="bottom", color="#555555")
-    f.set_ylabel(r"max. element strain $|e|_{\max}$"); f.set_ylim(0, 1.05); f.set_title("Strain bounds the others", loc="left")
+    e_.text(0.04, 0.95, f"$\\rho_s$ = {rho:.2f}, $n$ = {len(ALL)}", transform=e_.transAxes, ha="left", va="top", fontsize=style.FS, color=style.NOTE)
+    f = ax[5]; draw(f, "maxe"); f.axhline(0.5, color=GREY, lw=LW["ref"], ls=(0, (4, 2)))
+    f.set_ylabel(r"$|\eta|_{\max}$"); f.set_ylim(0, 1.05); f.set_title("Largest element strain", loc="left")
     for a_, t in zip(ax, "abcdef"):
         style.letter(a_, t)
-    style.top_legend(fig, [chan_handles(ALL, lw=1.0)], y=0.90)
+    from matplotlib.lines import Line2D
+    enc = [Line2D([], [], color=DARK, lw=LW["data"], marker="o", ms=MS["line"], mec="white", mew=MEW["edge"], markevery=[-1], label=r"path to $\varepsilon^*$ (marker: end of validity)"),
+           Line2D([], [], color=DARK, lw=LW["thin"], alpha=0.45, label=r"beyond $\varepsilon^*$, still stable")]
+    fig.canvas.draw()
+    style.top_legend(fig, [chan_handles(ALL), enc])
     style.save(fig, NAME)
     stiff = sum(float(ST[p]["a_005"]) > 1 for p in ALL); kneg = sum(float(ST[p]["kappa_005"]) < 0 for p in ALL)
     style.describe(NAME, "Fig. 3 departures from linearization along the tension path (r_c = 10 A, membrane nodes, {{n}} structures). "

@@ -50,7 +50,12 @@ for name in PANEL:
     rec['loaded_mapped_frac'] = float(mapped[ver].mean())
     # (ii) B-factor calibration
     B = bfactors(name, M['order']); ok = np.isfinite(B) & (B > 0)
-    lu = spla.splu(sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc())
+    import kkt
+    if kkt.AVAILABLE:                     # bordered K0 by PARDISO (one factorisation), 2 refinement steps per solve
+        kk = kkt.get(net, None, C).factor(net.tangent(X0)); bsolve = lambda b: kk.solve(b)[0]
+    else:
+        lu = spla.splu(sp.bmat([[net.tangent(X0).tocsc(), Cs.T], [Cs, None]]).tocsc())
+        bsolve = lambda b: lu.solve(np.concatenate([b, np.zeros(6)]))[:n]
     if net.N <= 2000:
         import scipy.linalg as sla
         Z = sla.null_space(C); Kc = Z.T @ (net.tangent(X0).toarray() @ Z)
@@ -59,7 +64,7 @@ for name in PANEL:
     else:
         rng = np.random.default_rng(0); acc = np.zeros(n); npb = 400
         for _ in range(npb):
-            z = rng.choice([-1.0, 1.0], size=n); acc += z * lu.solve(np.concatenate([z, np.zeros(6)]))[:n]
+            z = rng.choice([-1.0, 1.0], size=n); acc += z * bsolve(z)
         dg = acc / npb; est = f'hutchinson({npb})'
     Kii = dg.reshape(-1, 3).sum(1)                           # trace of 3x3 block, A^2 per (pN/A)/kT
     u2 = 3 * B / (8 * np.pi ** 2)

@@ -17,7 +17,7 @@ from vfife.explicit import VFIFETruss, nodal_mass_gershgorin
 from vfife.tension import TensionPathSolver
 
 mode, name, rc = sys.argv[1], sys.argv[2], float(sys.argv[3])
-outf = f'{RES}/vfife_checks.json'
+outf = os.environ.get('VFIFE_OUT') or f'{RES}/vfife_checks.json'      # VFIFE_OUT: part file (parallel runs)
 M = model(name, rc); X0 = M['X0']; net = TrussNetwork(X0, M['pairs'], k=1.0)
 area, _ = make_area(M); C = gauge_C(X0)
 tag = f'{name}_rc{int(rc)}'
@@ -50,7 +50,7 @@ if mode == 'vfife':
         mass = nodal_mass_gershgorin(elem, Xk) + tk1 * Hrow
         anchor = rigid_anchor_dofs(X0, exclude_nodes=area.vertices); fd = np.setdiff1d(np.arange(3 * net.N), anchor)
         Kf = (net.tangent(Xk) - tk * area.H).tocsc()[fd][:, fd]; Mf = np.repeat(mass, 3)[fd]
-        lam = spla.eigsh(Kf, k=1, M=sp.diags(Mf).tocsc(), sigma=-1e-7, which='LM', return_eigenvectors=False)[0]
+        lam = spla.eigsh(Kf, k=1, M=sp.diags(Mf).tocsc(), sigma=-1e-7, which='LM', return_eigenvectors=False, v0=np.ones(len(fd)))[0]
         S = EckartVFIFE(elem, area, X0, np.array([], int), mass, 2 * np.sqrt(max(lam, 1e-12)), tol_R=1e-8, tol_K=1e-13,
                         max_steps=600000, check_every=200)
         # restart the explicit solver from the converged Newton state k (exact axial forces, zero velocity)
