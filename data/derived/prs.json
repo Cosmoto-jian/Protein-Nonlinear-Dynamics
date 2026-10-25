@@ -1,0 +1,62 @@
+{
+ "6b3r": {
+  "closed_tm": 10.801814122140629,
+  "prs_best_tm": 9.563223386307255,
+  "prs_ovl": 0.46527068007510997,
+  "prs_node": 2398,
+  "prs_node_is_membrane": false,
+  "n_tm": 1259,
+  "rc": 10.0,
+  "time_s": 18.5387122631073
+ },
+ "6pwn": {
+  "closed_tm": 6.332471822698272,
+  "prs_best_tm": 5.3253065123636425,
+  "prs_ovl": 0.5948187522604735,
+  "prs_node": 1698,
+  "prs_node_is_membrane": false,
+  "n_tm": 322,
+  "rc": 10.0,
+  "time_s": 2.3226873874664307
+ },
+ "2oar": {
+  "closed_tm": 6.924227949094752,
+  "prs_best_tm": 6.344948804183714,
+  "prs_ovl": 0.5231620517833535,
+  "prs_node": 238,
+  "prs_node_is_membrane": false,
+  "n_tm": 263,
+  "rc": 10.0,
+  "time_s": 0.5270771980285645
+ },
+ "4xdk": {
+  "closed_tm": 2.130822426289802,
+  "prs_best_tm": 1.6639387263515477,
+  "prs_ovl": 0.6250169194195487,
+  "prs_node": 242,
+  "prs_node_is_membrane": true,
+  "n_tm": 279,
+  "rc": 10.0,
+  "time_s": 0.36180949211120605
+ },
+ "4wff": {
+  "closed_tm": 0.6406775118409942,
+  "prs_best_tm": 0.4023223753557649,
+  "prs_ovl": 0.7790036400410457,
+  "prs_node": 500,
+  "prs_node_is_membrane": true,
+  "n_tm": 289,
+  "rc": 10.0,
+  "time_s": 0.3758199214935303
+ },
+ "6mgv": {
+  "closed_tm": 6.161424275912559,
+  "prs_best_tm": 5.586653703763388,
+  "prs_ovl": 0.42241776290195376,
+  "prs_node": 497,
+  "prs_node_is_membrane": true,
+  "n_tm": 528,
+  "rc": 10.0,
+  "time_s": 1.843613862991333
+ }
+}
