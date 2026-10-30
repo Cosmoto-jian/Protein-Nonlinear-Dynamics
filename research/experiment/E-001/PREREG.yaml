@@ -1,0 +1,20 @@
+id: E-001
+tests: [T-xxx]
+predictions:
+  - id: P-001
+    statement: ""
+    metric: ""
+    support_if: ""        # e.g. effect > 0.2 and p_adj < 0.05
+    refute_if: ""
+selected_node: N-xxx                  # chosen in explore/explore.yaml
+explore_nodes_tried: 0                # counted in multiple-comparison correction
+holdout:                              # data or seeds never used during exploration
+  data_sha256: []
+  seeds: []
+tolerance: ""                         # numeric tolerance for reproduction, fixed before running
+controls:
+  positive: ""
+  negative: ""
+replicates: 3
+stats: ""
+locked: false   # after committing with locked: true, gates forbid any change

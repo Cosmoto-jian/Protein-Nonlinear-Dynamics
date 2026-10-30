@@ -1,0 +1,6 @@
+[   13568ms] [LOG] %c prev state color: #9E9E9E; font-weight: bold {currentUrl: Object, stats: null} @ https://opm.phar.umich.edu/main.js:0
+[   13570ms] [LOG] %c action     color: #03A9F4; font-weight: bold {type: UPDATE_CURRENT_URL, payload: Object} @ https://opm.phar.umich.edu/main.js:0
+[   13570ms] [LOG] %c next state color: #4CAF50; font-weight: bold {currentUrl: Object, stats: null} @ https://opm.phar.umich.edu/main.js:0
+[   18166ms] [LOG] %c prev state color: #9E9E9E; font-weight: bold {currentUrl: Object, stats: null} @ https://opm.phar.umich.edu/main.js:0
+[   18166ms] [LOG] %c action     color: #03A9F4; font-weight: bold {type: LOAD_STATS, payload: Object} @ https://opm.phar.umich.edu/main.js:0
+[   18166ms] [LOG] %c next state color: #4CAF50; font-weight: bold {currentUrl: Object, stats: Object} @ https://opm.phar.umich.edu/main.js:0

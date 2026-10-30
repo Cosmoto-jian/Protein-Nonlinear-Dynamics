@@ -1,0 +1,37 @@
+# Exploration tree (pilot -> tune -> explore -> ablate). Results here are never evidence.
+stages: [pilot, tune, explore, ablate]
+workers: 3
+max_nodes: 24
+max_debug_depth: 3
+budget: {gpu_hours: 10, usd: 30}
+data_split: dev          # exploration uses dev only; holdout is reserved for PREREG
+seeds: [0, 1, 2]
+nodes:
+  - id: N-001
+    parent: null
+    stage: pilot
+    change: "Check shared-area-load linear solve feasibility for standard ANM (gamma=1) on dev structures 2OAR and 6PWN, using f0=grad A(X0) and the common six-condition Eckart KKT system."
+    metric:
+      structures:
+        2oar:
+          nodes: 625
+          edges: 5563
+          anm_vs_project_tangent_max_abs: 0.0
+          relative_equilibrium_residual: 5.0994912293757895e-15
+          relative_eckart_residual: 6.703076959237268e-16
+          overlap_with_project_reference_tangent: 1.0
+          rms_displacement_per_unit_tau_A: 0.6816103108449864
+          existing_nonlinear_path_rows: 16
+        6pwn:
+          nodes: 1960
+          edges: 16827
+          anm_vs_project_tangent_max_abs: 0.0
+          relative_equilibrium_residual: 1.8995075697975437e-14
+          relative_eckart_residual: 1.392518708595554e-15
+          overlap_with_project_reference_tangent: 1.0
+          rms_displacement_per_unit_tau_A: 1.627241804233943
+          existing_nonlinear_path_rows: 27
+      limitations: "This establishes only shared-load solver feasibility for standard ANM on dev structures. Its Hessian equals the project's reference tangent for this same network, so this is not an independent model comparison. imANM, MCP-ANM, and MCP-mANM implementations and parameter mappings remain unresolved; no P-001 conclusion is drawn."
+    status: ok
+selected: N-001
+selected_reason: "Select the only completed pilot node because the shared-load ANM solve is finite and reproducible on both dev structures; the node demonstrates feasibility only, while three declared baselines remain unimplemented and require resolution before a formal comparison."

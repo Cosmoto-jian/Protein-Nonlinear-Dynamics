@@ -1,0 +1,309 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - generic [ref=e4]:
+      - generic [ref=e5]:
+        - link "UNIVERSITY OF MICHIGAN" [ref=e6] [cursor=pointer]:
+          - /url: http://www.umich.edu
+        - text: "|"
+        - link "COLLEGE OF PHARMACY" [ref=e7] [cursor=pointer]:
+          - /url: http://www.umich.edu/~pharmacy/
+        - text: "|"
+        - link "LOMIZE GROUP" [ref=e8] [cursor=pointer]:
+          - /url: https://pharmacy.umich.edu/lomize-group
+      - generic [ref=e11]:
+        - textbox "Search proteins by PDB ID or name" [ref=e12]
+        - generic [ref=e13] [cursor=pointer]: search
+    - generic [ref=e15]:
+      - strong [ref=e17]: HOME
+      - strong [ref=e19] [cursor=pointer]: ABOUT OPM DATABASE
+      - strong [ref=e21] [cursor=pointer]: BIOLOGICAL MEMBRANES
+      - link [ref=e23] [cursor=pointer]:
+        - /url: /search
+        - strong [ref=e24]: SEARCH
+      - link [ref=e26] [cursor=pointer]:
+        - /url: /download
+        - strong [ref=e27]: DOWNLOAD OPM FILES
+      - link [ref=e29] [cursor=pointer]:
+        - /url: /contact
+        - strong [ref=e30]: CONTACT US
+      - link [ref=e32] [cursor=pointer]:
+        - /url: /ppm_server
+        - strong [ref=e33]: PPM
+      - link [ref=e35] [cursor=pointer]:
+        - /url: /tmpfold_server_cgopm
+        - strong [ref=e36]: TMPFOLD SERVER
+    - generic [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e39]: Protein Classification
+        - generic [ref=e40]:
+          - generic [ref=e41]:
+            - link [ref=e42] [cursor=pointer]:
+              - /url: /protein_types
+              - strong [ref=e43]: Types
+            - generic [ref=e44]: (3)
+          - generic [ref=e45]:
+            - link [ref=e46] [cursor=pointer]:
+              - /url: /protein_classes
+              - strong [ref=e47]: Classes
+            - generic [ref=e48]: (11)
+          - generic [ref=e49]:
+            - link [ref=e50] [cursor=pointer]:
+              - /url: /protein_superfamilies
+              - strong [ref=e51]: Superfamilies
+            - generic [ref=e52]: (530)
+          - generic [ref=e53]:
+            - link [ref=e54] [cursor=pointer]:
+              - /url: /protein_families
+              - strong [ref=e55]: Families
+            - generic [ref=e56]: (1090)
+          - generic [ref=e57]:
+            - link [ref=e58] [cursor=pointer]:
+              - /url: /protein_species
+              - strong [ref=e59]: Species
+            - generic [ref=e60]: (1056)
+          - generic [ref=e61]:
+            - link [ref=e62] [cursor=pointer]:
+              - /url: /protein_localizations
+              - strong [ref=e63]: Localizations
+            - generic [ref=e64]: (24)
+          - generic [ref=e65]:
+            - link [ref=e66] [cursor=pointer]:
+              - /url: /proteins
+              - strong [ref=e67]: Proteins
+            - generic [ref=e68]: (8915)
+        - generic [ref=e69]: Assembly
+        - generic [ref=e70]:
+          - generic [ref=e71]:
+            - link [ref=e72] [cursor=pointer]:
+              - /url: /assembly_superfamilies
+              - strong [ref=e73]: Superfamilies
+            - generic [ref=e74]: (9)
+          - generic [ref=e75]:
+            - link [ref=e76] [cursor=pointer]:
+              - /url: /assembly_families
+              - strong [ref=e77]: Families
+            - generic [ref=e78]: (19)
+          - generic [ref=e79]:
+            - link [ref=e80] [cursor=pointer]:
+              - /url: /assembly_localizations
+              - strong [ref=e81]: Localizations
+            - generic [ref=e82]: (8)
+          - generic [ref=e83]:
+            - link [ref=e84] [cursor=pointer]:
+              - /url: /assemblies
+              - strong [ref=e85]: Assemblies
+            - generic [ref=e86]: (205)
+        - generic [ref=e87]: Protein Links
+        - generic [ref=e88]:
+          - link "PDB Sum" [ref=e89] [cursor=pointer]:
+            - /url: https://www.ebi.ac.uk/thornton-srv/databases/pdbsum/
+          - text: ","
+          - link "PDB" [ref=e90] [cursor=pointer]:
+            - /url: https://www.rcsb.org/pdb/
+          - text: ","
+          - link "MPKS" [ref=e91] [cursor=pointer]:
+            - /url: https://blanco.biomol.uci.edu/mpstruc/
+          - text: ","
+          - link "MPDB" [ref=e92] [cursor=pointer]:
+            - /url: http://www.mpdb.tcd.ie/
+        - link [ref=e94] [cursor=pointer]:
+          - /url: /ppm_server
+        - link [ref=e97] [cursor=pointer]:
+          - /url: /tmpfold_server_cgopm
+      - generic [ref=e101]:
+        - heading "Orientations of Proteins in Membranes (OPM) database" [level=1] [ref=e102]
+        - generic [ref=e104]:
+          - link [ref=e105] [cursor=pointer]:
+            - /url: /proteins/4314
+          - link "Nav1.2-beta2-conotoxin complex pdb-6j8e" [ref=e109] [cursor=pointer]:
+            - /url: /proteins/4314
+          - separator [ref=e110]
+          - 'link "Download File: 6j8e.pdb" [ref=e112] [cursor=pointer]':
+            - /url: https://biomembhub.org/shared/opm-assets/pdb/6j8e.pdb
+        - generic [ref=e113]:
+          - generic [ref=e114]:
+            - paragraph [ref=e115]: OPM provides spatial arrangements of membrane proteins with respect to the hydrocarbon core of the lipid bilayer.
+            - paragraph [ref=e116]:
+              - text: OPM includes all unique experimental structures of transmembrane proteins and some peripheral proteins and membrane-active peptides (
+              - link "Features" [ref=e117] [cursor=pointer]:
+                - /url: /about#features
+              - text: ).
+            - paragraph [ref=e118]:
+              - text: Each protein is positioned in a lipid bilayer of adjustable thickness and curvature by minimizing its transfer energy from water to the membrane (
+              - link "Methods" [ref=e119] [cursor=pointer]:
+                - /url: /about#methods_and_definitions
+              - text: ).
+            - paragraph [ref=e120]:
+              - text: OPM provides structural classification and sorting according to different criteria (
+              - link "Classification" [ref=e121] [cursor=pointer]:
+                - /url: /about#classification
+              - text: ).
+            - paragraph [ref=e122]:
+              - paragraph [ref=e123]:
+                - generic [ref=e124]:
+                  - text: OPM also provides a few preliminary results of
+                  - link "our computational analysis" [ref=e125] [cursor=pointer]:
+                    - /url: /about#tm_helix_assembly
+                  - text: of transmembrane α-helix association in experimental structures of selected polytopic proteins (Assembly pages).
+              - generic [ref=e127]:
+                - text: For more information on single-spanning transmembrane proteins please see our
+                - link "Membranome database" [ref=e128] [cursor=pointer]:
+                  - /url: http://membranome.org/
+          - generic [ref=e129]:
+            - paragraph [ref=e130]: In citing the Orientations of Proteins in Membranes (OPM) database please refer to
+            - paragraph [ref=e131]:
+              - text: "Lomize MA, Pogozheva ID, Joo H., Mosberg HI, Lomize AL (2012) OPM database and PPM web server: resources for positioning of proteins in membranes. Nucleic Acids Res. 40 (Database issue), D370-D376."
+              - link "PDF" [ref=e132] [cursor=pointer]:
+                - /url: https://biomembhub.org/shared/opm-assets/pdfs/gkr703.pdf
+              - link "PubMed" [ref=e133] [cursor=pointer]:
+                - /url: https://www.ncbi.nlm.nih.gov/pubmed/21890895
+            - paragraph [ref=e134]: For an explanation of our method please refer to
+            - paragraph [ref=e135]:
+              - text: "Lomize AL, Pogozheva ID, Lomize MA, Mosberg HI (2006) Positioning of proteins in membranes: A computational approach. Protein Science. 15, 1318-1333."
+              - link "PDF" [ref=e136] [cursor=pointer]:
+                - /url: https://biomembhub.org/shared/opm-assets/pdfs/PPM.pdf
+              - link "PubMed" [ref=e137] [cursor=pointer]:
+                - /url: https://www.ncbi.nlm.nih.gov/pubmed/16731967
+            - paragraph [ref=e138]:
+              - text: Lomize AL, Pogozheva ID, Mosberg HI (2011) Anisotropic solvent model of the lipid bilayer. 2. Energetics of insertion of small molecules, peptides, and proteins in membranes. J Chem Inf Model. 51, 930-946.
+              - link "PDF" [ref=e139] [cursor=pointer]:
+                - /url: https://biomembhub.org/shared/opm-assets/pdfs/PPM2.pdf
+              - link "PDF (supplementary)" [ref=e140] [cursor=pointer]:
+                - /url: https://biomembhub.org/shared/opm-assets/pdfs/PPM2s.pdf
+              - link "PubMed" [ref=e141] [cursor=pointer]:
+                - /url: https://www.ncbi.nlm.nih.gov/pubmed/21438606
+            - paragraph [ref=e142]: For a new version of our method please refer to
+            - paragraph [ref=e143]:
+              - text: "Lomize AL, Todd SC, Pogozheva ID. (2022) Spatial arrangement of proteins in planar and curved membranes by PPM 3.0. Protein Sci. 31: 930-946."
+              - link "PDF" [ref=e144] [cursor=pointer]:
+                - /url: https://biomembhub.org/shared/opm-assets/pdfs/PPM3.pdf
+              - link "PubMed" [ref=e145] [cursor=pointer]:
+                - /url: https://www.ncbi.nlm.nih.gov/pubmed/34716622
+            - paragraph [ref=e146]:
+              - text: See also
+              - link "BioMembHub" [ref=e147] [cursor=pointer]:
+                - /url: https://biomembhub.org
+              - text: project that includes several databases and webservers for analyzing proteins, peptides, and small molecules in biomembranes.
+            - generic [ref=e148]:
+              - generic [ref=e149]: Structure Statistics (distinct protein structures/PDB entries)
+              - generic [ref=e150]:
+                - generic [ref=e151]:
+                  - paragraph [ref=e152]:
+                    - text: "Type:"
+                    - link "Transmembrane" [ref=e153] [cursor=pointer]:
+                      - /url: /protein_types/1
+                    - text: "-"
+                    - strong [ref=e155]: (6477/10312)
+                  - generic [ref=e156]:
+                    - paragraph [ref=e158]:
+                      - text: "Class:"
+                      - link "Alpha-helical polytopic" [ref=e159] [cursor=pointer]:
+                        - /url: /protein_classes/1
+                      - text: "-"
+                      - generic [ref=e160]: (5450/8167)
+                    - paragraph [ref=e162]:
+                      - text: "Class:"
+                      - link "Bitopic proteins" [ref=e163] [cursor=pointer]:
+                        - /url: /protein_classes/11
+                      - text: "-"
+                      - generic [ref=e164]: (568/1433)
+                    - paragraph [ref=e166]:
+                      - text: "Class:"
+                      - link "Beta-barrel transmembrane" [ref=e167] [cursor=pointer]:
+                        - /url: /protein_classes/2
+                      - text: "-"
+                      - generic [ref=e168]: (459/712)
+                - generic [ref=e169]:
+                  - paragraph [ref=e170]:
+                    - text: "Type:"
+                    - link "Monotopic/peripheral" [ref=e171] [cursor=pointer]:
+                      - /url: /protein_types/2
+                    - text: "-"
+                    - strong [ref=e173]: (1666/5247)
+                  - generic [ref=e174]:
+                    - paragraph [ref=e176]:
+                      - text: "Class:"
+                      - link "All alpha monotopic/peripheral" [ref=e177] [cursor=pointer]:
+                        - /url: /protein_classes/4
+                      - text: "-"
+                      - generic [ref=e178]: (366/1269)
+                    - paragraph [ref=e180]:
+                      - text: "Class:"
+                      - link "All beta monotopic/peripheral" [ref=e181] [cursor=pointer]:
+                        - /url: /protein_classes/3
+                      - text: "-"
+                      - generic [ref=e182]: (634/1990)
+                    - paragraph [ref=e184]:
+                      - text: "Class:"
+                      - link "Alpha/Beta monotopic/peripheral" [ref=e185] [cursor=pointer]:
+                        - /url: /protein_classes/5
+                      - text: "-"
+                      - generic [ref=e186]: (372/1384)
+                    - paragraph [ref=e188]:
+                      - text: "Class:"
+                      - link "Alpha + Beta monotopic/peripheral" [ref=e189] [cursor=pointer]:
+                        - /url: /protein_classes/6
+                      - text: "-"
+                      - generic [ref=e190]: (294/604)
+                - generic [ref=e191]:
+                  - paragraph [ref=e192]:
+                    - text: "Type:"
+                    - link "Peptides" [ref=e193] [cursor=pointer]:
+                      - /url: /protein_types/3
+                    - text: "-"
+                    - strong [ref=e195]: (772/1314)
+                  - generic [ref=e196]:
+                    - paragraph [ref=e198]:
+                      - text: "Class:"
+                      - link "Alpha-helical peptides" [ref=e199] [cursor=pointer]:
+                        - /url: /protein_classes/7
+                      - text: "-"
+                      - generic [ref=e200]: (520/880)
+                    - paragraph [ref=e202]:
+                      - text: "Class:"
+                      - link "Beta-hairpin peptides" [ref=e203] [cursor=pointer]:
+                        - /url: /protein_classes/9
+                      - text: "-"
+                      - generic [ref=e204]: (150/258)
+                    - paragraph [ref=e206]:
+                      - text: "Class:"
+                      - link "Beta-helical peptides" [ref=e207] [cursor=pointer]:
+                        - /url: /protein_classes/8
+                      - text: "-"
+                      - generic [ref=e208]: (17/36)
+                    - paragraph [ref=e210]:
+                      - text: "Class:"
+                      - link "Peptides of nonregular structure" [ref=e211] [cursor=pointer]:
+                        - /url: /protein_classes/10
+                      - text: "-"
+                      - generic [ref=e212]: (85/140)
+            - generic [ref=e213]:
+              - generic [ref=e214]: Questions
+              - generic [ref=e215]:
+                - paragraph [ref=e216]: 1. Calculate orientation for unreleased structure or membrane protein was not in OPM?
+                - paragraph [ref=e217]:
+                  - text: Please use our
+                  - link "web server" [ref=e218] [cursor=pointer]:
+                    - /url: /ppm_server2
+                  - text: or we can process your coordinates through email (
+                  - link "lomizeal@gmail.com" [ref=e219] [cursor=pointer]:
+                    - /url: mailto:lomizeal@gmail.com
+                  - text: ). All information is kept confidential. Orientation of membrane protein cannot be predicted if all its membrane-anchoring elements are missing or disordered.
+                - paragraph [ref=e220]: 2. Errors in orientation or experimental verification description?
+                - paragraph [ref=e221]:
+                  - text: Please
+                  - link "contact us" [ref=e222] [cursor=pointer]:
+                    - /url: /contact
+                  - text: .
+            - paragraph [ref=e224]: Last updated October 09, 2023.
+            - paragraph [ref=e226]:
+              - link "OPM is funded by the National Science Foundation (NSF)" [ref=e227] [cursor=pointer]:
+                - /url: https://www.nsf.gov/awardsearch/showAward?AWD_ID=2010851
+    - generic [ref=e229]:
+      - text: © 2005 - 2019 The Regents of the University of Michigan |
+      - link "License" [ref=e230] [cursor=pointer]:
+        - /url: https://creativecommons.org/licenses/by/3.0/
+  - generic [ref=e231]:
+    - text: 1,665,932 Site Visits since 2005
+    - link "See Detailed Visitor Stats" [ref=e232] [cursor=pointer]:
+      - /url: http://statcounter.com/p11656557/?guest=1
